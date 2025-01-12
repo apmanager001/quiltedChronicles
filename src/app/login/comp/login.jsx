@@ -22,7 +22,7 @@ const Login = () => {
       } else {
         setData({});
         toast.success("Login Successful");
-        window.location.href = "/";
+        window.location.href = "/account";
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {

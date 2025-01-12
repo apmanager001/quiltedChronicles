@@ -31,7 +31,9 @@ const UserInfo = () => {
           
         </div>
       ) : (
-        "Sign In"
+        <Link href='/login'>
+          Sign In
+        </Link>
       )}
     </div>
   );}
