@@ -1,10 +1,14 @@
 'use client'
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import accountStore from "../../../../store/accountStore";
 import axiosInstance from "../../../../../comps/utility/axios";
 
 const Search = () => {
   const searchBoxRef = useRef(null);
+  const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
+  const setAuthorName = accountStore((state) => state.setAuthorName);
+  const setChapterId = accountStore((state) => state.setChapterId);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("chapters");
   const [sort, setSort] = useState("");
@@ -68,6 +72,14 @@ const Search = () => {
     fetchData();
   }, [searchTerm, filter, sort, sortOrder, stories]);
 
+  const handleChapterSelect = (chapterId) => {
+    setMiddleColumn("chapter");
+    setChapterId(chapterId);
+  };
+  const handleAuthorSelect = (authorName) => {
+    setMiddleColumn("profile");
+    setAuthorName(authorName);
+  };
   return (
     <div className="flex flex-col w-full items-center p-4">
       <div className="w-full max-w-md">
@@ -118,7 +130,10 @@ const Search = () => {
         {filter === "users"
           ? cards.map((card, index) => (
               <div key={index} className="card bg-base-100 shadow-xl p-4">
-                <Link href={`/profile/${card.userName}`}>
+                <Link
+                  href="#"
+                  onClick={() => handleAuthorSelect(card.userName)}
+                >
                   <h2 className="card-title truncate">{card.userName}</h2>
                   <p>Email: {card.email || "not available"}</p>
                   <p>
@@ -133,7 +148,10 @@ const Search = () => {
                 key={index}
                 className="card bg-base-100 w-72 h-24 shadow-xl p-4"
               >
-                <Link href={`/chapter/${card.chapterId}`}>
+                <Link
+                  href="#"
+                  onClick={() => handleChapterSelect(card.chapterId)}
+                >
                   <h2 className="card-title truncate">
                     {card.chapterTitle || card.storyTitle}
                   </h2>

@@ -12,6 +12,8 @@ import axiosInstance from "../../../../../comps/utility/axios";
 const ChapterInd = ({ onAuthorChange }) => {
     const user = useStore((state) => state.user);
     const chapterId = accountStore((state) => state.chapterId);
+    const setAuthorName = accountStore((state) => state.setAuthorName);
+    const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
     const [entry, setEntry] = useState("Loading...");
     const [loading, setLoading] = useState(true);
 
@@ -80,6 +82,11 @@ const ChapterInd = ({ onAuthorChange }) => {
     .split("\n")
     .map((paragraph, index) => <p key={index}>{paragraph}</p>);
 
+  const handleAuthorSelect = (authorName) => {
+    setMiddleColumn("profile");
+    setAuthorName(authorName);
+  };
+
   return (
     <div className="flex flex-col p-5 md:p-0 md:pb-5 min-h-96 md:h-full border-b-2 border-slate-600 md:border-0">
       {loading ? (
@@ -134,26 +141,25 @@ const ChapterInd = ({ onAuthorChange }) => {
         <>
           <div className="pl-2">
             <div className="flex flex-col items-start">
-              <div className="w-full flex justify-end items-center pt-4 pr-4">
-                {/* <FontAwesomeIcon
-                  icon={faShareNodes}
-                  className="pr-4 text-2xl text-gray-600"
-                /> */}
+              <div className="w-full flex justify-end items-center pt-4 pr-4 gap-2">
                 <Share2 />
                 <SharedButtons title={entryData.storyTitle} />
               </div>
               <div className="flex items-center py-2">
                 <div>By:</div>
                 <div className="text-red-500 pl-1">
-                  <Link href={`/profile/${authorName}`}>{authorName}</Link>
+                  <Link
+                    href="#"
+                    onClick={() => handleAuthorSelect(authorName)}
+                  >
+                    {authorName}
+                  </Link>
                 </div>
                 <div>
-                  {user && user.userName === authorName ? (
-                    ""
-                  ) : (
-                    // <FollowAuthor userId={entry.authorId} />
-                    ""
-                  )}
+                  {user && user.userName === authorName
+                    ? ""
+                    : // <FollowAuthor userId={entry.authorId} />
+                      ""}
                 </div>
               </div>
             </div>

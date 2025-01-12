@@ -108,7 +108,7 @@ const Settings = () => {
                 <textarea
                   value={bio}
                   onChange={handleTextAreaChange}
-                  className="textarea textarea-bordered h-52 w-full"
+                  className="textarea textarea-bordered h-52 w-full resize-none"
                 />
               </div>
             </div>
