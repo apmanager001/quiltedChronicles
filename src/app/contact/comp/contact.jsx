@@ -1,8 +1,9 @@
 'use client'
 import React, { useState, useContext, useEffect } from "react";
-import axiosInstance from "../../../../../comps/utility/axios";
-import useStore from "../../../../store/store";
+import axiosInstance from "../../../comps/utility/axios";
+import useStore from "../../store/store";
 import { toast } from "react-hot-toast";
+import AccountPage from "../../account/layout";
 
 const Contact = () => {
   const user = useStore((state) => state.user);
@@ -77,6 +78,7 @@ const Contact = () => {
     }
   }, [user]);
   return (
+    <AccountPage>
     <div className="flex flex-col gap-5 items-center w-full h-screen-minus-65 ">
       <form
         onSubmit={handleSubmit}
@@ -136,6 +138,7 @@ const Contact = () => {
         </button>
       </form>
     </div>
+    </AccountPage>
   );
 };
 

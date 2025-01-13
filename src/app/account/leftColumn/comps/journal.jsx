@@ -44,10 +44,7 @@ const Journal = () => {
             <div key={index}>
               <ul className="menu menu-xs justify-start rounded-box gap-2">
                 <li>
-                  <Link
-                    href='#'
-                    onClick={() => handleChapterSelect(chapters.chapterId)}
-                  >
+                  <Link href={`/chapter/${chapters.chapterId}`}>
                     {chapters.chapterTitle || chapters.storyTitle}
                   </Link>
                 </li>

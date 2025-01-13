@@ -2,14 +2,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import useStore from "../../../store/store";
-import accountStore from "../../../store/accountStore";
 import MoreButton from "./more";
 import DeleteAuthor from "./deleteAuthor";
 
-const FollowedAuthors = ({onAuthorSelect}) => {
+const FollowedAuthors = () => {
     const user = useStore((state) => state.user);
-    const setAuthorName = accountStore((state) => state.setAuthorName);
-    const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
+   
     const [showMore, setShowMore] = useState(false);
     const [followedAuthors, setFollowedAuthors] = useState([]);
 
@@ -35,10 +33,7 @@ const FollowedAuthors = ({onAuthorSelect}) => {
     const updatedUser = { ...user, followedAuthors: updatedAuthors };
     setUser(updatedUser);
   };
-  const handleAuthorSelect = (authorName) => {
-    setMiddleColumn('profile')
-    setAuthorName(authorName);
-  };
+
   return (
     <div>
       {followedAuthors.length === 0
@@ -47,10 +42,7 @@ const FollowedAuthors = ({onAuthorSelect}) => {
             <div key={index}>
               <ul className=" menu menu-xs rounded-box  gap-2">
                 <li className="flex flex-row justify-between items-center">
-                  <Link
-                    href="#"
-                    onClick={() => handleAuthorSelect(author.userName)}
-                  >
+                  <Link href={`/profile/${author.userName}`}>
                     {author.userName}
                   </Link>
                   <DeleteAuthor
@@ -68,10 +60,7 @@ const FollowedAuthors = ({onAuthorSelect}) => {
               <div key={index} className="flex flex-row ">
                 <ul className="menu menu-xs rounded-box  gap-2">
                   <li className="flex flex-row justify-between items-center">
-                    <Link
-                      href="#"
-                      onClick={() => handleAuthorSelect(author.userName)}
-                    >
+                    <Link href={link(author)}>
                       {name(author)}
                     </Link>
                     <DeleteAuthor

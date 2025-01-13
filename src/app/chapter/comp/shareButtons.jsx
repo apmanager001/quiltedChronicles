@@ -1,16 +1,17 @@
 'use client'
 import React from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { SocialIcon } from "react-social-icons";
 
 const SharedButtons = ({ title }) => {
-//   const { id } = useParams();
+  const { id } = useParams();
 
   const link = encodeURI(window.location.href);
   const msg = encodeURIComponent("Check out this story on Quilted Chronicles!");
   const shareTitle = encodeURIComponent(title);
   return (
-    <div className="flex gap-4 text-2xl p-2 bg-white rounded-xl hover:h-24">
+    <div className="flex gap-4 text-2xl p-2 bg-white rounded-xl">
       <div className="tooltip tooltip-bottom" data-tip="Share to Threads">
         <SocialIcon
           network="threads"

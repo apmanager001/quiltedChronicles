@@ -27,11 +27,6 @@ const Chapters = () => {
 
   const link = (entry) => `/entry/${entry.entryId}`;
   const name = (entry) => entry.entryTitle;
-
-  const handleChapterSelect = (chapterId) => {
-    setMiddleColumn("chapter");
-    setChapterId(chapterId);
-  };
   return (
     <div>
       {chapters.length === 0
@@ -42,8 +37,10 @@ const Chapters = () => {
                 <ul className="menu menu-xs justify-start rounded-box gap-2">
                   <li className="text-center">
                     <Link
-                      href="#"
-                      onClick={() => handleChapterSelect(chapters.chapterId)}
+                      // href={`/chapter/${chapters.chapterId}`}
+                      href={`/chapter/${
+                        chapters.chapterId
+                      }`}
                     >
                       {chapters.entryTitle || chapters.storyTitle}
                     </Link>
@@ -53,8 +50,9 @@ const Chapters = () => {
                 <ul className="menu menu-xs justify-start rounded-box gap-2">
                   <li className="text-center">
                     <Link
-                      href="#"
-                      onClick={() => handleChapterSelect(chapters.chapterId)}
+                      href={`/chapter/${
+                        chapters.chapterId
+                      }`}
                     >
                       {chapters.entryTitle || chapters.storyTitle}
                       <BookHeart />

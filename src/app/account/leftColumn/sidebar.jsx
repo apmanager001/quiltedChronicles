@@ -32,9 +32,7 @@ const Sidebar = () => {
     <div className="flex flex-col justify-start overflow-y-auto ">
       <ul className="menu rounded-box">
         <li className="text-xl">
-          <Link href="#" onClick={() => handleAuthorSelect()}>
-            {user.userName}
-          </Link>
+          <Link href={`/profile/${user.userName}`}>{user.userName}</Link>
         </li>
         <li>
           <Link href="#" onClick={() => setMiddleColumn("createStory")}>
@@ -42,23 +40,23 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link href="#" onClick={() => setMiddleColumn("settings")}>
+          <Link href="/settings">
             Settings
           </Link>
         </li>
         <li>
-          <Link href="#" onClick={() => setMiddleColumn("contact")}>
+          <Link href="/contact" >
             Contact
           </Link>
         </li>
         <li>
-          <Link href="#" onClick={() => setMiddleColumn("search")}>
+          <Link href="/search" >
             Search
           </Link>
         </li>
         {user.admin && (
           <li>
-            <Link href="#" onClick={() => setMiddleColumn("admin")}>
+            <Link href="/admin">
               Admin
             </Link>
           </li>

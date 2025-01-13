@@ -89,56 +89,6 @@ const ChapterInd = ({ onAuthorChange }) => {
 
   return (
     <div className="flex flex-col p-5 md:p-0 md:pb-5 min-h-96 md:h-full border-b-2 border-slate-600 md:border-0">
-      {loading ? (
-        // <ContentLoader
-        //   animate={true}
-        //   speed={2}
-        //   width="100%"
-        //   height="100%"
-        //   viewBox="0 0 600 800"
-        // >
-        //   {/* Author */}
-        //   <rect x="10" y="20" rx="3" ry="3" width="60" height="7" />
-        //   <rect x="80" y="20" rx="3" ry="3" width="100" height="7" />
-
-        //   {/* Date */}
-        //   <rect x="40" y="35" rx="3" ry="3" width="60" height="7" />
-        //   <rect x="110" y="35" rx="3" ry="3" width="100" height="7" />
-
-        //   {/* Main Story */}
-        //   <rect x="80" y="50" rx="3" ry="3" width="60" height="7" />
-        //   <rect x="150" y="50" rx="3" ry="3" width="150" height="7" />
-
-        //   {/* Entry Title */}
-        //   <rect x="80" y="65" rx="3" ry="3" width="60" height="7" />
-        //   <rect x="150" y="65" rx="3" ry="3" width="150" height="7" />
-
-        //   {/* Horizontal line */}
-        //   <rect x="10" y="80" rx="0" ry="0" width="100%" height="1" />
-
-        //   {/* Paragraph */}
-        //   <rect x="150" y="90" rx="3" ry="3" width="400" height="7" />
-        //   <rect x="150" y="105" rx="3" ry="3" width="400" height="7" />
-        //   <rect x="150" y="120" rx="3" ry="3" width="400" height="7" />
-        //   <rect x="150" y="135" rx="3" ry="3" width="400" height="7" />
-        //   <rect x="150" y="150" rx="3" ry="3" width="400" height="7" />
-
-        //   <rect x="150" y="165" rx="3" ry="3" width="400" height="7" />
-
-        //   <rect x="150" y="180" rx="3" ry="3" width="400" height="7" />
-
-        //   <rect x="150" y="195" rx="3" ry="3" width="400" height="7" />
-
-        //   <rect x="150" y="210" rx="3" ry="3" width="400" height="7" />
-        //   <rect x="150" y="225" rx="3" ry="3" width="400" height="7" />
-
-        //   {/* Footer */}
-        //   <rect x="150" y="270" rx="3" ry="3" width="100" height="7" />
-        //   <rect x="400" y="270" rx="3" ry="3" width="100" height="7" />
-        // </ContentLoader>
-        ""
-      ) : (
-        <>
           <div className="pl-2">
             <div className="flex flex-col items-start">
               <div className="w-full flex justify-end items-center pt-4 pr-4 gap-2">
@@ -196,8 +146,6 @@ const ChapterInd = ({ onAuthorChange }) => {
               <Link href={`/entry/${storyId}`}>Jump to first story</Link>
             )}
           </div>
-        </>
-      )}
     </div>
   );
 };
