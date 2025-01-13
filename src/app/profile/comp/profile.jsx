@@ -71,13 +71,6 @@ const Profile = () => {
   return (
     <AccountPage>
     <div className="flex flex-col w-full px-5 ">
-      {/* {check === user ? (
-        <div className="flex flex-col w-full pt-3 md:hidden ">
-          <Dropdown />
-        </div>
-      ) : (
-        ""
-      )} */}
       <div className="flex flex-col justify-center w-full py-4 md:py-20 min-h-full md:min-h-5/6 md:flex-row">
         <div className="flex flex-col rounded h-full w-full  p-7">
           <div className="w-full flex flex-col md:flex-row items-center justify-center border-b-2 p-2 gap-6">
@@ -127,12 +120,12 @@ const Profile = () => {
               <div className="pl-7">
                 {entries.length === 0
                   ? "No Entries Yet"
-                  : entries.map((entry, index) => (
+                  : entries.map((chapter, index) => (
                       <div key={index}>
                         <ul className="menu menu-s rounded-box">
                           <li>
-                            <Link href={`/entry/${entry.entryId}`}>
-                              {entry.entryTitle || entry.storyTitle}
+                            <Link href={`/chapter/${chapter.chapterId}`}>
+                              {chapter.chapterTitle || chapter.storyTitle}
                             </Link>
                           </li>
                         </ul>

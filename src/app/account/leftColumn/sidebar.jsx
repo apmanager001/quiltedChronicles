@@ -9,6 +9,7 @@ import Chapters from './comps/chapters';
 
 const Sidebar = () => {
   const user = useStore((state) => state.user);
+  const validateSession = useStore((state) => state.validateSession);
   const setAuthorName = accountStore((state) => state.setAuthorName);
   const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
   const setChapterId = accountStore((state) => state.setChapterId)
@@ -28,6 +29,7 @@ const Sidebar = () => {
     setMiddleColumn("chapter")
     setChapterId()
   }
+
   return (
     <div className="flex flex-col justify-start overflow-y-auto ">
       <ul className="menu rounded-box">
@@ -35,7 +37,7 @@ const Sidebar = () => {
           <Link href={`/profile/${user.userName}`}>{user.userName}</Link>
         </li>
         <li>
-          <Link href="#" onClick={() => setMiddleColumn("createStory")}>
+          <Link href="/createStory">
             Create a Story
           </Link>
         </li>

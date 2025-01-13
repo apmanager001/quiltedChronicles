@@ -42,7 +42,10 @@ const FollowedAuthors = () => {
             <div key={index}>
               <ul className=" menu menu-xs rounded-box  gap-2">
                 <li className="flex flex-row justify-between items-center">
-                  <Link href={`/profile/${author.userName}`}>
+                  <Link
+                    href={`/profile/${author.userName}`}
+                    className="btn btn-ghost btn-sm text-md"
+                  >
                     {author.userName}
                   </Link>
                   <DeleteAuthor
@@ -60,9 +63,7 @@ const FollowedAuthors = () => {
               <div key={index} className="flex flex-row ">
                 <ul className="menu menu-xs rounded-box  gap-2">
                   <li className="flex flex-row justify-between items-center">
-                    <Link href={link(author)}>
-                      {name(author)}
-                    </Link>
+                    <Link href={link(author)}>{name(author)}</Link>
                     <DeleteAuthor
                       id={author.userId}
                       onDeleteAuthor={() => toggleDeleteAuthor(author.userId)}

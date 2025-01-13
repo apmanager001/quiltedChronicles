@@ -10,6 +10,15 @@ import {
 import "@xyflow/react/dist/style.css";
 import {AnimatedSVGEdge} from'./animatedEdge'
 
+const CustomNodeComponent = ({ data }) => ( 
+  <div className="w-full h-full flex items-center justify-center"> 
+    {data.label} 
+    </div> 
+); 
+
+const CustomEdgeComponent = ({ id, path }) => ( 
+  <path id={id} style={{ stroke: '#000', strokeWidth: 2 }} d={path} />
+)
 
 const SectionTree = () => {
   const style = {

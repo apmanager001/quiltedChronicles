@@ -90,7 +90,7 @@ const Settings = () => {
                   className="radio"
                 />
                 <label htmlFor="public" className="pb-2">
-                  Set my Email Public
+                  Public
                 </label>
                 <input
                   type="radio"
@@ -101,7 +101,7 @@ const Settings = () => {
                   onChange={handleRadioChange}
                   className="radio "
                 />
-                <label htmlFor="notPublic">Set my Email Not Public</label>
+                <label htmlFor="notPublic">Not Public</label>
               </div>
             </div>
             <div className="flex flex-row h-40 w-full items-center justify-center">
