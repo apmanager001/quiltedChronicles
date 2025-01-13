@@ -8,24 +8,24 @@ import {
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
-const style = { 
-  backgroundColor: '#90EE90', 
-  borderRadius: '25px', 
-  color: 'black', 
-  width: '100px',
-  borderWidth: '3px', 
-  borderColor: '#000',
 
-}
 
 const SectionTree = () => {
-
+  const style = {
+    backgroundColor: "#90EE90",
+    borderRadius: "25px",
+    color: "black",
+    width: "100px",
+    borderWidth: "3px",
+    borderColor: "#000",
+  };
   const initialNodes = [
     {
       id: "1",
       position: { x: 350, y: 0 },
       data: { label: "First Story Chapter" },
       style,
+      className: "hover:bg-yellow-400",
     },
     {
       id: "2",
