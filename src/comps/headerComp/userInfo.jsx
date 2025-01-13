@@ -22,7 +22,7 @@ const UserInfo = () => {
     <div>
       {user ? (
         <div className='flex items-center gap-4 mr-4'>
-            <Link href='/account'>
+            <Link href={`/profile/${user.userName}`}>
                 <User size={32} />
             </Link>
             <Link href='#' onClick={handleLogout}>

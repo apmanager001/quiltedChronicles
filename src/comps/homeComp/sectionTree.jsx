@@ -144,10 +144,10 @@ const SectionTree = () => {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
-        nodesDraggable={false}
-        panOnDrag={false} 
-        zoomOnScroll={false} 
-        zoomOnPinch={false}
+        // nodesDraggable={false}
+        // panOnDrag={false} 
+        // zoomOnScroll={false} 
+        // zoomOnPinch={false}
       ></ReactFlow>
     </div>
   );
