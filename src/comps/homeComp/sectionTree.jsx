@@ -136,7 +136,7 @@ const SectionTree = () => {
     [setEdges]
   );
   return (
-    <div className="w-[800] h-[500] font-bold ">
+    <div className="w-[800px] h-[500px] font-bold ">
       <h2 className="text-center my-10">Full Story Chain</h2>
       <ReactFlow
         nodes={nodes}
