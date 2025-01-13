@@ -71,7 +71,7 @@ const SectionTree = () => {
 
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
   return (
-    <div className="w-[800] h-96 font-bold">
+    <div className="w-[800] h-[500] font-bold ">
       <h2 className="text-center my-10">Full Story Chain</h2>
       <ReactFlow
         nodes={nodes}
