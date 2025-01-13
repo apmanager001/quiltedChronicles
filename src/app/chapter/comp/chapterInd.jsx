@@ -1,10 +1,9 @@
 "use client";
 import React, { useState, useEffect, useContext } from "react";
 import useStore from "../../store/store";
-import AccountPage from "../../account/layout";
 import Link from "next/link";
 import { Share2 } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 // import FollowAuthor from "./followAuthor";
 import SharedButtons from "./shareButtons";
 import axiosInstance from "../../../comps/utility/axios";
@@ -12,49 +11,49 @@ import axiosInstance from "../../../comps/utility/axios";
 const ChapterInd = () => {
   const user = useStore((state) => state.user);
   const { id } = useParams();
-  const [entry, setEntry] = useState("Loading...");
+  const [chapter, setChapter] = useState("Loading...");
   const [loading, setLoading] = useState(true);
 
-  const [entryData, setEntryData] = useState({
+  const [chapterData, setChapterData] = useState({
     authorName: "",
     body: "",
-    entryTitle: null,
+    chapterTitle: null,
     storyTitle: "",
-    previousEntry: null,
+    previousChapter: null,
     storyId: "",
-    entryId: "",
+    chapterId: "",
     createDate: "",
-    continuationEntries: "",
+    continuationChapters: "",
   });
 
   useEffect(() => {
-    const fetchEntry = async () => {
+    const fetchChapter= async () => {
       try {
         const response = await axiosInstance.get(`/chapter/${id}`);
         const {
           authorName,
           bodyText: body,
-          entryTitle,
+          chapterTitle,
           storyTitle,
-          previousEntry,
+          previousChapter,
           storyId,
           _id,
           createDate,
-          continuationEntries,
+          continuationChapters,
         } = response.data;
 
-        setEntry(response.data);
+        setChapter(response.data);
         const dateWithoutTime = new Date(createDate).toLocaleDateString();
-        setEntryData({
+        setChapterData({
           authorName,
           body,
-          entryTitle,
+          chapterTitle,
           storyTitle,
-          previousEntry,
+          previousChapter,
           storyId,
-          entryId: _id,
+          chapterId: _id,
           createDate: dateWithoutTime,
-          continuationEntries,
+          continuationChapters,
         });
         setLoading(false);
         // onAuthorChange(authorName);
@@ -62,19 +61,19 @@ const ChapterInd = () => {
         console.error(error);
       }
     };
-    fetchEntry();
+    fetchChapter();
   }, []);
   const {
     authorName,
     body,
-    entryTitle,
+    chapterTitle,
     storyTitle,
-    previousEntry,
+    previousChapter,
     storyId,
-    entryId,
+    chapterId,
     createDate,
-    continuationEntries,
-  } = entryData;
+    continuationChapters,
+  } = chapterData;
 
   const paragraphs = body
     .split("\n")
@@ -86,13 +85,13 @@ const ChapterInd = () => {
   };
 
   return (
-    <AccountPage>
+    <>
     <div className="flex flex-col p-5 md:p-0 md:pb-5 min-h-96 md:h-full border-b-2 border-slate-600 md:border-0">
       <div className="pl-2">
         <div className="flex flex-col items-start">
           <div className="w-full flex justify-end items-center pt-4 pr-4 gap-2">
             <Share2 />
-            <SharedButtons title={entryData.storyTitle} />
+            <SharedButtons title={chapterData.storyTitle} />
           </div>
           <div className="flex items-center py-2">
             <div>By:</div>
@@ -120,10 +119,10 @@ const ChapterInd = () => {
           </div>
         </div>
         <div className="flex items-center py-2">
-          {entryTitle && (
+          {chapterTitle && (
             <div className="flex items-center">
-              <div>This Entry Title:</div>
-              <div className="text-red-500 pl-1">{entryTitle}</div>
+              <div>This Chapter Title:</div>
+              <div className="text-red-500 pl-1">{chapterTitle}</div>
             </div>
           )}
         </div>
@@ -132,13 +131,13 @@ const ChapterInd = () => {
         {paragraphs}
       </div>
       <div className="flex items-center justify-around text-red-500 mt-auto">
-        {previousEntry && (
+        {previousChapter && (
           <p>
-            <Link href={`/chapter/${previousEntry}`}>Previous Entry</Link>
+            <Link href={`/chapter/${previousChapter}`}>Previous Entry</Link>
           </p>
         )}
 
-        {previousEntry && (
+        {previousChapter && (
           <Link href={`/chapter/${storyId}`}>Jump to first story</Link>
         )}
       </div>
@@ -146,7 +145,7 @@ const ChapterInd = () => {
     <div>
       
     </div>
-    </AccountPage>
+    </>
   );
 };
 

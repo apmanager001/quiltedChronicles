@@ -1,12 +1,12 @@
 'use client'
 import React from 'react'
-import ChapterInd from '../comp/chapterInd'
+import Chapter from '../comp/chapter'
 
 const Page = () => {
 
   return (
     <div>
-      <ChapterInd />
+      <Chapter />
     </div>
   );
 }
