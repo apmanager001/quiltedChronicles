@@ -68,12 +68,6 @@ const Chapter = () => {
           >
             Story Chain
           </Link>
-
-          {/* {usersChapter || !user ? (
-            <div className="w-20"></div>
-          ) : (
-            <Toolbar chapterId={id} />
-          )} */}
         </div>
         <div className="flex-2 flex justify-center items-center w-full">
           {visibleComponent === "Chapter" && (

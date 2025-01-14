@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import useStore from "../../../store/store";
 import accountStore from "../../../store/accountStore";
-import { BookHeart } from "lucide-react";
+import { BookHeart, Heart } from "lucide-react";
 import MoreButton from "./more";
 
 const Chapters = () => {
@@ -27,6 +27,7 @@ const Chapters = () => {
 
   const link = (entry) => `/entry/${entry.entryId}`;
   const name = (entry) => entry.entryTitle;
+  console.log(user)
   return (
     <div>
       {chapters.length === 0
@@ -38,25 +39,27 @@ const Chapters = () => {
                   <li className="text-center">
                     <Link
                       // href={`/chapter/${chapters.chapterId}`}
-                      href={`/chapter/${
-                        chapters.chapterId
-                      }`}
+                      href={`/chapter/${chapters.chapterId}`}
                     >
                       {chapters.entryTitle || chapters.storyTitle}
                     </Link>
+                    <p className="flex items-center gap-2">
+                      <Heart color="red" fill="red" />
+                      {chapters.likes}
+                    </p>
                   </li>
                 </ul>
               ) : (
                 <ul className="menu menu-xs justify-start rounded-box gap-2">
-                  <li className="text-center">
-                    <Link
-                      href={`/chapter/${
-                        chapters.chapterId
-                      }`}
-                    >
+                  <li className="text-center flex">
+                    <Link href={`/chapter/${chapters.chapterId}`} className="flex justify-between">
                       {chapters.entryTitle || chapters.storyTitle}
-                      <BookHeart />
+                      <p className="flex items-center gap-2">
+                      <Heart color="red" fill="red" />
+                      {chapters.likes}
+                    </p>
                     </Link>
+                    
                   </li>
                 </ul>
               )}

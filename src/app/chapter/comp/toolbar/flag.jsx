@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFlag } from "@fortawesome/free-solid-svg-icons";
+import axiosInstance from "../../../../comps/utility/axios";
+import { Flag } from "lucide-react";
 import toast from "react-hot-toast";
 
 
-const Flag = ({ chapterId }) => {
+const Flagged = ({ chapterId }) => {
   const [onFlag, setOnFlag] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [reason, setReason] = useState("");
@@ -24,7 +23,7 @@ const Flag = ({ chapterId }) => {
     }
 
     try {
-      const response = await axios.post(`/chapter/${chapterId}/flag`, {
+      const response = await axiosInstance.post(`/chapter/${chapterId}/flag`, {
         reason: selectedReason,
       });
       setOnFlag(true);
@@ -50,7 +49,7 @@ const Flag = ({ chapterId }) => {
         }`}
         onClick={() => handleFlag("")}
       >
-        <FontAwesomeIcon icon={faFlag} />
+        <Flag />
       </button>
       {dropdownVisible && (
         <div className="flex flex-col absolute top-full right-0 shadow-xl z-50 mt-2">
@@ -78,4 +77,4 @@ const Flag = ({ chapterId }) => {
   );
 };
 
-export default Flag;
+export default Flagged;

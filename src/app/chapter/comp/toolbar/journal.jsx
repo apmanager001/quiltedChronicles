@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "../../../context/userContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
+import useStore from "../../../store/store";
+import { Bookmark } from "lucide-react";
+import axiosInstance from "../../../../comps/utility/axios";
 import toast from "react-hot-toast";
 
 
+
 const Journal = ({chapterId}) => {
-    const { user } = useContext(UserContext);
+    const user = useStore((state) => state.user);
     const [onHeart, setOnHeart] = useState(false);
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const Journal = ({chapterId}) => {
 
     const handleJournal = async () => {
       if (onHeart === false) {
-        const response = await axios.post(`/chapter/${chapterId}/bookmark`);
+        const response = await axiosInstance.post(`/chapter/${chapterId}/bookmark`);
         setOnHeart(true);
         toast.success("Thank you for adding this Bookmark!");
 
@@ -40,16 +40,11 @@ const Journal = ({chapterId}) => {
           origin: { y: 0.3 },
         });
       } else {
-        const response = await axios.delete(`/chapter/${chapterId}/bookmark`);
+        const response = await axiosInstance.delete(`/chapter/${chapterId}/bookmark`);
         setOnHeart(false);
         toast.success("You have removed your bookmark from this chapter");
       }
     };
-
-    // const handleHeart = () => {
-    //   setOnHeart(true);
-    //   toast.success("Thank you for bookmarking this chapter!");
-    // };
 
 
   return (
@@ -58,12 +53,13 @@ const Journal = ({chapterId}) => {
       data-tip="Add chapter to your Bookmarks"
     >
       <button
-        className={`btn bg-toolbarColor hover:bg-toolbarHover rounded-full text-xl  ${
-          onHeart ? "text-red-600" : "text-slate-300"
-        }`}
+        className={`btn hover:bg-toolbarHover rounded-full text-xl`}
         onClick={handleJournal}
       >
-        <FontAwesomeIcon icon={faBookmark} />
+        <Bookmark
+          fill={onHeart ? `#CC5500` : "none"}
+          color={onHeart ? `#CC5500` : "currentColor"}
+        />
       </button>
     </div>
   );
