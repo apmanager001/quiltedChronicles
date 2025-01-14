@@ -1,5 +1,5 @@
 'use client'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Link from 'next/link';
 import {User, LogOut, Menu, PanelLeftOpen} from "lucide-react";
 import useStore from '../../app/store/store'
@@ -9,6 +9,7 @@ import axiosInstance from '../utility/axios';
 
 const UserInfo = () => {
   const user = useStore((state) => state.user);
+  const validateSession = useStore((state) => state.validateSession);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const handleLogout = async () => {
@@ -23,6 +24,9 @@ const UserInfo = () => {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+    useEffect(() => {
+      validateSession();
+    }, [validateSession]);
   return (
     <div className="relative">
       {user ? (

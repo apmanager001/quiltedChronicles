@@ -6,12 +6,7 @@ import NextStory from "./rightColumn/nextStory";
 
 const AccountPage = ({children}) => {
   const user = useStore((state) => state.user);
-  const validateSession = useStore((state) => state.validateSession);
-
-  useEffect(() => {
-    validateSession();
-  }, [validateSession]);
-
+  
   return (
     <div className="flex flex-col md:flex-row gap-2 p-4">
       {user ? 

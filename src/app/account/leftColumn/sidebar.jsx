@@ -9,7 +9,6 @@ import Chapters from './comps/chapters';
 
 const Sidebar = () => {
   const user = useStore((state) => state.user);
-  const validateSession = useStore((state) => state.validateSession);
   const setAuthorName = accountStore((state) => state.setAuthorName);
   const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
   const setChapterId = accountStore((state) => state.setChapterId)
