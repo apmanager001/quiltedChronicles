@@ -6,6 +6,17 @@ export default {
     "./src/comps/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  daisyui: {
+    themes: [
+      "light",
+      "dark",
+      "retro",
+      "coffee",
+      "cyberpunk",
+      "valentine",
+      "aqua",
+    ],
+  },
   theme: {
     extend: {
       screens: {

@@ -45,7 +45,7 @@ const Flagged = ({ chapterId }) => {
     >
       <button
         className={`btn bg-toolbarColor hover:bg-toolbarHover rounded-full h-4 text-xl ${
-          onFlag ? "text-red-600" : "text-slate-300"
+          onFlag ? "text-red-600" : "currentValue"
         }`}
         onClick={() => handleFlag("")}
       >
