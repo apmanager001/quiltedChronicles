@@ -75,7 +75,7 @@ const Chapter = () => {
             <Toolbar chapterId={id} />
           )} */}
         </div>
-        <div className="flex-2 h-custom w-full">
+        <div className="flex-2 flex justify-center items-center w-full">
           {visibleComponent === "Chapter" && (
             <div>
               <ChapterInd />
@@ -90,7 +90,7 @@ const Chapter = () => {
               <Link href={`/login`}>
                 <input
                   type="submit"
-                  className="btn btn-accent"
+                  className="btn btn-accent "
                   value="Login to Start"
                 />
               </Link>

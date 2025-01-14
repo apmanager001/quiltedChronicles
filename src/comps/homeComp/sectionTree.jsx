@@ -145,20 +145,22 @@ const SectionTree = () => {
   );
 
   return (
-    <div className="w-[800px] h-[500px] font-bold ">
-      <h2 className="text-center my-10">Full Story Chain</h2>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        nodesDraggable={false}
-        panOnDrag={false}
-        zoomOnScroll={false}
-        zoomOnPinch={false}
-        edgeTypes={edgeTypes}
-      ></ReactFlow>
+    <div className="flex justify-center w-full">
+      <div className="w-[800px] h-[500px] font-bold my-10">
+        <h2 className="text-center my-10">Full Story Chain</h2>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          nodesDraggable={false}
+          panOnDrag={false}
+          zoomOnScroll={false}
+          zoomOnPinch={false}
+          edgeTypes={edgeTypes}
+        ></ReactFlow>
+      </div>
     </div>
   );
 };

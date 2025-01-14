@@ -5,6 +5,7 @@ import Sidebar from "./leftColumn/sidebar";
 import NextStory from "./rightColumn/nextStory";
 
 const AccountPage = ({children}) => {
+  const user = useStore((state) => state.user);
   const validateSession = useStore((state) => state.validateSession);
 
   useEffect(() => {
@@ -13,9 +14,10 @@ const AccountPage = ({children}) => {
 
   return (
     <div className="flex flex-col md:flex-row gap-2 p-4">
+      {user ? 
       <div className="hidden md:block flex-2 max-w-60 xl:max-w-96 border-r border-b border-gray-500 hover:border-gray-300 bg-base-300 p-4 rounded-xl">
         <Sidebar />
-      </div>
+      </div>: " "}
       <main className="flex-1 border-r border-b border-gray-500 hover:border-gray-300 bg-base-300 p-4 rounded-xl">
         {children}
       </main>
