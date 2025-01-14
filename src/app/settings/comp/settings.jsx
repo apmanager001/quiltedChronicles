@@ -89,7 +89,7 @@ const Settings = () => {
                   onChange={handleRadioChange}
                   className="radio"
                 />
-                <label htmlFor="public" className="pb-2">
+                <label htmlFor="public">
                   Public
                 </label>
                 <input

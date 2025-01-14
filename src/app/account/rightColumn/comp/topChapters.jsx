@@ -35,11 +35,11 @@ const TopChapters = () => {
       <h3 className="text-center">Top of all Chapters</h3>
       {chapters.map((chapter, index) => (
         <div key={index} className="flex flex-col gap-2">
-          <div className="flex justify-between">
+          <div className="flex justify-between gap-2">
             <Link href={`/chapter/${chapter.chapterId}`}>
                 <h2>{chapter.chapterTitle || chapter.storyTitle}</h2>
             </Link>
-            <p className="flex gap-2">
+            <p className="flex items-center gap-2">
               <Heart color="red" fill="red" />
               {chapter.likes}
             </p>

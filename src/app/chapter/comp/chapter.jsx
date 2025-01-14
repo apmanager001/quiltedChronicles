@@ -35,7 +35,7 @@ const Chapter = () => {
   return (
     <AccountPage>
     <div className="flex flex-row justify-center min-h-screen md:min-h-full w-full gap-5 p-5">
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <div
           role="tablist"
           className="tabs tabs-bordered flex flex-row justify-between items-center p-3"
@@ -77,9 +77,7 @@ const Chapter = () => {
           )}
           {visibleComponent === "Create Story" &&
             (user ? (
-                <div>
                     <AddChapter />
-                </div>
             ) : (
               <Link href={`/login`}>
                 <input
