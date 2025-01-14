@@ -35,31 +35,21 @@ const Sidebar = () => {
         <li className="text-xl">
           <Link href={`/profile/${user.userName}`}>{user.userName}</Link>
         </li>
-        <li>
-          <Link href="/createStory">
-            Create a Story
-          </Link>
+        <li className="pl-2">
+          <Link href="/createStory">Create a Story</Link>
         </li>
-        <li>
-          <Link href="/settings">
-            Settings
-          </Link>
+        <li className="pl-2">
+          <Link href="/settings">Settings</Link>
         </li>
-        <li>
-          <Link href="/contact" >
-            Contact
-          </Link>
+        <li className="pl-2">
+          <Link href="/contact">Contact</Link>
         </li>
-        <li>
-          <Link href="/search" >
-            Search
-          </Link>
+        <li className="pl-2">
+          <Link href="/search">Search</Link>
         </li>
         {user.admin && (
-          <li>
-            <Link href="/admin">
-              Admin
-            </Link>
+          <li className="pl-2">
+            <Link href="/admin">Admin</Link>
           </li>
         )}
       </ul>

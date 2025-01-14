@@ -51,7 +51,7 @@ const Contact = () => {
     };
 
     try {
-      const response = await axios.post("/message", finalFormData, {
+      const response = await axiosInstance.post("/message", finalFormData, {
         headers: { "Content-Type": "application/json" },
       });
       if (response.status === 200) {

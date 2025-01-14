@@ -35,7 +35,7 @@ const UserInfo = () => {
             <Menu size={32} />
           </button>
           {isDropdownOpen && (
-            <div className="absolute top-10 right-0 mt-2 w-48 bg-base-200 border-x-2 border-b-2 border-gray-400 text-white p-4 rounded-b-xl shadow-md">
+            <div className="absolute top-10 right-0 mt-2 w-48 bg-base-200 border-x-2 border-b-2 border-gray-400 text-white p-4 rounded-b-xl shadow-md z-50">
               <Link
                 href={`/profile/${user.userName}`}
                 onClick={toggleDropdown}

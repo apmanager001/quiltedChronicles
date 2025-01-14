@@ -60,7 +60,7 @@ const AddChapter = () => {
         onSubmit={handleAddChapter}
       >
         <div className="tooltip flex gap-2" data-tip="Add to this Chapters next steps.">
-          Create your own Legacy...
+          Create your next part of this story...
           <Info />
         </div>
 
@@ -81,7 +81,7 @@ const AddChapter = () => {
         <textarea
           placeholder="Create your adventure here..."
           name="body"
-          className="textarea textarea-bordered w-full h-full text-md"
+          className="textarea textarea-bordered w-full h-24 text-md"
           onChange={(e) => setData({ ...data, body: e.target.value })}
           required
         />

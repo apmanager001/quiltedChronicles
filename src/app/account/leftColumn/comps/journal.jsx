@@ -31,11 +31,6 @@ const Journal = () => {
   const link = (journal) => `/chapter/${journal.chapterId}`;
   const name = (journal) => journal.chapterTitle || journal.storyTitle;
 
-  const handleChapterSelect = (chapterId) => {
-    setMiddleColumn("chapter");
-    setChapterId(chapterId);
-  };
-
   return (
     <div>
       {journal.length === 0
@@ -44,7 +39,7 @@ const Journal = () => {
             <div key={index}>
               <ul className="menu menu-xs justify-start rounded-box gap-2">
                 <li>
-                  <Link href={`/chapter/${chapters.chapterId}`}>
+                  <Link href={`/chapter/${chapters.chapterId}`} className="p-3">
                     {chapters.chapterTitle || chapters.storyTitle}
                   </Link>
                 </li>
@@ -55,7 +50,7 @@ const Journal = () => {
         <div>
           {showMore &&
             remainingChapters.map((journal, index) => (
-              <div key={index}>
+              <div key={index} className="w-20">
                 <ul className="menu menu-xs justify-start rounded-box gap-2">
                   <li>
                     <Link href={link(journal)}>{name(journal)}</Link>

@@ -38,7 +38,7 @@ const NextStory = () => {
   const name = (chapter) => chapter.chapterTitle;
 
   return (
-    <div className="pl-2 pt-4">
+    <div className="pl-2 pt-4 min-h-96">
         <p className="text-xl">Pick your next Story!</p>
         <ul className="pt-2 pl-2">
           {chapters.length === 0
