@@ -82,7 +82,7 @@ const Contact = () => {
     <div className="flex flex-col gap-5 items-center w-full h-screen-minus-65 ">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col items-center w-full xl:w-2/4 gap-2 justify-center"
+        className="flex flex-col items-center w-full gap-2 justify-center"
       >
         <p className="text-3xl mb-10">Contact Us</p>
         <label htmlFor="name">Name:</label>

@@ -24,17 +24,19 @@ const AccountPage = ({children}) => {
       <main className="flex-1 border-r border-b border-gray-500 hover:border-gray-300 bg-base-300 p-4 rounded-xl hover:shadow-xl">
         {children}
       </main>
-      <div className="flex-2 min-w-96 flex flex-col gap-2">
+      <div className="flex-2 md:min-w-96 flex flex-col gap-2 ">
         {pathname && pathname.startsWith("/chapter") ? (
           <>
             <div className="flex-1 border-r border-b w-full md:max-w-60 xl:max-w-96 border-gray-500 hover:border-gray-300 p-4 bg-base-300 rounded-xl hover:shadow-xl">
               <NextStory />
             </div>
             <div className="flex-2 border-r border-b w-full md:max-w-60 xl:max-w-96 border-gray-500 hover:border-gray-300 p-4 bg-base-300 rounded-xl hover:shadow-xl">
-              <AddChapter />
+              {/* <AddChapter /> */}
+              <button className="btn btn-accent">Add a Chapter</button>
             </div>
             <div className="flex-2 border-r border-b w-full md:max-w-60 xl:max-w-96 border-gray-500 hover:border-gray-300 p-4 bg-base-300 rounded-xl hover:shadow-xl">
-              <Chain />
+              {/* <Chain /> */}
+              <button className="btn btn-accent">View Full Chain</button>
             </div>
           </>
         ) : (
@@ -42,7 +44,7 @@ const AccountPage = ({children}) => {
             <div className="flex-1 border-r border-b w-full md:max-w-60 xl:max-w-96 border-gray-500 hover:border-gray-300 p-4 bg-base-300 rounded-xl hover:shadow-xl">
               <TopChapters />
             </div>
-            <div className="flex-2 border-r border-b w-full md:max-w-60 xl:max-w-96 border-gray-500 hover:border-gray-300 p-4 bg-base-300 rounded-xl hover:shadow-xl">
+            <div className="flex-1 border-r border-b w-full md:max-w-60 xl:max-w-96 border-gray-500 hover:border-gray-300 p-4 bg-base-300 rounded-xl hover:shadow-xl">
               <TopStories />
             </div>
           </>

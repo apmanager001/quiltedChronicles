@@ -1,17 +1,14 @@
 'use client'
 import React from 'react'
 import Link from 'next/link';
+import { Library, Bookmark, UserRoundPen, Pen, Settings, Lock, MessageSquareMore, Search, User } from 'lucide-react';
 import useStore from '../../store/store';
-import accountStore from '../../store/accountStore';
 import FollowedAuthors from './comps/followedAuthors';
 import Journal from './comps/journal';
 import Chapters from './comps/chapters';
 
 const Sidebar = () => {
   const user = useStore((state) => state.user);
-  const setAuthorName = accountStore((state) => state.setAuthorName);
-  const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
-  const setChapterId = accountStore((state) => state.setChapterId)
   if (!user) { 
     return (
       <div className='h-full w-full flex justify-center items-center'>
@@ -19,44 +16,57 @@ const Sidebar = () => {
       </div>
    )}
 
-  const handleAuthorSelect = () => {
-    // When an author is clicked, set their name in the zustand store
-    setMiddleColumn("profile")
-    setAuthorName(user.userName);
-  };
-  const handleChapterSelect = () => {
-    setMiddleColumn("chapter")
-    setChapterId()
-  }
-
   return (
     <div className="flex flex-col justify-start overflow-y-auto ">
       <ul className="menu rounded-box">
         <li className="text-xl">
-          <Link href={`/profile/${user.userName}`}>{user.userName}</Link>
+          <Link href={`/profile/${user.userName}`}>
+            <User />
+            {user.userName}
+          </Link>
         </li>
         <li className="pl-2">
-          <Link href="/createStory">Create a Story</Link>
+          <Link href="/createStory">
+            <Pen />
+            Create a Story
+          </Link>
         </li>
         <li className="pl-2">
-          <Link href="/settings">Settings</Link>
+          <Link href="/settings">
+            <Settings />
+            Settings
+          </Link>
         </li>
         <li className="pl-2">
-          <Link href="/contact">Contact</Link>
+          <Link href="/contact">
+            <MessageSquareMore />
+            Contact
+          </Link>
         </li>
         <li className="pl-2">
-          <Link href="/search">Search</Link>
+          <Link href="/search">
+            <Search />
+            Search
+          </Link>
         </li>
         {user.admin && (
           <li className="pl-2">
-            <Link href="/admin">Admin</Link>
+            <Link href="/admin">
+              <Lock />
+              Admin
+            </Link>
           </li>
         )}
       </ul>
 
       <div className="collapse collapse-arrow ">
-        <input type="radio" name="accordion" defaultChecked />
-        <div className="collapse-title text-l font-medium">Your Authors</div>
+        <input type="radio" name="accordion" />
+        <div className="collapse-title text-l font-medium">
+          <div className="flex gap-2">
+            <UserRoundPen />
+            Your Authors
+          </div>
+        </div>
         <div className="collapse-content w-full">
           <FollowedAuthors />
         </div>
@@ -64,7 +74,12 @@ const Sidebar = () => {
 
       <div className="collapse collapse-arrow ">
         <input type="radio" name="accordion" />
-        <div className="collapse-title text-l font-medium">Your Chapters</div>
+        <div className="collapse-title text-l font-medium">
+          <div className="flex gap-2">
+            <Library />
+            Your Chapters
+          </div>
+        </div>
         <div className="collapse-content">
           <Chapters />
         </div>
@@ -72,7 +87,12 @@ const Sidebar = () => {
 
       <div className="collapse collapse-arrow ">
         <input type="radio" name="accordion" />
-        <div className="collapse-title text-l font-medium">Your Bookmarks</div>
+        <div className="collapse-title text-l font-medium">
+          <div className="flex gap-2">
+            <Bookmark />
+            Your Bookmarks
+          </div>
+        </div>
         <div className="collapse-content">
           <Journal />
         </div>

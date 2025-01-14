@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import { Heart } from "lucide-react";
 import Link from "next/link";
 import axiosInstance from "../../../comps/utility/axios";
 
@@ -15,9 +16,16 @@ const NextStory = () => {
     const fetchChapter = async () => {
       try {
         const response = await axiosInstance.get(`/chapter/${id}`);
-        const continuationChapters = response.data.continuationChapters;
-
-        setChapters(continuationChapters);
+        if (!response.data || !response.data.continuationChapters) {
+          setLoading(false);
+          return;
+        }
+        let continuationChapters = response.data.continuationChapters;
+        if (!Array.isArray(continuationChapters)) {
+          continuationChapters = Object.values(continuationChapters);
+        } 
+        continuationChapters.sort((a, b) => b.likes - a.likes); 
+        setChapters(continuationChapters); 
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -36,36 +44,45 @@ const NextStory = () => {
 
   const link = (chapter) => `/chapter/${chapter.chapterId}`;
   const name = (chapter) => chapter.chapterTitle;
-
   return (
     <div className="pl-2 pt-4 min-h-96">
-        <p className="text-xl">Pick your next Story!</p>
-        <ul className="pt-2 pl-2">
-          {chapters.length === 0
-            ? "No Chapters Yet"
-            : topFiveChapters.map((chapters, index) => (
-                <div key={index} className="pt-2">
-                  <Link href={`/chapter/${chapters.chapterId}`}>
-                    <button className="btn btn-ghost">{chapters.chapterTitle || chapters.storyTitle}</button>
+      <p className="text-xl">Continue the Story!</p>
+      <ul className="pt-2 pl-2">
+        {chapters.length === 0
+          ? "No Chapters Yet"
+          : topFiveChapters.map((chapters, index) => (
+              <div key={index} className="pt-2 flex justify-around mr-10">
+                <Link href={`/chapter/${chapters.chapterId}`}>
+                  <button className="btn btn-ghost">
+                    {chapters.chapterTitle || chapters.storyTitle}
+                  </button>
+                </Link>
+                <p className="flex items-center gap-2">
+                  <Heart color="red" fill="red" />
+                  {chapters.likes}
+                </p>
+              </div>
+            ))}
+        {remainingChapters.length > 0 && (
+          <div>
+            {showMore &&
+              remainingChapters.map((chapter, index) => (
+                <div key={index} className="pt-2 flex justify-around mr-10">
+                  <Link to={link(chapter)}>
+                    <p>{name(chapter)}</p>
                   </Link>
+                  <p className="flex items-center gap-2">
+                    <Heart color="red" fill="red" />
+                    {chapters.likes}
+                  </p>
                 </div>
               ))}
-          {remainingChapters.length > 0 && (
-            <div>
-              {showMore &&
-                remainingChapters.map((chapter, index) => (
-                  <div key={index} className="pt-2">
-                    <Link to={link(chapter)}>
-                      <p>{name(chapter)}</p>
-                    </Link>
-                  </div>
-                ))}
-              <button onClick={handleShowMore} className="btn mt-3">
-                {showMore ? "Less" : "More"}
-              </button>
-            </div>
-          )}
-        </ul>
+            <button onClick={handleShowMore} className="btn mt-3">
+              {showMore ? "Less" : "More"}
+            </button>
+          </div>
+        )}
+      </ul>
     </div>
   );
 };

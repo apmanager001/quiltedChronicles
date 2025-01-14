@@ -11,7 +11,6 @@ const TopStories = () => {
     const date = new Date(dateString);
     return date.toLocaleDateString();
   };
-console.log(chapters)
   useEffect(() => {
     const fetchChapter = async () => {
       try {
@@ -35,9 +34,9 @@ console.log(chapters)
     <div className="flex flex-col gap-4 mx-4">
       <h3 className="text-center">Top First Chapters in a Story</h3>
       {chapters.map((chapter, index) => (
-        <div key={index} className="flex flex-col gap-2">
+        <div key={index} className="flex flex-col gap-2 ">
           <div className="flex justify-between">
-            <Link href={`/chapter/${chapter.chapterId}`}>
+            <Link href={`/chapter/${chapter.chapterId}`} >
               <h2>{chapter.chapterTitle || chapter.storyTitle}</h2>
             </Link>
             <p className="flex gap-2">
