@@ -43,15 +43,15 @@ const UserInfo = () => {
               >
                 <User size={24} /> Profile
               </Link>
-              <div className="drawer z-50">
+              <div className="drawer z-50" >
                 <input
                   id="my-drawer"
                   type="checkbox"
                   className="drawer-toggle"
                 />
-                <div className="drawer-content flex gap-2">
+                <div className="drawer-content flex gap-2" >
                   <PanelLeftOpen />
-                  <label htmlFor="my-drawer">Account Drawer</label>
+                  <label htmlFor="my-drawer">Dashboard</label>
                 </div>
                 <div className="drawer-side">
                   <label

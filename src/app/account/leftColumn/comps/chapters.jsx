@@ -8,8 +8,6 @@ import MoreButton from "./more";
 
 const Chapters = () => {
   const user = useStore.getState().user;
-  const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
-  const setChapterId = accountStore((state) => state.setChapterId);
   const [showMore, setShowMore] = useState(false);
   const [chapters, setChapters] = useState([]);
 
@@ -27,7 +25,7 @@ const Chapters = () => {
 
   const link = (entry) => `/entry/${entry.entryId}`;
   const name = (entry) => entry.entryTitle;
-  console.log(user)
+
   return (
     <div>
       {chapters.length === 0

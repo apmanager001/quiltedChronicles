@@ -27,7 +27,16 @@ const useStore = create((set, get) => ({
     } catch (error) { 
         console.error("Error fetching user:", error); 
         set({ user: null, loading: false }); 
-    }
+        }
+    },
+    updateUser: async () => { 
+        try { 
+            const response = await axiosInstance.get('/profile'); 
+            const data = await response.data; 
+            set({ user: data }); 
+        } catch (error) { 
+            console.error("Error updating user:", error); 
+        } 
     }
 }));
 

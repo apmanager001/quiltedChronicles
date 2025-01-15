@@ -1,20 +1,22 @@
 "use client";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
+import Head from "next/head";
 import useStore from "../../store/store";
 import Link from "next/link";
 import { Share2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Heart } from "lucide-react";
-// import FollowAuthor from "./followAuthor";
+import FollowAuthor from "../../profile/comp/followAuthor";
 import SharedButtons from "./shareButtons";
 import axiosInstance from "../../../comps/utility/axios";
 import Toolbar from "./toolbar/toolbar";
+import Loading from '../../../comps/utility/loading'
 
 const ChapterInd = () => {
   const user = useStore((state) => state.user);
   const { id } = useParams();
   const [chapter, setChapter] = useState("Loading...");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [chapterData, setChapterData] = useState({
     authorName: "",
@@ -57,7 +59,7 @@ const ChapterInd = () => {
           createDate: dateWithoutTime,
           continuationChapters,
         });
-        setLoading(false);
+        setLoading(true);
         // onAuthorChange(authorName);
       } catch (error) {
         console.error(error);
@@ -80,8 +82,19 @@ const ChapterInd = () => {
   const paragraphs = body
     .split("\n")
     .map((paragraph, index) => <p key={index}>{paragraph}</p>);
-  return (
+    
+  return loading ? (
     <>
+      <Head>
+        <title>{chapterTitle || storyTitle}</title>
+        <meta name="description" content={body.slice(0, 150)} />
+        <meta name="keywords" content={chapter.keywords.join(", ")} />
+        <meta property="og:title" content={chapterTitle || storyTitle} />
+        <meta property="og:description" content={body.slice(0, 150)} />
+        <meta property="og:type" content="chapter" />
+        <meta property="og:url" content={`/chapter/${id}`} />
+      </Head>
+
       <div className="flex flex-col p-5 md:p-0 md:pb-5 min-h-96 md:h-full ">
         <div className="pl-2">
           <div className="flex flex-col items-start">
@@ -91,22 +104,26 @@ const ChapterInd = () => {
                 {chapter.likes}
               </p>
               <div className="flex items-center gap-2">
-              <Share2 />
-              <SharedButtons title={chapterData.storyTitle} />
+                <Share2 />
+                <SharedButtons title={chapterData.storyTitle} />
               </div>
             </div>
             <div className="flex items-center py-2">
               <div>By:</div>
               <div className="text-red-500 pl-1">
-                <Link href="#" onClick={() => handleAuthorSelect(authorName)}>
+                <Link
+                  href={`/profile/${authorName}`}
+                  onClick={() => handleAuthorSelect(authorName)}
+                >
                   {authorName}
                 </Link>
               </div>
-              <div>
-                {user && user.userName === authorName
-                  ? ""
-                  : // <FollowAuthor userId={entry.authorId} />
-                    ""}
+              <div className="ml-2">
+                {user && user.userName === authorName ? (
+                  ""
+                ) : (
+                  <FollowAuthor userId={chapter.authorId} />
+                )}
               </div>
             </div>
           </div>
@@ -129,7 +146,7 @@ const ChapterInd = () => {
             )}
           </div>
         </div>
-        <div className="break-words text-wrap font-message text-2xl px-4 py-4 border-t-2 border-slate-600">
+        <div className="break-words text-wrap font-message text-2xl px-0 lg:px-4 py-4 border-t-2 border-slate-600">
           {paragraphs}
         </div>
         <div className="flex items-center justify-around text-red-500 mt-auto">
@@ -144,8 +161,9 @@ const ChapterInd = () => {
           )}
         </div>
       </div>
-      <div></div>
     </>
+  ) : (
+    <Loading />
   );
 };
 

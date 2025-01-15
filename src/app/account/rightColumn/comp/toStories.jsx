@@ -30,14 +30,17 @@ const TopStories = () => {
     };
     fetchChapter();
   }, []);
+  
   return (
     <div className="flex flex-col gap-4 mx-4">
       <h3 className="text-center">Top First Chapters in a Story</h3>
       {chapters.map((chapter, index) => (
         <div key={index} className="flex flex-col gap-2 ">
-          <div className="flex justify-between">
-            <Link href={`/chapter/${chapter.chapterId}`} >
-              <h2>{chapter.chapterTitle || chapter.storyTitle}</h2>
+          <div className="flex justify-between items-center">
+            <Link href={`/chapter/${chapter.chapterId}`}>
+              <h2 className="btn btn-ghost btn-sm">
+                {chapter.chapterTitle || chapter.storyTitle}
+              </h2>
             </Link>
             <p className="flex gap-2">
               <Heart color="red" fill="red" />
@@ -47,7 +50,7 @@ const TopStories = () => {
           <div className="flex justify-between">
             <Link
               href={`/profile/${chapter.authorName}`}
-              className="flex gap-2"
+              className="flex gap-2 btn btn-ghost btn-sm"
             >
               <User />
               <span className="font-medium text-sm  text-left truncate">

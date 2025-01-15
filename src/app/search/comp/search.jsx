@@ -4,6 +4,7 @@ import Link from "next/link";
 import accountStore from "../../store/accountStore";
 import axiosInstance from "../../../comps/utility/axios";
 import AccountPage from "../../account/layout";
+import { Heart } from "lucide-react";
 
 const Search = () => {
   const searchBoxRef = useRef(null);
@@ -85,34 +86,41 @@ const Search = () => {
     <AccountPage>
     <div className="flex flex-col w-full items-center p-4">
       <div className="w-full max-w-md">
+        <label htmlFor='search' className="hidden"></label>
         <input
           type="text"
           placeholder="Search..."
+          id='search'
+          name='search'
           className="input input-bordered w-full mb-4"
           value={searchTerm}
           onChange={handleSearchChange}
         />
       </div>
-      <div className="flex flex-row gap-4 mb-4">
-        <select
-          className="select select-bordered"
-          value={filter}
-          onChange={handleFilterChange}
-        >
-          <option value="chapters">Chapters</option>
-          <option value="users">Users</option>
-        </select>
-        <select
-          className="select select-bordered"
-          value={sort}
-          onChange={handleSortChange}
-          disabled={selectedChapter != "chapters"}
-        >
-          <option value="">Sort By</option>
-          <option value="new">Newest</option>
-          <option value="old">Oldest</option>
-          <option value="likes">Most Likes</option>
-        </select>
+      <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
+        <div className="flex gap-2">
+          <select
+            className="select select-bordered"
+            value={filter}
+            name='type'
+            onChange={handleFilterChange}
+          >
+            <option value="chapters">Chapters</option>
+            <option value="users">Users</option>
+          </select>
+          <select
+            className="select select-bordered"
+            value={sort}
+            name='sort'
+            onChange={handleSortChange}
+            disabled={selectedChapter != "chapters"}
+          >
+            <option value="">Sort By</option>
+            <option value="new">Newest</option>
+            <option value="old">Oldest</option>
+            <option value="likes">Most Likes</option>
+          </select>
+        </div>
         <div
           className="tooltip tooltip-bottom flex flex-row jusify-center items-center gap-4"
           data-tip="Checked will only show chapters that are the beginning of a story"
@@ -120,24 +128,25 @@ const Search = () => {
           <input
             type="checkbox"
             className="checkbox"
+            id='stories'
             name="stories"
             checked={stories}
             onChange={handleCheckboxChange}
             disabled={selectedChapter != "chapters"}
           />
-          <label name="stories">Beginning Chapters</label>
+          <label htmlFor='stories' name="stories">Beginning Chapters</label>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-4xl">
+      <div className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-4">
         {filter === "users"
           ? cards.map((card, index) => (
               <div key={index} className="card bg-base-100 shadow-xl p-4">
                 <Link
-                  href="#"
+                  href={`/profile/${card.userName}`}
                   onClick={() => handleAuthorSelect(card.userName)}
                 >
                   <h2 className="card-title truncate">{card.userName}</h2>
-                  <p>Email: {card.email || "not available"}</p>
+                  <p>Email: {card.email || "Not Available"}</p>
                   <p>
                     Number of Chapters Written:{" "}
                     {card.publishedChapters?.length ?? 0}
@@ -148,17 +157,20 @@ const Search = () => {
           : cards.map((card, index) => (
               <div
                 key={index}
-                className="card bg-base-100 w-72 h-24 shadow-xl p-4"
+                className="card bg-base-100 w-72 h-20 shadow-xl p-4"
               >
                 <Link
-                  href="#"
+                  href={`/chapter/${card.chapterId}`}
                   onClick={() => handleChapterSelect(card.chapterId)}
                 >
                   <h2 className="card-title truncate">
                     {card.chapterTitle || card.storyTitle}
                   </h2>
-                  <p className="truncate">Author: {card.authorName}</p>
-                  <p>Likes: {card.likes}</p>
+                  <p className="truncate flex justify-between">Author: {card.authorName}
+                    <span className="flex gap-2">
+                      <Heart fill='red' color='red' /> {card.likes}
+                    </span>
+                  </p>
                 </Link>
               </div>
             ))}

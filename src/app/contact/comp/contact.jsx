@@ -79,65 +79,71 @@ const Contact = () => {
   }, [user]);
   return (
     <AccountPage>
-    <div className="flex flex-col gap-5 items-center w-full h-screen-minus-65 ">
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col items-center w-full gap-2 justify-center"
-      >
-        <p className="text-3xl mb-10">Contact Us</p>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          className="input input-bordered w-full text-2xl"
-          name="name"
-          placeholder={username}
-          value={formData.name}
-          onChange={handleChange}
-        />
-
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          className="input input-bordered w-full text-2xl"
-          name="email"
-          placeholder={email}
-          value={formData.email}
-          onChange={handleChange}
-        />
-
-        <label htmlFor="messageText">Message:</label>
-        <textarea
-          className="textarea textarea-bordered h-72 text-2xl w-full"
-          name="messageText"
-          placeholder="Message"
-          value={formData.messageText}
-          onChange={handleChange}
-          required
-        ></textarea>
-
-        <div className="flex flex-row justify-center text-xl">
+      <div className="flex flex-col gap-5 items-center w-full h-screen-minus-65 ">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col items-center w-full gap-2 justify-center"
+        >
+          <p className="text-3xl mb-10">Contact Us</p>
+          <label htmlFor="name">Name:</label>
           <input
-            type="checkbox"
-            className="checkbox mr-2"
-            checked={isUserLoggedIn}
+            type="text"
+            className="input input-bordered w-full text-2xl"
+            id='name'
+            name="name"
+            placeholder={username}
+            value={formData.name}
             onChange={handleChange}
+            autoComplete="off"
           />
 
-          <label
-            htmlFor="userLoggedIn"
-            className="tooltip"
-            data-tip="If you are logged in and this box is checked it will use your
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            className="input input-bordered w-full text-2xl"
+            id='email'
+            name="email"
+            placeholder={email}
+            value={formData.email}
+            onChange={handleChange}
+            autoComplete="off"
+          />
+
+          <label htmlFor="messageText">Message:</label>
+          <textarea
+            className="textarea textarea-bordered h-72 text-2xl w-full"
+            id='messageText'
+            name="messageText"
+            placeholder="Message"
+            value={formData.messageText}
+            onChange={handleChange}
+            required
+          ></textarea>
+
+          <div className="flex flex-row justify-center text-xl">
+            <input
+              type="checkbox"
+              className="checkbox mr-2"
+              id="userLoggedIn"
+              checked={isUserLoggedIn}
+              onChange={handleChange}
+            />
+
+            <label
+              htmlFor="userLoggedIn"
+              className="tooltip"
+              data-tip="If you are logged in and this box is checked it will use your
             username and email. Uncheck to remain anonymous."
-          >
-            {user ? `${user.userName} is logged in` : "User is not logged in"}
-          </label>
-          <div></div>
-        </div>
-        <button type="submit" className="btn w-full btn-accent">
-          Send
-        </button>
-      </form>
-    </div>
+            >
+              {user ? `${user.userName} is logged in` : "User is not logged in"}
+            </label>
+            <div></div>
+          </div>
+          <button type="submit" className="btn w-full btn-accent">
+            Send
+          </button>
+        </form>
+      </div>
     </AccountPage>
   );
 };

@@ -18,7 +18,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Quilted Chronicles",
-  description: "A community",
+  description: "Complete a story as a community. Each user writes a chapter and the next person writes the next one. Each story has multiple middles and endings.",
+  keywords: "chapter, story, book, writing, journal, community",
 };
 
 export default function RootLayout({

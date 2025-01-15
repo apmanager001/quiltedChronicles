@@ -6,10 +6,10 @@ import MoreButton from "./more";
 import DeleteAuthor from "./deleteAuthor";
 
 const FollowedAuthors = () => {
-    const user = useStore((state) => state.user);
-   
-    const [showMore, setShowMore] = useState(false);
-    const [followedAuthors, setFollowedAuthors] = useState([]);
+  const user = useStore((state) => state.user);
+  const updateUser = useStore((state) => state.updateUser);
+  const [showMore, setShowMore] = useState(false);
+  const [followedAuthors, setFollowedAuthors] = useState([]);
 
   useEffect(() => {
     if (!user) return;
@@ -31,7 +31,7 @@ const FollowedAuthors = () => {
       (author) => author.userId !== authorId
     );
     const updatedUser = { ...user, followedAuthors: updatedAuthors };
-    setUser(updatedUser);
+    updateUser(updatedUser);
   };
 
   return (

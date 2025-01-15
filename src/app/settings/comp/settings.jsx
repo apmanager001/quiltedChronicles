@@ -109,6 +109,7 @@ const Settings = () => {
                 <div className="flex flex-col items-center w-2/3">
                   <textarea
                     value={bio}
+                    id='textarea'
                     onChange={handleTextAreaChange}
                     className="textarea textarea-bordered h-52 max-w-96 resize-none"
                   />

@@ -16,9 +16,25 @@ const Footer = () => {
           </div>
 
           <div className="col-span-1">
-            <h4 className="font-semibold text-gray-100">Misc</h4>
+            <h4 className="font-semibold text-gray-100">About Us</h4>
 
             <div className="mt-3 grid space-y-3">
+              <p>
+                <a
+                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                  href="/faq"
+                >
+                  F.A.Q.
+                </a>
+              </p>
+              <p>
+                <a
+                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                  href="/howitworks"
+                >
+                  How It Works
+                </a>
+              </p>
               <p>
                 <a
                   className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
@@ -72,7 +88,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="col-span-2">
+          {/* <div className="col-span-2">
             <h4 className="font-semibold text-gray-100">
               Get Updates on New Games:
             </h4>
@@ -100,7 +116,7 @@ const Footer = () => {
                 </a>
               </div>
             </form>
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-5 sm:mt-12 grid gap-y-2 sm:gap-y-0 sm:flex sm:justify-between sm:items-center">

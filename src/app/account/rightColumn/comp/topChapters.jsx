@@ -34,10 +34,12 @@ const TopChapters = () => {
     <div className="flex flex-col gap-4 mx-4">
       <h3 className="text-center">Top of all Chapters</h3>
       {chapters.map((chapter, index) => (
-        <div key={index} className="flex flex-col gap-2">
-          <div className="flex justify-between gap-2">
+        <div key={index} className="flex flex-col gap-2 ">
+          <div className="flex justify-between items-center gap-2">
             <Link href={`/chapter/${chapter.chapterId}`}>
-                <h2>{chapter.chapterTitle || chapter.storyTitle}</h2>
+              <h2 className="btn btn-ghost btn-sm  text-left">
+                {chapter.chapterTitle || chapter.storyTitle}
+              </h2>
             </Link>
             <p className="flex items-center gap-2">
               <Heart color="red" fill="red" />
@@ -45,17 +47,19 @@ const TopChapters = () => {
             </p>
           </div>
           <div className="flex justify-between">
-              <Link
-                href={`/profile/${chapter.authorName}`}
-                className="flex gap-2"
-              >
-                <User />
-                <span className="font-medium text-sm  text-left truncate">
-                  {chapter.authorName}
-                </span>
-              </Link>
+            <Link
+              href={`/profile/${chapter.authorName}`}
+              className="flex justify-center items-center gap-2 btn btn-ghost btn-sm"
+            >
+              <User />
+              <span className="font-medium text-sm text-left truncate">
+                {chapter.authorName}
+              </span>
+            </Link>
             <span className="text-sm">{dateNoTime(chapter.createDate)}</span>
+            
           </div>
+          {/* <div className="divider"></div> */}
         </div>
       ))}
     </div>
