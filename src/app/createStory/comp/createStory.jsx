@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { toast } from "react-hot-toast";
 import { Info } from "lucide-react";
 import useStore from '../../store/store'
@@ -9,6 +10,7 @@ import AccountPage from "../../account/layout"
 const CreateStory = () => {
   const user = useStore((state) => state.user);
   const [authorName, setAuthorName] = useState("");
+  const [loading, setLoading] = useState(false)
   const [data, setData] = useState({
     storyTitle: "",
     bodyText: "",
@@ -17,6 +19,7 @@ const CreateStory = () => {
 
   useEffect(() => {
     if (!user) return;
+    setLoading(true)
     setAuthorName(user.userName);
   }, [user]);
 
@@ -52,6 +55,7 @@ const CreateStory = () => {
   };
   return (
     <AccountPage>
+      {loading ? 
       <div className="flex flex-col gap-5 items-center w-full p-5">
         <p className="text-center text-xl">Create Your New Story</p>
         <form
@@ -94,7 +98,13 @@ const CreateStory = () => {
           ></textarea>
           <input type="submit" className="btn btn-accent" value="Submit" />
         </form>
+      </div>:
+      <div className="flex justify-center items-center min-h-96">
+        <Link href="/login">
+          <button className="btn btn-accent">Login</button>
+        </Link>
       </div>
+      }
     </AccountPage>
   );
 };

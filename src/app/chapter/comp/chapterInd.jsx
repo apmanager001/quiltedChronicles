@@ -5,7 +5,7 @@ import useStore from "../../store/store";
 import Link from "next/link";
 import { Share2 } from "lucide-react";
 import { useParams } from "next/navigation";
-import { Heart } from "lucide-react";
+import { Heart, ArrowBigLeft, Rewind } from "lucide-react";
 import FollowAuthor from "../../profile/comp/followAuthor";
 import SharedButtons from "./shareButtons";
 import axiosInstance from "../../../comps/utility/axios";
@@ -99,17 +99,17 @@ const ChapterInd = () => {
         <div className="pl-2">
           <div className="flex flex-col items-start">
             <div className="w-full flex justify-between items-center pt-4 pr-4 gap-2">
-              <p className="flex items-center gap-2">
+              <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">
                 <Heart color="red" fill="red" />
                 {chapter.likes}
-              </p>
+              </div>
               <div className="flex items-center gap-2">
                 <Share2 />
                 <SharedButtons title={chapterData.storyTitle} />
               </div>
             </div>
-            <div className="flex items-center py-2">
-              <div>By:</div>
+            <div className="flex items-center py-2 gap-2">
+              <div className="text-sm">By:</div>
               <div className="text-red-500 pl-1">
                 <Link
                   href={`/profile/${authorName}`}
@@ -127,21 +127,21 @@ const ChapterInd = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center py-2">
-            <div>Created on:</div>
-            <div className="text-red-500 pl-1">{createDate}</div>
+          <div className="flex items-center py-2 gap-2">
+            <div className="text-sm">Created on:</div>
+            <div className="font-bold">{createDate}</div>
           </div>
           <div className="flex items-center py-2">
-            <div className="flex items-center">
-              <div>Main Story Title: </div>
-              <div className="text-red-500 pl-1">{storyTitle}</div>
+            <div className="flex items-center gap-2">
+              <div className="text-sm">Main Story Title: </div>
+              <div className="font-bold">{storyTitle}</div>
             </div>
           </div>
           <div className="flex items-center py-2">
             {chapterTitle && (
-              <div className="flex items-center">
-                <div>This Chapter Title:</div>
-                <div className="text-red-500 pl-1">{chapterTitle}</div>
+              <div className="flex items-center gap-2">
+                <div className="text-sm">This Chapter Title:</div>
+                <div className="font-bold">{chapterTitle}</div>
               </div>
             )}
           </div>
@@ -149,16 +149,30 @@ const ChapterInd = () => {
         <div className="break-words text-wrap font-message text-2xl px-0 lg:px-4 py-4 border-t-2 border-slate-600">
           {paragraphs}
         </div>
-        <div className="flex items-center justify-around text-red-500 mt-auto">
-          {previousChapter && (
-            <p>
-              <Link href={`/chapter/${previousChapter}`}>Previous Entry</Link>
-            </p>
-          )}
+        <div className={`flex items-center ${previousChapter?'justify-around':'justify-center'}  mt-auto`}>
+          <div className="flex text-red-500">
+            {previousChapter && (
+              <div
+                className="tooltip tooltip-right tooltip-accent"
+                data-tip="Previous Chapter"
+              >
+                <Link href={`/chapter/${previousChapter}`}>
+                  <ArrowBigLeft size={40} fill="red" />
+                </Link>
+              </div>
+            )}
+            {previousChapter && (
+              <div
+                className="tooltip tooltip-right tooltip-accent mr-10"
+                data-tip="Jump to First Story"
+              >
+                <Link href={`/chapter/${storyId}`}>
+                  <Rewind size={40} fill="red" />
+                </Link>
+              </div>
+            )}
+          </div>
           <Toolbar />
-          {previousChapter && (
-            <Link href={`/chapter/${storyId}`}>Jump to first story</Link>
-          )}
         </div>
       </div>
     </>

@@ -1,11 +1,13 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import Loading from "../../../comps/utility/loading"
 // import DarkMode from "../../context/darkmode/DarkMode";
 import useStore from "../../store/store";
 import axiosInstance from "../../../comps/utility/axios";
 import AccountPage from "../../account/layout";
 import ThemeSelector from "../../store/theme";
+import FontSelector from "../../store/font";
 
 const Settings = () => {
   const user = useStore((state) => state.user);
@@ -44,7 +46,7 @@ const Settings = () => {
       bio,
     };
 
-    axios
+    axiosInstance
       .put("/profile", settingsData)
       .then((response) => {
         toast.success("Settings updated successfully");
@@ -62,9 +64,7 @@ const Settings = () => {
     <AccountPage>
       <div className="flex flex-col items-center h-screen-minus-65 w-full">
         {loading ? (
-          <div className="min-h-1/2 flex justify-center items-center">
-            Loading...
-          </div>
+          <Loading />
         ) : (
           <>
             <div className="p-10">Your Settings</div>
@@ -73,11 +73,17 @@ const Settings = () => {
                 <div className="flex flex-col w-1/3">
                   Set Your Color Scheme:
                 </div>
-                <div className="flex flex-col items-center w-2/3 h-10">
+                <div className="flex flex-col justify-center items-center w-2/3 h-10">
                   <ThemeSelector />
                 </div>
               </div>
-              <div className="flex h-40 w-full items-center justify-center">
+              <div className="flex w-full items-center justify-center h-24">
+                <div className="flex flex-col w-1/3">Your Story Font:</div>
+                <div className="flex flex-col justify-center items-center w-2/3">
+                  <FontSelector />
+                </div>
+              </div>
+              <div className="flex min-h-20 w-full items-center justify-center">
                 <div className="flex flex-col w-1/3">
                   Set Your Email Privacy:
                 </div>
@@ -109,7 +115,7 @@ const Settings = () => {
                 <div className="flex flex-col items-center w-2/3">
                   <textarea
                     value={bio}
-                    id='textarea'
+                    id="textarea"
                     onChange={handleTextAreaChange}
                     className="textarea textarea-bordered h-52 max-w-96 resize-none"
                   />

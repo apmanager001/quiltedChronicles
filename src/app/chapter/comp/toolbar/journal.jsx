@@ -53,7 +53,7 @@ const Journal = ({chapterId}) => {
       data-tip="Add chapter to your Bookmarks"
     >
       <button
-        className={`btn hover:bg-toolbarHover rounded-full text-xl`}
+        className={`btn btn-ghost rounded-full text-xl`}
         onClick={handleJournal}
       >
         <Bookmark

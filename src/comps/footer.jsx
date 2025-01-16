@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
           <div className="col-span-full lg:col-span-1">
             <a
-              className="flex-none text-xl font-semibold text-white focus:outline-none focus:opacity-80"
+              className="flex-none text-xl font-semibold  focus:outline-none focus:opacity-80"
               href="#"
               aria-label="Brand"
             >
@@ -16,12 +16,12 @@ const Footer = () => {
           </div>
 
           <div className="col-span-1">
-            <h4 className="font-semibold text-gray-100">About Us</h4>
+            <h4 className="font-semibold">About Us</h4>
 
             <div className="mt-3 grid space-y-3">
               <p>
                 <a
-                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                  className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
                   href="/faq"
                 >
                   F.A.Q.
@@ -29,7 +29,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
-                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                  className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
                   href="/howitworks"
                 >
                   How It Works
@@ -37,7 +37,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
-                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                  className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
                   href="/search"
                 >
                   Search
@@ -45,7 +45,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
-                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                  className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
                   href="/about"
                 >
                   About Us
@@ -53,7 +53,7 @@ const Footer = () => {
               </p>
               <p>
                 <a
-                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                  className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
                   href="/contact"
                 >
                   Contact
@@ -63,12 +63,12 @@ const Footer = () => {
           </div>
 
           <div className="col-span-1">
-            <h4 className="font-semibold text-gray-100">Account</h4>
+            <h4 className="font-semibold">Account</h4>
 
             <div className="mt-3 grid space-y-3">
               <p>
                 <a
-                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                  className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
                   href="/login"
                 >
                   Login
@@ -76,15 +76,12 @@ const Footer = () => {
               </p>
               <p>
                 <a
-                  className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200"
+                  className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none "
                   href="/register"
                 >
                   Register
                 </a>
               </p>
-              {/* <p><a className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Blog</a></p>
-            <p><a className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Careers</a> <span className="inline-block ms-1 text-xs bg-blue-700 text-white py-1 px-2 rounded-lg">We're hiring</span></p>
-            <p><a className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 focus:outline-none focus:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200 dark:focus:text-neutral-200" href="#">Customers</a></p> */}
             </div>
           </div>
 
@@ -121,9 +118,7 @@ const Footer = () => {
 
         <div className="mt-5 sm:mt-12 grid gap-y-2 sm:gap-y-0 sm:flex sm:justify-between sm:items-center">
           <div className="flex justify-between items-center">
-            <p className="text-sm text-gray-400 dark:text-neutral-400">
-              © 2025 Quilted Chronicles.
-            </p>
+            <p className="text-sm ">© 2025 Quilted Chronicles.</p>
           </div>
 
           <div>Socials</div>

@@ -45,9 +45,9 @@ const NextStory = () => {
   const link = (chapter) => `/chapter/${chapter.chapterId}`;
   const name = (chapter) => chapter.chapterTitle;
   return (
-    <div className="pl-2 pt-4 min-h-96">
-      <p className="text-xl">Continue the Story!</p>
-      <ul className="pt-2 pl-2">
+    <div className="pl-2 pt-4 min-h-96 flex flex-col">
+      <p className="text-xl font-bold">Continue the Story!</p>
+      <ul className="pt-2 pl-2 flex-grow">
         {chapters.length === 0
           ? "No Chapters Yet"
           : topFiveChapters.map((chapters, index) => (
@@ -83,6 +83,9 @@ const NextStory = () => {
           </div>
         )}
       </ul>
+      <div className="lg:hidden flex justify-center">
+        <button className="btn btn-accent">Add a Chapter</button>
+      </div>
     </div>
   );
 };

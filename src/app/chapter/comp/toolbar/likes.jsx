@@ -35,7 +35,7 @@ const Like = ({chapterId}) => {
   const handleLike = async () => {
     if(onLike === false) {
        if(userChapter){
-        toast.success("Unfortunately, you can't Like your own chapter");
+        toast.error("Unfortunately, you can't Like your own chapter");
       }else {
         await axiosInstance.post(`/chapter/${chapterId}/like`);
         setOnlike(true);
@@ -57,7 +57,7 @@ const Like = ({chapterId}) => {
   return (
     <div className="tooltip tooltip-bottom" data-tip="Like this post">
       <button
-        className="btn hover:bg-toolbarHover rounded-full text-xl"
+        className="btn btn-ghost rounded-full text-xl"
         onClick={handleLike}
       >
         <ThumbsUp

@@ -11,7 +11,7 @@ const SharedButtons = ({ title }) => {
   const msg = encodeURIComponent("Check out this story on Quilted Chronicles!");
   const shareTitle = encodeURIComponent(title);
   return (
-    <div className="flex gap-4 text-2xl p-2 bg-white rounded-xl">
+    <div className="flex justify-between gap-2 lg:gap-4 text-2xl p-2 bg-white rounded-xl">
       <div className="tooltip tooltip-bottom" data-tip="Share to Threads">
         <SocialIcon
           network="threads"

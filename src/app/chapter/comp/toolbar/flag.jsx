@@ -41,10 +41,10 @@ const Flagged = ({ chapterId }) => {
   return (
     <div
       className="tooltip tooltip-bottom relative flex gap-5"
-      data-tip="Is this Post inappropriate?"
+      data-tip="Flag as Inappropriate"
     >
       <button
-        className={`btn bg-toolbarColor hover:bg-toolbarHover rounded-full h-4 text-xl ${
+        className={`btn btn-ghost hover:bg-toolbarHover rounded-full h-4 text-xl ${
           onFlag ? "text-red-600" : "currentValue"
         }`}
         onClick={() => handleFlag("")}
@@ -54,19 +54,19 @@ const Flagged = ({ chapterId }) => {
       {dropdownVisible && (
         <div className="flex flex-col absolute top-full right-0 shadow-xl z-50 mt-2">
           <button
-            className={`btn ${onFlag ? "text-red-600" : "text-slate-300"}`}
+            className={`btn ${onFlag ? "text-red-600" : ""}`}
             onClick={() => handleFlag("spam")}
           >
             <div>Spam</div>
           </button>
           <button
-            className={`btn ${onFlag ? "text-red-600" : "text-slate-300"}`}
+            className={`btn ${onFlag ? "text-red-600" : ""}`}
             onClick={() => handleFlag("inappropriate")}
           >
             <div>Inappropriate</div>
           </button>
           <button
-            className={`btn ${onFlag ? "text-red-600" : "text-slate-300"}`}
+            className={`btn ${onFlag ? "text-red-600" : ""}`}
             onClick={() => handleFlag("offensive")}
           >
             <div>Offensive</div>

@@ -82,7 +82,7 @@ const UserInfo = () => {
           </div>
         </div>
       ) : (
-        <Link href="/login">Sign In</Link>
+        <Link href="/login" className='mr-2'>Sign In</Link>
       )}
     </div>
   );

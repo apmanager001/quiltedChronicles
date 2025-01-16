@@ -50,14 +50,16 @@ const Chapters = () => {
               ) : (
                 <ul className="menu menu-xs justify-start rounded-box gap-2">
                   <li className="text-center flex">
-                    <Link href={`/chapter/${chapters.chapterId}`} className="flex justify-between">
+                    <Link
+                      href={`/chapter/${chapters.chapterId}`}
+                      className="flex justify-between"
+                    >
                       {chapters.entryTitle || chapters.storyTitle}
                       <p className="flex items-center gap-2">
-                      <Heart color="red" fill="red" />
-                      {chapters.likes}
-                    </p>
+                        <Heart color="red" fill="red" />
+                        {chapters.likes}
+                      </p>
                     </Link>
-                    
                   </li>
                 </ul>
               )}

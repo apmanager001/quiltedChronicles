@@ -32,7 +32,7 @@ const TopChapters = () => {
      }, []);
   return (
     <div className="flex flex-col gap-4 mx-4">
-      <h3 className="text-center">Top of all Chapters</h3>
+      <h3 className="text-center font-bold">Top of all Chapters</h3>
       {chapters.map((chapter, index) => (
         <div key={index} className="flex flex-col gap-2 ">
           <div className="flex justify-between items-center gap-2">
@@ -41,12 +41,12 @@ const TopChapters = () => {
                 {chapter.chapterTitle || chapter.storyTitle}
               </h2>
             </Link>
-            <p className="flex items-center gap-2">
+            <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">
               <Heart color="red" fill="red" />
               {chapter.likes}
-            </p>
+            </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <Link
               href={`/profile/${chapter.authorName}`}
               className="flex justify-center items-center gap-2 btn btn-ghost btn-sm"
@@ -57,7 +57,6 @@ const TopChapters = () => {
               </span>
             </Link>
             <span className="text-sm">{dateNoTime(chapter.createDate)}</span>
-            
           </div>
           {/* <div className="divider"></div> */}
         </div>
