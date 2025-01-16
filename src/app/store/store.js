@@ -35,7 +35,7 @@ const useStore = create((set, get) => ({
             const data = await response.data; 
             set({ user: data }); 
         } catch (error) { 
-            // console.error("Error updating user:", error); 
+           console.error("Error updating user:", error); 
         } 
     }
 }));
