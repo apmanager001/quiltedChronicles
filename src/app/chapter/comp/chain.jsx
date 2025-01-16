@@ -29,7 +29,8 @@ const Chain = () => {
 
   return (
     <div className="mx-4">
-      <h1 className="text-center py-5">{storyTitle}</h1>
+      <h1 className="text-center font-bold">Full Story Chain</h1>
+      <h2 className="text-center py-5">{storyTitle}</h2>
       {chain.map((chapter, index) => (
         <div
           key={index}
