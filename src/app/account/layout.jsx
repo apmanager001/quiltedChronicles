@@ -6,6 +6,7 @@ import Sidebar from "./leftColumn/sidebar";
 import NextStory from "./rightColumn/nextStory";
 import TopChapters from "./rightColumn/comp/topChapters";
 import TopStories from "./rightColumn/comp/toStories";
+import Buttons from "./rightColumn/comp/chainButton";
 
 
 const AccountPage = ({children}) => {
@@ -17,7 +18,7 @@ const AccountPage = ({children}) => {
   const universalDiv =
     "lg:border-r lg:border-b border-gray-500 hover:border-neutral bg-base-300 hover:shadow-xl lg:rounded-xl";
   return (
-    <div className="flex flex-col lg:flex-row lg:gap-4 lg:p-6 xl:p-24 bg-gradient-to-b from-base-200 via-base-100 to-gray-100">
+    <div className="flex flex-col lg:flex-row lg:gap-4 lg:p-6 xl:p-12 bg-gradient-to-b from-base-200 via-base-100 to-gray-100">
       {user ? (
         <div
           className={`hidden lg:block flex-2 max-w-60 xl:max-w-72 p-4 ${transition}`}
@@ -28,9 +29,7 @@ const AccountPage = ({children}) => {
         " "
       )}
       <div className="lg:hidden flex justify-center gap-2 p-4 bg-base-300 rounded-xl ">
-        <button className="btn btn-accent">Chapter</button>
-        <button className="btn btn-accent">Add a Chapter</button>
-        <button className="btn btn-accent ">View Full Chain</button>
+        <Buttons />
       </div>
       <main className={`flex-1 p-4 ${universalDiv}`}>{children}</main>
       <div className="flex-2 w-full lg:max-w-96 flex flex-col lg:gap-2 ">
@@ -40,9 +39,7 @@ const AccountPage = ({children}) => {
               className={`hidden lg:flex justify-center items-center w-full xl:max-w-96 p-4 ${universalDiv}`}
             >
               <div className="flex gap-2">
-                  <button className="btn btn-accent">Chapter</button>
-                  <button className="btn btn-accent">Add a Chapter</button>
-                  <button className="btn btn-accent">View Full Chain</button>
+                  <Buttons />
               </div>
             </div>
             <div

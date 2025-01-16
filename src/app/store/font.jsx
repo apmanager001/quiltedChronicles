@@ -82,10 +82,13 @@ const FontSelector = () => {
   ];
 // console.log(selectedFont)
   return (
-    <div className="flex flex-col justify-center items-center gap-2 h-60">
+    <div
+      className="flex flex-col justify-center items-center gap-2 h-60"
+    >
       <select
         className="select select-bordered max-w-xs"
         onChange={handleChange}
+        name="font"
         value={selectedFont}
         style={{ fontFamily: selectedFont }}
       >
@@ -100,7 +103,7 @@ const FontSelector = () => {
         ))}
       </select>
 
-      <div className="mt-4" style={{ fontFamily: selectedFont }}>
+      <div className="mt-4" style={{ fontFamily: `var(${selectedFont})` }}>
         <p className="text-xl">This is a sample text with the selected font.</p>
       </div>
     </div>

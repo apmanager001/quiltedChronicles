@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import useStore from "../../store/store";
-import { useParams } from "next/navigation";
-// import Toolbar from "./toolbar/toolbar";
+import accountStore from "../../store/accountStore";
 import ChapterInd from "./chapterInd";
 import AccountPage from "../../account/layout";
 import AddChapter from "./addChapter";
@@ -11,7 +10,7 @@ import Chain from "./chain";
 
 const Chapter = () => {
   const user = useStore((state) => state.user);
-  
+  const middleColumn = accountStore((state) => state.middleColumn)
   const [author, setAuthor] = useState("");
   const [activeTab, setActiveTab] = useState("Chapter");
   const [usersChapter, setUsersChapter] = useState(false);
@@ -34,9 +33,9 @@ const Chapter = () => {
 
   return (
     <AccountPage>
-    <div className="flex flex-row justify-center min-h-screen md:min-h-full w-full gap-5 p-5">
+    <div className="flex flex-row justify-center lg:min-h-full w-full gap-5 p-5">
       <div className="flex flex-col w-full">
-        <div
+        {/* <div
           role="tablist"
           className="tabs tabs-bordered flex flex-row justify-between items-center p-3"
         >
@@ -68,14 +67,14 @@ const Chapter = () => {
           >
             Story Chain
           </Link>
-        </div>
+        </div> */}
         <div className="flex-2 flex justify-center items-center w-full">
-          {visibleComponent === "Chapter" && (
+          {middleColumn === "chapter" && (
             <div>
               <ChapterInd />
             </div>
           )}
-          {visibleComponent === "Create Story" &&
+          {middleColumn === "add" &&
             (user ? (
                     <AddChapter />
             ) : (
@@ -87,7 +86,7 @@ const Chapter = () => {
                 />
               </Link>
             ))}
-          {visibleComponent === "Story Chain" && <div><Chain /></div>}
+          {middleColumn === "chain" && <div><Chain /></div>}
         </div>
       </div>
     </div>

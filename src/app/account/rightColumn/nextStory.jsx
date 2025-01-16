@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Heart } from "lucide-react";
+import accountStore from "../../store/accountStore";
 import Link from "next/link";
 import axiosInstance from "../../../comps/utility/axios";
 
 const NextStory = () => {
+  const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
   const { id } = useParams();
   const [showMore, setShowMore] = useState(false);
   const [chapters, setChapters] = useState([]);
@@ -57,10 +59,10 @@ const NextStory = () => {
                     {chapters.chapterTitle || chapters.storyTitle}
                   </button>
                 </Link>
-                <p className="flex items-center gap-2">
+                <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">
                   <Heart color="red" fill="red" />
                   {chapters.likes}
-                </p>
+                </div>
               </div>
             ))}
         {remainingChapters.length > 0 && (
@@ -71,10 +73,10 @@ const NextStory = () => {
                   <Link to={link(chapter)}>
                     <p>{name(chapter)}</p>
                   </Link>
-                  <p className="flex items-center gap-2">
+                  <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">
                     <Heart color="red" fill="red" />
                     {chapters.likes}
-                  </p>
+                  </div>
                 </div>
               ))}
             <button onClick={handleShowMore} className="btn mt-3">
@@ -84,7 +86,12 @@ const NextStory = () => {
         )}
       </ul>
       <div className="lg:hidden flex justify-center">
-        <button className="btn btn-accent">Add a Chapter</button>
+        <button
+          className="btn btn-accent"
+          onClick={() => setMiddleColumn("add")}
+        >
+          Add a Chapter
+        </button>
       </div>
     </div>
   );

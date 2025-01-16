@@ -95,7 +95,7 @@ const ChapterInd = () => {
         <meta property="og:url" content={`/chapter/${id}`} />
       </Head>
 
-      <div className="flex flex-col p-5 md:p-0 md:pb-5 min-h-96 md:h-full ">
+      <div className="flex flex-col p-0 lg:pb-5 lg:h-full ">
         <div className="pl-2">
           <div className="flex flex-col items-start">
             <div className="w-full flex justify-between items-center pt-4 pr-4 gap-2">
@@ -110,7 +110,7 @@ const ChapterInd = () => {
             </div>
             <div className="flex items-center py-2 gap-2">
               <div className="text-sm">By:</div>
-              <div className="text-red-500 pl-1">
+              <div className="font-bold text-red-500 pl-1">
                 <Link
                   href={`/profile/${authorName}`}
                   onClick={() => handleAuthorSelect(authorName)}

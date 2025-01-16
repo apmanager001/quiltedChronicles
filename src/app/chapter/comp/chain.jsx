@@ -28,25 +28,25 @@ const Chain = () => {
   };
 
   return (
-    <div className="mx-12">
+    <div className="mx-4">
       <h1 className="text-center py-5">{storyTitle}</h1>
       {chain.map((chapter, index) => (
         <div
           key={index}
-          className="flex items-center w-full mb-5 p-2 border border-slate-600 rounded-xl"
+          className="flex gap-2 items-center w-full mb-5 p-2"
         >
-          <div className="flex-1 pr-5 text-center">
+          <div className="lg:w-1/3 hidden md:block pr-5 text-center">
             <Link href={`/chapter/${chapter.chapterId}`}>
-              <h3 className="hover:text-gray-600 text-sm">
+              <h3 className="hover:text-neutral text-sm">
                 {chapter.chapterTitle || chapter.storyTitle}
               </h3>
             </Link>
             <Link href={`/profile/${chapter.authorName}`}>
-              <p className="hover:text-gray-600">{chapter.authorName}</p>
+              <p className="hover:text-neutral">{chapter.authorName}</p>
             </Link>
             <p className="text-xs">{new Date(chapter.createDate).toLocaleDateString()}</p>
           </div>
-          <div className="flex-2">{processText(chapter.bodyText)}</div>
+          <div className="lg:w-2/3">{processText(chapter.bodyText)}</div>
         </div>
       ))}
     </div>

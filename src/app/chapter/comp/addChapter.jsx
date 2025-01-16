@@ -61,7 +61,7 @@ const AddChapter = () => {
       >
         <div
           className="tooltip flex gap-2"
-          data-tip="Add to this Chapters next steps."
+          data-tip="Add to this Chapter."
         >
           Create your next part of this story...
           <Info />

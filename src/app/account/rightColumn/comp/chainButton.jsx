@@ -1,18 +1,26 @@
 import React from 'react'
+import accountStore from '../../../store/accountStore';
 
 const Buttons = () => {
+    const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
+
   return (
-    <div
-      className={`h-24 flex justify-center items-center w-full md:max-w-60 xl:max-w-96 p-4 ${universalDiv}`}
-    >
-      <div className="flex gap-2">
-        <div>
-          <button className="btn btn-accent">Add a Chapter</button>
-        </div>
-        <div>
-          <button className="btn btn-accent">View Full Chain</button>
-        </div>
-      </div>
+    <div className="flex gap-2">
+      <button
+        className="btn btn-accent"
+        onClick={() => setMiddleColumn("chapter")}
+      >
+        Chapter
+      </button>
+      <button className="btn btn-accent" onClick={() => setMiddleColumn("add")}>
+        Add a Chapter
+      </button>
+      <button
+        className="btn btn-accent"
+        onClick={() => setMiddleColumn("chain")}
+      >
+        View Full Chain
+      </button>
     </div>
   );
 }
