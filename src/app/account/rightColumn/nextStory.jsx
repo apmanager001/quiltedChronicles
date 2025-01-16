@@ -53,7 +53,7 @@ const NextStory = () => {
         {chapters.length === 0
           ? "No Chapters Yet"
           : topFiveChapters.map((chapters, index) => (
-              <div key={index} className="pt-2 flex justify-around mr-10">
+              <div key={index} className="pt-2 flex justify-around items-center mr-10">
                 <Link href={`/chapter/${chapters.chapterId}`}>
                   <button className="btn btn-ghost">
                     {chapters.chapterTitle || chapters.storyTitle}

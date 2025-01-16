@@ -1,11 +1,12 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
+import "daisyui/dist/full.css";
 
 const ThemeSelector = () => {
-  const [theme, setTheme] = useState("default");
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "default";
+    const savedTheme = localStorage.getItem("theme") || "dark";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
   }, []);
@@ -18,50 +19,21 @@ const ThemeSelector = () => {
   };
 
   return (
-    <div className="dropdown dropdown-hover">
-      <label tabIndex={0} className="btn m-1">
-        Choose Theme
-      </label>
-      <ul
-        tabIndex={0}
-        className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+    <div className="flex flex-col justify-center items-center gap-2">
+      <select
+        className="select select-bordered max-w-xs"
+        name="theme"
+        value={theme}
+        onChange={handleThemeChange}
       >
-        <li>
-          <button onClick={handleThemeChange} value="dark">
-            Dark
-          </button>
-        </li>
-        <li>
-          <button onClick={handleThemeChange} value="light">
-            light
-          </button>
-        </li>
-        <li>
-          <button onClick={handleThemeChange} value="coffee">
-            Coffee
-          </button>
-        </li>
-        <li>
-          <button onClick={handleThemeChange} value="retro">
-            Retro
-          </button>
-        </li>
-        <li>
-          <button onClick={handleThemeChange} value="cyberpunk">
-            Cyberpunk
-          </button>
-        </li>
-        <li>
-          <button onClick={handleThemeChange} value="valentine">
-            Valentine
-          </button>
-        </li>
-        <li>
-          <button onClick={handleThemeChange} value="aqua">
-            Aqua
-          </button>
-        </li>
-      </ul>
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+        <option value="coffee">Coffee</option>
+        <option value="retro">Retro</option>
+        <option value="cyberpunk">Cyberpunk</option>
+        <option value="valentine">Valentine</option>
+        <option value="aqua">Aqua</option>
+      </select>
     </div>
   );
 };
