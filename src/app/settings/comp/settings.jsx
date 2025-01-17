@@ -27,14 +27,13 @@ const Settings = () => {
   };
 
   const handleTextAreaChange = (e) => setBio(e.target.value);
-
+console.log(email)
   useEffect(() => {
     if (!user) return;
     axiosInstance
       .get(`/profile`)
       .then((response) => {
         const settings = response.data;
-        console.log(settings)
         setEmailPublic(settings.publishEmail);
         setDarkMode(settings.darkMode);
         setBio(settings.bio);
@@ -50,6 +49,7 @@ const Settings = () => {
   const handleTextAreaButtonClick = () => {
     const settingsData = {
       publishEmail: emailPublic,
+      email,
       darkMode,
       bio,
     };
@@ -162,19 +162,19 @@ const Settings = () => {
                   <label htmlFor="notPublic">Not Public</label>
                 </div>
               </div>
-              <div className="flex min-h-36 w-full items-center justify-center">
+              <div className="flex  w-full items-center justify-center">
                 <div className="flex flex-col justify-start xl:items-start items-center xl:flex-row w-1/3 gap-2">
                   <div className="flex flex-col lg:flex-row gap-1 items-center">
                     Your Email:{isVerified ? verified() : notVerified()}
                   </div>
-                  <div >
+                  <div>
                     {isVerified ? (
                       ""
                     ) : (
                       <button
                         className="btn btn-active btn-accent"
-                        id='confirmEmail'
-                        name='confirmEmail'
+                        id="confirmEmail"
+                        name="confirmEmail"
                         onClick={handleVerifyEmail}
                       >
                         Verify This email
@@ -186,11 +186,26 @@ const Settings = () => {
                   <input
                     className="input input-bordered w-60"
                     onChange={handleEmailChange}
-                    name='email'
+                    name="email"
                     type="email"
                     value={email}
                     autoComplete="false"
                   />
+                </div>
+              </div>
+              <div className="flex min-h-20 w-full items-center justify-center">
+                <div className="flex items-center w-1/3 ">
+                  Change Password:
+                </div>
+                <div className="flex justify-center items-center  w-2/3">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() =>
+                      document.getElementById("my_modal_2").showModal()
+                    }
+                  >
+                    Change Password
+                  </button>
                 </div>
               </div>
               <div className="flex flex-row h-40 w-full items-center justify-center">
@@ -211,14 +226,6 @@ const Settings = () => {
                 >
                   Submit
                 </button>
-                <button
-                  className="btn btn-primary mt-8"
-                  onClick={() =>
-                    document.getElementById("my_modal_2").showModal()
-                  }
-                >
-                  Change Password
-                </button>
               </div>
               <dialog id="my_modal_2" className="modal">
                 <div className="modal-box w-full">
@@ -233,7 +240,7 @@ const Settings = () => {
                   <div className="flex flex-col w-full justify-center items-center gap-2">
                     <input
                       type="password"
-                      name='oldPassword'
+                      name="oldPassword"
                       className="input input-bordered w-80"
                       placeholder="Old Password"
                       value={oldPassword}
@@ -242,7 +249,7 @@ const Settings = () => {
                     <input
                       type="password"
                       className="input input-bordered w-80"
-                      name='newPassword'
+                      name="newPassword"
                       placeholder="New Password"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
@@ -250,7 +257,7 @@ const Settings = () => {
                     <input
                       type="password"
                       className="input input-bordered w-80"
-                      name='confirmPassword'
+                      name="confirmPassword"
                       placeholder="Confirm New Password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
