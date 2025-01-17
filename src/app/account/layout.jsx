@@ -29,7 +29,7 @@ const AccountPage = ({children}) => {
         " "
       )}
       {pathname && pathname.startsWith("/chapter") ? (
-      <div className="lg:hidden flex justify-center gap-2 p-4 bg-base-300 rounded-xl ">
+      <div className="lg:hidden flex justify-center gap-2 p-4 bg-base-300 ">
         <Buttons />
       </div>
        ) : ("")}

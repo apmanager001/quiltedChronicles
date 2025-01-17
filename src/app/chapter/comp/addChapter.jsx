@@ -55,25 +55,35 @@ const AddChapter = () => {
   };
   return (
     <div className="flex flex-col gap-5 items-center w-full h-screen-minus-65 mt-4">
+      <div
+        className="tooltip flex gap-2 font-bold"
+        data-tip="Add to this Chapter."
+      >
+        Create your next part of this story...
+        <Info />
+      </div>
       <form
-        className="flex flex-col items-center w-full gap-2 justify-center"
+        className="flex flex-col w-full gap-2 justify-center"
         onSubmit={handleAddChapter}
       >
-        <div
-          className="tooltip flex gap-2"
-          data-tip="Add to this Chapter."
-        >
-          Create your next part of this story...
-          <Info />
-        </div>
-
+        <label htmlFor="chapterTitle">Chapter Title</label>
         <input
           placeholder="Your Title"
+          id="chapterTitle"
           className="input input-bordered text-2xl w-full"
           name="chapterTitle"
           onChange={(e) => setData({ ...data, chapterTitle: e.target.value })}
           required
         />
+        <label htmlFor="keywords" className="flex gap-2">
+          Keywords
+          <div
+            className="flex gap-2 tooltip tooltip-top md:tooltip-right"
+            data-tip="Add a space between keywords, no commas"
+          >
+            <Info />
+          </div>
+        </label>
         <input
           className="input input-bordered text-2xl w-full"
           name="keywords"
@@ -81,10 +91,11 @@ const AddChapter = () => {
           placeholder="Keywords"
           required
         />
+        <label htmlFor="bodyText">Your Story</label>
         <textarea
           placeholder="Create your adventure here..."
           name="body"
-          className="textarea textarea-bordered w-full h-80 text-md"
+          className="textarea textarea-bordered w-full h-80 text-lg"
           onChange={(e) => setData({ ...data, body: e.target.value })}
           required
         />

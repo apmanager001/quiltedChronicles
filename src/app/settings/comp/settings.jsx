@@ -34,6 +34,7 @@ const Settings = () => {
       .get(`/profile`)
       .then((response) => {
         const settings = response.data;
+        console.log(settings)
         setEmailPublic(settings.publishEmail);
         setDarkMode(settings.darkMode);
         setBio(settings.bio);
@@ -70,13 +71,25 @@ const Settings = () => {
   const handleEmailChange = (e) => setEmail(e.target.value);
 
   const verified = () => {
-    return <div className="badge badge-success gap-2">Verified</div>;
+    return <div className="badge badge-success gap-2 font-bold">Verified</div>;
   };
 
   const notVerified = () => {
-    return <div className="badge badge-error gap-2">Not Verified</div>;
+    return <div className="badge badge-error md:p-4 text-center gap-2 font-bold">Not Verified</div>;
   };
 
+  const handleVerifyEmail = () => {
+    axiosInstance
+      .post(`/verify`)
+      .then((response) => {
+        toast.success(
+          "An email has been sent to your email address, click the link in the email to verify your email"
+        );
+      })
+      .catch((error) => {
+        console.error("There was an error verifying the email", error);
+      });
+  };
   const handleChangePassword = () => {
     if (newPassword !== confirmPassword) {
       toast.error("Your New Passwords do not match");
@@ -149,12 +162,12 @@ const Settings = () => {
                   <label htmlFor="notPublic">Not Public</label>
                 </div>
               </div>
-              <div className="flex min-h-20 w-full items-center justify-center">
-                <div className="flex flex-col w-1/3">
-                  <div className="flex gap-1 items-center">
+              <div className="flex min-h-36 w-full items-center justify-center">
+                <div className="flex flex-col justify-start xl:items-start items-center xl:flex-row w-1/3 gap-2">
+                  <div className="flex flex-col lg:flex-row gap-1 items-center">
                     Your Email:{isVerified ? verified() : notVerified()}
                   </div>
-                  <div>
+                  <div >
                     {isVerified ? (
                       ""
                     ) : (

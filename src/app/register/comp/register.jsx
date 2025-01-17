@@ -62,42 +62,47 @@ const CreateStory = () => {
             like.
           </p>
         </div>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-r-xl">
+        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-r-xl border border-neutral">
           <form className="card-body" onSubmit={registerUser}>
             <div className="form-control">
-              <label className="label">
+              <label htmlFor="userName" className="label">
                 <span className="label-text">Username</span>
               </label>
               <input
                 type="text"
+                id="userName"
                 name="userName"
                 className="input input-bordered"
                 placeholder="Username"
                 value={data.userName}
                 onChange={(e) => setData({ ...data, userName: e.target.value })}
                 required
+                autoComplete="false"
               />
             </div>
             <div className="form-control">
-              <label className="label">
+              <label htmlFor="email" className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
                 type="email"
+                id="email"
                 name="email"
                 className="input input-bordered"
                 placeholder="Email"
                 value={data.email}
                 onChange={(e) => setData({ ...data, email: e.target.value })}
                 required
+                autoComplete="true"
               />
             </div>
             <div className="form-control">
-              <label className="label">
+              <label htmlFor="password" className="label">
                 <span className="label-text">Password</span>
               </label>
               <input
                 type="password"
+                id="password"
                 name="password"
                 placeholder="Password"
                 className="input input-bordered"
@@ -107,11 +112,12 @@ const CreateStory = () => {
               />
             </div>
             <div className="form-control">
-              <label className="label">
+              <label htmlFor="password2" className="label">
                 <span className="label-text">Confirm Password</span>
               </label>
               <input
                 type="password"
+                id="password2"
                 name="password2"
                 placeholder="Confirm Password"
                 className="input input-bordered"

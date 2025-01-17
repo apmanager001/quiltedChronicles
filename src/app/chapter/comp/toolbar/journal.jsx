@@ -3,7 +3,7 @@ import useStore from "../../../store/store";
 import { Bookmark } from "lucide-react";
 import axiosInstance from "../../../../comps/utility/axios";
 import toast from "react-hot-toast";
-
+import confetti from "canvas-confetti";
 
 
 const Journal = ({chapterId}) => {

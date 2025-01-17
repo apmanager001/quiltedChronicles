@@ -26,7 +26,22 @@ const FAQ = () => {
                   Can I mess up a story?
                 </h1>
                 <p className="text-sm">
-                  Not at all. Our goal is to allow everyone be creative and your pivot to a story is one of many. Be as creative as you can.
+                  Not at all. Our goal is to allow everyone be creative and your
+                  pivot to a story is one of many. Be as creative as you can.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start my-8">
+              <div className="hidden sm:flex items-center justify-center p-3 mr-3  text-xl font-semibold">
+                <CircleHelp size={60} fill="white" color="purple" />
+              </div>
+              <div className="text-md">
+                <h1 className="text-primary font-semibold mb-2">
+                  Can I view a full story on a page?
+                </h1>
+                <p className="text-sm">
+                  Yes! It is called a chain and you click the button that says "View Full Chain" when you are on the page 
+                  with the last chapter you want to read. This will put all the chapters into a single page to read through.
                 </p>
               </div>
             </div>
