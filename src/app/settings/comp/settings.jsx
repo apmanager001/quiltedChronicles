@@ -27,7 +27,7 @@ const Settings = () => {
   };
 
   const handleTextAreaChange = (e) => setBio(e.target.value);
-console.log(email)
+  
   useEffect(() => {
     if (!user) return;
     axiosInstance

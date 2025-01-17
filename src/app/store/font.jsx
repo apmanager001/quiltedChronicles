@@ -1,110 +1,94 @@
 import React, { useState } from "react";
-import { Geist } from "next/font/google";
+import {
+  Roboto,
+  Lora,
+  Merriweather,
+  Dancing_Script,
+  Lobster,
+  Josefin_Sans,
+  Nunito_Sans,
+  Oswald,
+  Poppins,
+  Great_Vibes,
+} from "next/font/google";
 
-const roboto = Geist({
+// Define fonts using next/font module
+const roboto = Roboto({
   weight: "400",
-  variable: "--font-roboto",
   subsets: ["latin"],
 });
-
-const lora = Geist({
-  weight: "400",
-  variable: "--font-lora",
+const lora = Lora({
   subsets: ["latin"],
 });
-
-const merriweather = Geist({
+const merriweather = Merriweather({
   weight: "400",
-  variable: "--font-merriweather",
   subsets: ["latin"],
 });
-
-const dancingScript = Geist({
-  weight: "400",
-  variable: "--font-dancing-script",
+const dancingScript = Dancing_Script({
   subsets: ["latin"],
 });
-
-const lobster = Geist({
+const lobster = Lobster({
   weight: "400",
-  variable: "--font-lobster",
   subsets: ["latin"],
 });
-
-const josefinSans = Geist({
-  weight: "400",
-  variable: "--font-josefin-sans",
+const josefinSans = Josefin_Sans({
   subsets: ["latin"],
 });
-
-const nunitoSans = Geist({
-  weight: "400",
-  variable: "--font-nunito-sans",
+const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
 });
-
-const oswald = Geist({
-  weight: "400",
-  variable: "--font-oswald",
+const oswald = Oswald({
   subsets: ["latin"],
 });
-
-const poppins = Geist({
+const poppins = Poppins({
   weight: "400",
-  variable: "--font-poppins",
   subsets: ["latin"],
 });
-
-const greatVibes = Geist({
+const greatVibes = Great_Vibes({
   weight: "400",
-  variable: "--font-great-vibes",
   subsets: ["latin"],
 });
 
 const FontSelector = () => {
-  const [selectedFont, setSelectedFont] = useState(roboto.variable);
+  const [selectedFont, setSelectedFont] = useState(roboto.className); // Default to Roboto
 
+  // Handle the change of selected font
   const handleChange = (event) => {
-    setSelectedFont(event.target.value);
+    setSelectedFont(event.target.value); // Set the className of the selected font
   };
 
+  // Define available fonts and their corresponding class names
   const fontStyles = [
-    { name: "Roboto", class: roboto.variable },
-    { name: "Lora", class: lora.variable },
-    { name: "Merriweather", class: merriweather.variable },
-    { name: "Dancing Script", class: dancingScript.variable },
-    { name: "Lobster", class: lobster.variable },
-    { name: "Josefin Sans", class: josefinSans.variable },
-    { name: "Nunito Sans", class: nunitoSans.variable },
-    { name: "Oswald", class: oswald.variable },
-    { name: "Poppins", class: poppins.variable },
-    { name: "Great Vibes", class: greatVibes.variable },
+    { name: "Roboto", class: roboto.className },
+    { name: "Lora", class: lora.className },
+    { name: "Merriweather", class: merriweather.className },
+    { name: "Dancing Script", class: dancingScript.className },
+    { name: "Lobster", class: lobster.className },
+    { name: "Josefin Sans", class: josefinSans.className },
+    { name: "Nunito Sans", class: nunitoSans.className },
+    { name: "Oswald", class: oswald.className },
+    { name: "Poppins", class: poppins.className },
+    { name: "Great Vibes", class: greatVibes.className },
   ];
-// console.log(selectedFont)
+
   return (
-    <div
-      className="flex flex-col justify-center items-center gap-2 h-60"
-    >
+    <div className="flex flex-col justify-center items-center gap-2 h-60">
       <select
         className="select select-bordered max-w-xs"
         onChange={handleChange}
         name="font"
         value={selectedFont}
-        style={{ fontFamily: selectedFont }}
       >
         {fontStyles.map((font) => (
-          <option
-            key={font.name}
-            value={font.class}
-            style={{ fontFamily: font.class }}
-          >
+          <option key={font.name} value={font.class}>
             {font.name}
           </option>
         ))}
       </select>
 
-      <div className="mt-4" style={{ fontFamily: `var(${selectedFont})` }}>
-        <p className="text-xl">This is a sample text with the selected font.</p>
+      {/* Sample text container with applied font */}
+      <div className={`mt-4 ${selectedFont}`}>
+        <p className="text-xl text-center">This is a sample text with the selected font.</p>
       </div>
     </div>
   );
