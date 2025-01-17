@@ -11,6 +11,8 @@ import SharedButtons from "./shareButtons";
 import axiosInstance from "../../../comps/utility/axios";
 import Toolbar from "./toolbar/toolbar";
 import Loading from '../../../comps/utility/loading'
+import MetaData from "./metadata";
+
 
 const ChapterInd = () => {
   const user = useStore((state) => state.user);
@@ -82,10 +84,11 @@ const ChapterInd = () => {
   const paragraphs = body
     .split("\n")
     .map((paragraph, index) => <p key={index}>{paragraph}</p>);
-    
+
+  
   return loading ? (
     <>
-      <Head>
+      {/* <Head>
         <title>{chapterTitle || storyTitle}</title>
         <meta name="description" content={body.slice(0, 150)} />
         <meta name="keywords" content={chapter.keywords.join(", ")} />
@@ -93,7 +96,12 @@ const ChapterInd = () => {
         <meta property="og:description" content={body.slice(0, 150)} />
         <meta property="og:type" content="chapter" />
         <meta property="og:url" content={`/chapter/${id}`} />
-      </Head>
+      </Head> */}
+      <MetaData
+        description={body.slice(0, 150)}
+        title={chapterTitle || storyTitle}
+        keywords={chapter.keywords.join(", ")}
+      />
 
       <div className="flex flex-col p-0 lg:pb-5 lg:h-full ">
         <div className="pl-2">
@@ -149,7 +157,11 @@ const ChapterInd = () => {
         <div className="break-words text-wrap font-message text-2xl px-0 lg:px-4 py-4 border-t-2 border-slate-600">
           {paragraphs}
         </div>
-        <div className={`flex items-center ${previousChapter?'justify-around':'justify-center'}  mt-auto`}>
+        <div
+          className={`flex items-center ${
+            previousChapter ? "justify-around" : "justify-center"
+          }  mt-auto`}
+        >
           <div className="flex text-red-500">
             {previousChapter && (
               <div

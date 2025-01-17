@@ -84,7 +84,7 @@ const Search = () => {
   };
   return (
     <AccountPage>
-    <div className="flex flex-col w-full items-center p-4">
+    <div className="flex flex-col w-full items-center p-4 min-h-[500px]">
       <div className="w-full max-w-md">
         <label htmlFor='search' className="hidden"></label>
         <input
@@ -97,7 +97,7 @@ const Search = () => {
           onChange={handleSearchChange}
         />
       </div>
-      <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
+      <div className="flex flex-col md:flex-row items-center gap-4">
         <div className="flex gap-2">
           <select
             className="select select-bordered"
@@ -122,7 +122,7 @@ const Search = () => {
           </select>
         </div>
         <div
-          className="tooltip tooltip-bottom flex flex-row jusify-center items-center gap-4"
+          className="tooltip tooltip-bottom flex flex-row jusify-center items-center"
           data-tip="Checked will only show chapters that are the beginning of a story"
         >
           <input
@@ -134,7 +134,7 @@ const Search = () => {
             onChange={handleCheckboxChange}
             disabled={selectedChapter != "chapters"}
           />
-          <label htmlFor='stories' name="stories">Beginning Chapters</label>
+          <label htmlFor='stories' name="stories" className="ml-2">Beginning Chapters</label>
         </div>
       </div>
       <div className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-4">
