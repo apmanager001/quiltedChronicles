@@ -48,6 +48,7 @@ const Flagged = ({ chapterId }) => {
           onFlag ? "text-red-600" : "currentValue"
         }`}
         onClick={() => handleFlag("")}
+        aria-label={onFlag ? "Flagged Chapter" : "Unflagged Chapter"}
       >
         <Flag />
       </button>
@@ -56,18 +57,21 @@ const Flagged = ({ chapterId }) => {
           <button
             className={`btn ${onFlag ? "text-red-600" : ""}`}
             onClick={() => handleFlag("spam")}
+            aria-label={onFlag ? "Flagged Chapter" : "Unflagged Chapter"}
           >
             <div>Spam</div>
           </button>
           <button
             className={`btn ${onFlag ? "text-red-600" : ""}`}
             onClick={() => handleFlag("inappropriate")}
+            aria-label={onFlag ? "Flagged Chapter" : "Unflagged Chapter"}
           >
             <div>Inappropriate</div>
           </button>
           <button
             className={`btn ${onFlag ? "text-red-600" : ""}`}
             onClick={() => handleFlag("offensive")}
+            aria-label={onFlag ? "Flagged Chapter" : "Unflagged Chapter"}
           >
             <div>Offensive</div>
           </button>

@@ -49,7 +49,7 @@ export default function RootLayout({
         />
         <meta
           name="keywords"
-          content="chapter, story, book, writing, journal, community"
+          content="chapter, story, book, writing, journal, community, collaborative, storytelling"
         />
       </head>
       <body

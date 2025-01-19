@@ -47,6 +47,7 @@ const UserInfo = () => {
                   toggleDropdown();
                 }}
                 className="flex items-center gap-2 my-2"
+                name='profile'
               >
                 <User size={24} /> Profile
               </Link>
@@ -74,16 +75,17 @@ const UserInfo = () => {
                 href="#"
                 onClick={handleLogout}
                 className="flex items-center gap-2 my-2"
+                name='logout'
               >
                 <LogOut size={24} /> Logout
               </Link>
             </div>
           )}
           <div className="hidden lg:flex items-center gap-4">
-            <Link href={`/profile/${user.userName}`}>
+            <Link href={`/profile/${user.userName}`} name='profile'>
               <User size={32} />
             </Link>
-            <Link href="#" onClick={handleLogout}>
+            <Link href="#" onClick={handleLogout} name='logout'>
               <LogOut size={24} />
             </Link>
           </div>

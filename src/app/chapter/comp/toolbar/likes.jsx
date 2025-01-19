@@ -59,6 +59,7 @@ const Like = ({chapterId}) => {
       <button
         className="btn btn-ghost rounded-full text-xl"
         onClick={handleLike}
+        aria-label={onLike ? "Liked Chapter" : "Not Liked Chapter"}
       >
         <ThumbsUp
           fill={onLike ? "#83f28f" : "none"}

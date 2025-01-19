@@ -43,14 +43,14 @@ const Footer = () => {
                   Search
                 </a>
               </p>
-              <p>
+              {/* <p>
                 <a
                   className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
                   href="/about"
                 >
                   About Us
                 </a>
-              </p>
+              </p> */}
               <p>
                 <a
                   className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"

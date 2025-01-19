@@ -152,7 +152,7 @@ const ChapterInd = () => {
                 className="tooltip tooltip-right tooltip-accent"
                 data-tip="Previous Chapter"
               >
-                <Link href={`/chapter/${previousChapter}`}>
+                <Link href={`/chapter/${previousChapter}`} name='lastChapter'>
                   <ArrowBigLeft size={40} fill="red" />
                 </Link>
               </div>
@@ -162,7 +162,7 @@ const ChapterInd = () => {
                 className="tooltip tooltip-right tooltip-accent mr-10"
                 data-tip="Jump to First Story"
               >
-                <Link href={`/chapter/${storyId}`}>
+                <Link href={`/chapter/${storyId}`} name='firstChapter'>
                   <Rewind size={40} fill="red" />
                 </Link>
               </div>

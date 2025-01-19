@@ -55,6 +55,7 @@ const Journal = ({chapterId}) => {
       <button
         className={`btn btn-ghost rounded-full text-xl`}
         onClick={handleJournal}
+        aria-label={onHeart ? "Bookmarked Chapter" : "Not bookmarked Chapter"}
       >
         <Bookmark
           fill={onHeart ? `#CC5500` : "none"}

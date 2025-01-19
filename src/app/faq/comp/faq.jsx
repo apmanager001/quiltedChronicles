@@ -14,7 +14,7 @@ const FAQ = () => {
         </div>
 
         <div className="px-2 sm:px-16">
-          <div className="py-3 uppercase font-bold">Technical</div>
+          <div className="py-3 uppercase font-bold">About Chapters and Stories</div>
 
           <div className="ml-2">
             <div className="flex items-start my-8">
@@ -26,8 +26,8 @@ const FAQ = () => {
                   Can I mess up a story?
                 </h1>
                 <p className="text-sm">
-                  Not at all. Our goal is to allow everyone be creative and your
-                  pivot to a story is one of many. Be as creative as you can.
+                  Not at all. Our goal is to allow everyone to be creative and your
+                  pivot in a story is one of many to be creative. Be as creative as you can!
                 </p>
               </div>
             </div>
@@ -40,7 +40,7 @@ const FAQ = () => {
                   Can I view a full story on a page?
                 </h1>
                 <p className="text-sm">
-                  Yes! It is called a chain and you click the button that says "View Full Chain" when you are on the page 
+                  Yes! It is called a chain and you click the button that says "View Full Chain" when you are on the chapter page 
                   with the last chapter you want to read. This will put all the chapters into a single page to read through.
                 </p>
               </div>
@@ -54,10 +54,10 @@ const FAQ = () => {
                   How can I start a new story?
                 </h1>
                 <p className="text-sm">
-                  Starting a new story is easy! Simply click the "Start a New
-                  Story" button on the homepage, choose a title, and write the
-                  first section. Once you're done, publish it, and others can
-                  begin adding their sections.
+                  Starting a new story is easy! Simply click the "Create a
+                  Story" button when you login, choose a title, keywords, and write the
+                  first chapter. Once you're done, publish it, and others can
+                  begin adding their chapters to yours.
                 </p>
               </div>
             </div>
@@ -67,11 +67,11 @@ const FAQ = () => {
               </div>
               <div className="text-md">
                 <h1 className="text-primary font-semibold mb-2">
-                  Can I add my section to an existing story?
+                  Can I add my Chapter to an existing story?
                 </h1>
                 <p className="text-sm">
-                  Yes, definitely! Browse through the existing storylines and
-                  click on any story that interests you. Click "Add Section" to
+                  Yes, definitely! Browse through the existing stories and
+                  click on any story that interests you. Click "Add a Chapter" to
                   contribute your part to the narrative.
                 </p>
               </div>
@@ -92,7 +92,8 @@ const FAQ = () => {
                 <p className="text-sm">
                   We encourage creativity and originality! However, please
                   adhere to our community guidelines which prohibit content that
-                  is offensive, inappropriate, or violates copyright laws.
+                  is offensive, inappropriate, or violates copyright laws. 
+                  If you see anything offensive please use the flag button under the chapter to notify us.
                 </p>
               </div>
             </div>

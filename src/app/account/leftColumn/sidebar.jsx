@@ -24,25 +24,25 @@ const Sidebar = ({ closeDrawer }) => {
     <div className="flex flex-col justify-start overflow-y-auto ">
       <ul className="menu rounded-box">
         <li className="text-xl">
-          <Link href={`/profile/${user.userName}`} >
+          <Link href={`/profile/${user.userName}`}>
             <User />
             {user.userName}
           </Link>
         </li>
         <li className="pl-2">
-          <Link href="/createStory" >
+          <Link href="/createStory">
             <Pen />
             Create a Story
           </Link>
         </li>
         <li className="pl-2">
-          <Link href="/settings" >
+          <Link href="/settings">
             <Settings />
             Settings
           </Link>
         </li>
         <li className="pl-2">
-          <Link href="/contact" >
+          <Link href="/contact">
             <MessageSquareMore />
             Contact
           </Link>
@@ -64,7 +64,8 @@ const Sidebar = ({ closeDrawer }) => {
       </ul>
 
       <div className="collapse collapse-arrow ">
-        <input type="radio" name="accordion" />
+        <label htmlFor="authors" className="hidden"></label>
+        <input type="radio" id="authors" name="accordion" />
         <div className="collapse-title text-l font-medium">
           <div className="flex gap-2">
             <UserRoundPen />
@@ -77,7 +78,8 @@ const Sidebar = ({ closeDrawer }) => {
       </div>
 
       <div className="collapse collapse-arrow ">
-        <input type="radio" name="accordion" />
+        <label htmlFor="chapters" className="hidden"></label>
+        <input type="radio" id="chapters" name="accordion" />
         <div className="collapse-title text-l font-medium">
           <div className="flex gap-2">
             <Library />
@@ -90,7 +92,8 @@ const Sidebar = ({ closeDrawer }) => {
       </div>
 
       <div className="collapse collapse-arrow ">
-        <input type="radio" name="accordion" />
+        <label htmlFor="journal" className="hidden"></label>
+        <input type="radio" id='journal' name="accordion" />
         <div className="collapse-title text-l font-medium">
           <div className="flex gap-2">
             <Bookmark />
