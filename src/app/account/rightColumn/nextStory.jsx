@@ -51,9 +51,9 @@ const NextStory = () => {
       <p className="text-xl font-bold">Continue the Story!</p>
       <ul className="pt-2 pl-2 flex-grow">
         {chapters.length === 0
-          ? "No Chapters Yet"
+          ? <li>No Chapters Yet</li>
           : topFiveChapters.map((chapters, index) => (
-              <div key={index} className="pt-2 flex justify-around items-center mr-10">
+              <li key={index} className="pt-2 flex justify-around items-center mr-10">
                 <Link href={`/chapter/${chapters.chapterId}`}>
                   <button className="btn btn-ghost">
                     {chapters.chapterTitle || chapters.storyTitle}
@@ -63,7 +63,7 @@ const NextStory = () => {
                   <Heart color="red" fill="red" />
                   {chapters.likes}
                 </div>
-              </div>
+              </li>
             ))}
         {remainingChapters.length > 0 && (
           <div>
