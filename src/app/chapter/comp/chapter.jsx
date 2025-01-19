@@ -10,7 +10,7 @@ import Chain from "./chain";
 
 const Chapter = () => {
   const user = useStore((state) => state.user);
-  const middleColumn = accountStore((state) => state.middleColumn)
+  const middleColumn = accountStore((state) => state.middleColumn);
   const [author, setAuthor] = useState("");
   const [activeTab, setActiveTab] = useState("Chapter");
   const [usersChapter, setUsersChapter] = useState(false);
@@ -33,9 +33,9 @@ const Chapter = () => {
 
   return (
     <AccountPage>
-    <div className="flex flex-row justify-center lg:min-h-full w-full gap-5 p-5">
-      <div className="flex flex-col w-full">
-        {/* <div
+      <div className="flex flex-row justify-center lg:min-h-full w-full gap-5 p-5">
+        <div className="flex flex-col w-full">
+          {/* <div
           role="tablist"
           className="tabs tabs-bordered flex flex-row justify-between items-center p-3"
         >
@@ -68,28 +68,32 @@ const Chapter = () => {
             Story Chain
           </Link>
         </div> */}
-        <div className="flex-2 flex justify-center items-center w-full">
-          {middleColumn === "chapter" && (
-            <div>
-              <ChapterInd />
-            </div>
-          )}
-          {middleColumn === "add" &&
-            (user ? (
-                    <AddChapter />
-            ) : (
-              <Link href={`/login`}>
-                <input
-                  type="submit"
-                  className="btn btn-accent "
-                  value="Login to Start"
-                />
-              </Link>
-            ))}
-          {middleColumn === "chain" && <div><Chain /></div>}
+          <div className="flex-2 flex justify-center items-center w-full">
+            {middleColumn === "chapter" && (
+              <div>
+                <ChapterInd />
+              </div>
+            )}
+            {middleColumn === "add" &&
+              (user ? (
+                <AddChapter />
+              ) : (
+                <Link href={`/login`}>
+                  <input
+                    type="submit"
+                    className="btn btn-accent "
+                    value="Login to Start"
+                  />
+                </Link>
+              ))}
+            {middleColumn === "chain" && (
+              <div>
+                <Chain />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
     </AccountPage>
   );
 };

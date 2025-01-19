@@ -122,21 +122,21 @@ const Settings = () => {
             <div className="p-10">Your Settings</div>
             <div className="flex flex-col gap-5 w-full">
               <div className="flex h-24 w-full items-center justify-center">
-                <div className="flex flex-col w-1/3">
+                <div className="flex flex-col w-1/3 font-bold">
                   Set Your Color Scheme:
                 </div>
                 <div className="flex flex-col justify-center items-center w-2/3">
                   <ThemeSelector />
                 </div>
               </div>
-              <div className="flex w-full items-center justify-center h-32">
+              {/* <div className="flex w-full items-center justify-center h-32">
                 <div className="flex flex-col w-1/3">Your Story Font:</div>
                 <div className="flex flex-col justify-center items-center w-2/3">
                   <FontSelector />
                 </div>
-              </div>
+              </div> */}
               <div className="flex min-h-20 w-full items-center justify-center">
-                <div className="flex flex-col w-1/3">
+                <div className="flex flex-col w-1/3 font-bold">
                   Set Your Email Privacy:
                 </div>
                 <div className="flex justify-center items-center gap-2 w-2/3">
@@ -164,7 +164,7 @@ const Settings = () => {
               </div>
               <div className="flex  w-full items-center justify-center">
                 <div className="flex flex-col justify-start xl:items-start items-center xl:flex-row w-1/3 gap-2">
-                  <div className="flex flex-col lg:flex-row gap-1 items-center">
+                  <div className="flex flex-col lg:flex-row gap-1 items-center font-bold">
                     Your Email:{isVerified ? verified() : notVerified()}
                   </div>
                   <div>
@@ -194,7 +194,7 @@ const Settings = () => {
                 </div>
               </div>
               <div className="flex min-h-20 w-full items-center justify-center">
-                <div className="flex items-center w-1/3 ">
+                <div className="flex items-center w-1/3 font-bold">
                   Change Password:
                 </div>
                 <div className="flex justify-center items-center  w-2/3">
@@ -209,7 +209,7 @@ const Settings = () => {
                 </div>
               </div>
               <div className="flex flex-row h-40 w-full items-center justify-center">
-                <div className="flex flex-col w-1/3">Your Bio:</div>
+                <div className="flex flex-col w-1/3 font-bold">Your Bio:</div>
                 <div className="flex flex-col items-center w-2/3">
                   <textarea
                     value={bio}

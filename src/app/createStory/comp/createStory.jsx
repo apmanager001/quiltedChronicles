@@ -71,26 +71,26 @@ const CreateStory = () => {
             placeholder="Story Title"
             required
           />
-          <label htmlFor="keywords">
-            <div className="flex gap-2 tooltip tooltip-right w-28" data-tip="Add a space between keywords, no commas">
+          <label htmlFor="keys">
+            <div className="flex gap-2 tooltip tooltip-right w-28" data-tip="Space between keywords, no commas">
               Keywords
               <Info />
             </div>
-            </label>
+          </label>
           <input
             className="input input-bordered w-full text-3xl"
-            id="keywords"
+            id="keys"
             name="keywords"
             onChange={(e) => setData({ ...data, keywords: e.target.value })}
             placeholder="Keywords"
             required
           />
-          <label htmlFor="bodyText">
+          <label htmlFor="story">
             Your Story 
           </label>
           <textarea
             className="textarea textarea-bordered h-80 text-3xl"
-            id="bodyText"
+            id="story"
             name="bodyText"
             onChange={(e) => setData({ ...data, bodyText: e.target.value })}
             placeholder="Type the first chapter in your story..."

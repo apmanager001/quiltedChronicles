@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Head from "next/head";
 import useStore from "../../store/store";
 import Link from "next/link";
 import { Share2 } from "lucide-react";
@@ -11,8 +10,6 @@ import SharedButtons from "./shareButtons";
 import axiosInstance from "../../../comps/utility/axios";
 import Toolbar from "./toolbar/toolbar";
 import Loading from '../../../comps/utility/loading'
-import MetaData from "./metadata";
-
 
 const ChapterInd = () => {
   const user = useStore((state) => state.user);
@@ -33,7 +30,7 @@ const ChapterInd = () => {
   });
 
   useEffect(() => {
-    const fetchChapter= async () => {
+    const fetchChapter = async () => {
       try {
         const response = await axiosInstance.get(`/chapter/${id}`);
         const {
@@ -62,7 +59,6 @@ const ChapterInd = () => {
           continuationChapters,
         });
         setLoading(true);
-        // onAuthorChange(authorName);
       } catch (error) {
         console.error(error);
       }
@@ -85,24 +81,13 @@ const ChapterInd = () => {
     .split("\n")
     .map((paragraph, index) => <p key={index}>{paragraph}</p>);
 
-  
   return loading ? (
     <>
-      {/* <Head>
-        <title>{chapterTitle || storyTitle}</title>
-        <meta name="description" content={body.slice(0, 150)} />
-        <meta name="keywords" content={chapter.keywords.join(", ")} />
-        <meta property="og:title" content={chapterTitle || storyTitle} />
-        <meta property="og:description" content={body.slice(0, 150)} />
-        <meta property="og:type" content="chapter" />
-        <meta property="og:url" content={`/chapter/${id}`} />
-      </Head> */}
-      <MetaData
-        description={body.slice(0, 150)}
-        title={chapterTitle || storyTitle}
-        keywords={chapter.keywords.join(", ")}
-      />
-
+      <title>
+        {chapter.chapterTitle || chapter.storyTitle}
+      </title>
+      <meta name="description" content={body.slice(0, 150)} />
+      <meta name="keywords" content={chapter.keywords.join(", ")} />
       <div className="flex flex-col p-0 lg:pb-5 lg:h-full ">
         <div className="pl-2">
           <div className="flex flex-col items-start">
@@ -121,7 +106,6 @@ const ChapterInd = () => {
               <div className="font-bold text-red-500 pl-1">
                 <Link
                   href={`/profile/${authorName}`}
-                  onClick={() => handleAuthorSelect(authorName)}
                 >
                   {authorName}
                 </Link>

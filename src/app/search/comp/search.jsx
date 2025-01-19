@@ -42,7 +42,6 @@ const Search = () => {
     }
     setSort(value);
   };
-
   useEffect(() => {
     const fetchData = async () => {
       if (searchTerm && filter === "users") {
@@ -82,6 +81,8 @@ const Search = () => {
     setMiddleColumn("profile");
     setAuthorName(authorName);
   };
+
+  const sortedCards = cards.sort((a, b) => b.likes - a.likes);
   return (
     <AccountPage>
     <div className="flex flex-col w-full items-center p-4 min-h-[500px]">
@@ -97,7 +98,7 @@ const Search = () => {
           onChange={handleSearchChange}
         />
       </div>
-      <div className="flex flex-col md:flex-row items-center gap-4">
+      <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
         <div className="flex gap-2">
           <select
             className="select select-bordered"
@@ -154,7 +155,8 @@ const Search = () => {
                 </Link>
               </div>
             ))
-          : cards.map((card, index) => (
+          : 
+          sortedCards.map((card, index) => (
               <div
                 key={index}
                 className="card bg-base-100 w-72 h-20 shadow-xl p-4"

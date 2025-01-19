@@ -42,6 +42,15 @@ export default function RootLayout({
 
           gtag('config', 'G-CWG0K8DNT9');`}
         </Script>
+        <title>Quilted Chronicles</title>
+        <meta
+          name="description"
+          content="Complete a story as a community. Each user writes a chapter and the next person writes the next one. Each story has multiple middles and endings."
+        />
+        <meta
+          name="keywords"
+          content="chapter, story, book, writing, journal, community"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}

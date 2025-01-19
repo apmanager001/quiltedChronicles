@@ -11,6 +11,7 @@ const UserInfo = () => {
   const user = useStore((state) => state.user);
   const validateSession = useStore((state) => state.validateSession);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -27,6 +28,10 @@ const UserInfo = () => {
     useEffect(() => {
       validateSession();
     }, [validateSession]);
+
+  const closeDrawer = () => {
+    setIsDrawerOpen(false);
+  };
   return (
     <div className="relative">
       {user ? (
@@ -50,6 +55,7 @@ const UserInfo = () => {
                   id="my-drawer"
                   type="checkbox"
                   className="drawer-toggle"
+                  onChange={() => setIsDrawerOpen(!isDrawerOpen)}
                 />
                 <div className="drawer-content flex gap-2 cursor-pointer">
                   <PanelLeftOpen />
@@ -61,7 +67,7 @@ const UserInfo = () => {
                     aria-label="close sidebar"
                     className="drawer-overlay"
                   ></label>
-                  <Drawer />
+                  <Drawer closeDrawer={closeDrawer} />
                 </div>
               </div>
               <Link

@@ -6,39 +6,43 @@ import useStore from '../../store/store';
 import FollowedAuthors from './comps/followedAuthors';
 import Journal from './comps/journal';
 import Chapters from './comps/chapters';
+import Loading from '@/comps/utility/loading';
 
-const Sidebar = () => {
+const Sidebar = ({ closeDrawer }) => {
   const user = useStore((state) => state.user);
-  if (!user) { 
+  if (!user) {
     return (
-      <div className='h-full w-full flex justify-center items-center'>
-        <span className="text-center loading loading-spinner loading-lg text-accent"></span>
-      </div>
-   )}
+      <Loading />
+    );
+  }
+
+  // const handleLinkClick = () => {
+  //   closeDrawer();
+  // };
 
   return (
     <div className="flex flex-col justify-start overflow-y-auto ">
       <ul className="menu rounded-box">
         <li className="text-xl">
-          <Link href={`/profile/${user.userName}`}>
+          <Link href={`/profile/${user.userName}`} >
             <User />
             {user.userName}
           </Link>
         </li>
         <li className="pl-2">
-          <Link href="/createStory">
+          <Link href="/createStory" >
             <Pen />
             Create a Story
           </Link>
         </li>
         <li className="pl-2">
-          <Link href="/settings">
+          <Link href="/settings" >
             <Settings />
             Settings
           </Link>
         </li>
         <li className="pl-2">
-          <Link href="/contact">
+          <Link href="/contact" >
             <MessageSquareMore />
             Contact
           </Link>
@@ -99,6 +103,6 @@ const Sidebar = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar
