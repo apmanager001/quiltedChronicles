@@ -48,6 +48,7 @@ const UserInfo = () => {
                 }}
                 className="flex items-center gap-2 my-2"
                 data-name="profile"
+                aria-label="This link will take you to your profile"
               >
                 <User size={24} /> Profile
               </Link>
@@ -82,16 +83,25 @@ const UserInfo = () => {
             </div>
           )}
           <div className="hidden lg:flex items-center gap-4">
-            <Link href={`/profile/${user.userName}`} data-name="profile">
+            <Link
+              href={`/profile/${user.userName}`}
+              data-name="profile"
+              aria-label="This link will take you to your profile"
+            >
               <User size={32} />
             </Link>
-            <Link href="#" onClick={handleLogout} data-name="logout">
+            <Link
+              href="#"
+              onClick={handleLogout}
+              data-name="logout"
+              aria-label="This link will log you out of your account. "
+            >
               <LogOut size={24} />
             </Link>
           </div>
         </div>
       ) : (
-        <Link href="/login" className="mr-2">
+        <Link href="/login" className="mr-2" aria-label='This link will take you to login page'>
           Sign In
         </Link>
       )}

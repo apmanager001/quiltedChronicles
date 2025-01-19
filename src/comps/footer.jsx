@@ -11,12 +11,12 @@ const Footer = () => {
               href="#"
               aria-label="Brand"
             >
-              Quilted Chronicles
+              <h1>Quilted Chronicles</h1>
             </a>
           </div>
 
           <div className="col-span-1">
-            <h4 className="font-semibold">About Us</h4>
+            <h2 className="font-semibold">About Us</h2>
 
             <div className="mt-3 grid space-y-3">
               <p>
@@ -63,7 +63,7 @@ const Footer = () => {
           </div>
 
           <div className="col-span-1">
-            <h4 className="font-semibold">Account</h4>
+            <h2 className="font-semibold">Account</h2>
 
             <div className="mt-3 grid space-y-3">
               <p>

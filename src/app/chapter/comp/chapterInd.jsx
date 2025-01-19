@@ -146,7 +146,11 @@ const ChapterInd = () => {
                 className="tooltip tooltip-right tooltip-accent"
                 data-tip="Previous Chapter"
               >
-                <Link href={`/chapter/${previousChapter}`} data-name="lastChapter">
+                <Link
+                  href={`/chapter/${previousChapter}`}
+                  data-name="lastChapter"
+                  aria-label="This link will take you to the last chapter in the story"
+                >
                   <ArrowBigLeft size={40} fill="red" />
                 </Link>
               </div>
@@ -156,7 +160,11 @@ const ChapterInd = () => {
                 className="tooltip tooltip-right tooltip-accent mr-10"
                 data-tip="Jump to First Story"
               >
-                <Link href={`/chapter/${storyId}`} data-name="firstChapter">
+                <Link
+                  href={`/chapter/${storyId}`}
+                  data-name="firstChapter"
+                  aria-label="This link will take you to the first chapter in the story"
+                >
                   <Rewind size={40} fill="red" />
                 </Link>
               </div>
