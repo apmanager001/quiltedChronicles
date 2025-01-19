@@ -64,7 +64,7 @@ const Sidebar = ({ closeDrawer }) => {
       </ul>
 
       <div className="collapse collapse-arrow ">
-        <label htmlFor="authors" className="hidden"></label>
+        <label htmlFor="authors" className="sr-only">Authors</label>
         <input type="radio" id="authors" name="accordion" />
         <div className="collapse-title text-l font-medium">
           <div className="flex gap-2">
@@ -78,7 +78,9 @@ const Sidebar = ({ closeDrawer }) => {
       </div>
 
       <div className="collapse collapse-arrow ">
-        <label htmlFor="chapters" className="hidden"></label>
+        <label htmlFor="chapters" className="sr-only">
+          Chapters
+        </label>
         <input type="radio" id="chapters" name="accordion" />
         <div className="collapse-title text-l font-medium">
           <div className="flex gap-2">
@@ -92,8 +94,10 @@ const Sidebar = ({ closeDrawer }) => {
       </div>
 
       <div className="collapse collapse-arrow ">
-        <label htmlFor="journal" className="hidden"></label>
-        <input type="radio" id='journal' name="accordion" />
+        <label htmlFor="journal" className="sr-only">
+          Journal
+        </label>
+        <input type="radio" id="journal" name="accordion" />
         <div className="collapse-title text-l font-medium">
           <div className="flex gap-2">
             <Bookmark />

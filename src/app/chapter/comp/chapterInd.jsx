@@ -83,9 +83,7 @@ const ChapterInd = () => {
 
   return loading ? (
     <>
-      <title>
-        {chapter.chapterTitle || chapter.storyTitle}
-      </title>
+      <title>{chapter.chapterTitle || chapter.storyTitle}</title>
       <meta name="description" content={body.slice(0, 150)} />
       <meta name="keywords" content={chapter.keywords.join(", ")} />
       <div className="flex flex-col p-0 lg:pb-5 lg:h-full ">
@@ -104,11 +102,7 @@ const ChapterInd = () => {
             <div className="flex items-center py-2 gap-2">
               <div className="text-sm">By:</div>
               <div className="font-bold text-red-500 pl-1">
-                <Link
-                  href={`/profile/${authorName}`}
-                >
-                  {authorName}
-                </Link>
+                <Link href={`/profile/${authorName}`}>{authorName}</Link>
               </div>
               <div className="ml-2">
                 {user && user.userName === authorName ? (
@@ -152,7 +146,7 @@ const ChapterInd = () => {
                 className="tooltip tooltip-right tooltip-accent"
                 data-tip="Previous Chapter"
               >
-                <Link href={`/chapter/${previousChapter}`} name='lastChapter'>
+                <Link href={`/chapter/${previousChapter}`} data-name="lastChapter">
                   <ArrowBigLeft size={40} fill="red" />
                 </Link>
               </div>
@@ -162,7 +156,7 @@ const ChapterInd = () => {
                 className="tooltip tooltip-right tooltip-accent mr-10"
                 data-tip="Jump to First Story"
               >
-                <Link href={`/chapter/${storyId}`} name='firstChapter'>
+                <Link href={`/chapter/${storyId}`} data-name="firstChapter">
                   <Rewind size={40} fill="red" />
                 </Link>
               </div>
