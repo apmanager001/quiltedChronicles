@@ -1,12 +1,12 @@
 import React from 'react'
-import Chapter from '../comp/chapter'
+import Chain from '../comp/chain'
 
 const Page = () => {
   return (
     <div>
-      <Chapter />
+      <Chain />
     </div>
-);
+  )
 }
 
 export default Page

@@ -35,39 +35,6 @@ const Chapter = () => {
     <AccountPage>
       <div className="flex flex-row justify-center lg:min-h-full w-full gap-5 p-5">
         <div className="flex flex-col w-full">
-          {/* <div
-          role="tablist"
-          className="tabs tabs-bordered flex flex-row justify-between items-center p-3"
-        >
-          <Link
-            href="#"
-            role="tab"
-            className={`tab ${activeTab === "Chapter" ? "tab-active" : ""}`}
-            onClick={() => handleContentChange("Chapter")}
-          >
-            Chapter
-          </Link>
-
-          <Link
-            href="#"
-            role="tab"
-            className={`tab ${
-              activeTab === "Create Story" ? "tab-active" : ""
-            }`}
-            onClick={() => handleContentChange("Create Story")}
-          >
-            Add Chapter
-          </Link>
-
-          <Link
-            href="#"
-            role="tab"
-            className={`tab ${activeTab === "Story Chain" ? "tab-active" : ""}`}
-            onClick={() => handleContentChange("Story Chain")}
-          >
-            Story Chain
-          </Link>
-        </div> */}
           <div className="flex-2 flex justify-center items-center w-full">
             {middleColumn === "chapter" && (
               <div>

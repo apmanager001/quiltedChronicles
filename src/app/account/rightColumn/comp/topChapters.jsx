@@ -36,7 +36,10 @@ const TopChapters = () => {
       {chapters.map((chapter, index) => (
         <div key={index} className="flex flex-col gap-2 ">
           <div className="flex justify-between items-center gap-2">
-            <Link href={`/chapter/${chapter.chapterId}`}>
+            <Link
+              href={`/chapter/${chapter.chapterId}`}
+              onClick={() => setMiddleColumn("chapter")}
+            >
               <h2 className="btn btn-ghost btn-sm  text-left">
                 {chapter.chapterTitle || chapter.storyTitle}
               </h2>

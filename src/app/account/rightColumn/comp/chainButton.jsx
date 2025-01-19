@@ -1,26 +1,31 @@
 import React from 'react'
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import accountStore from '../../../store/accountStore';
 
 const Buttons = () => {
+  const { id } = useParams();
     const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
 
   return (
     <div className="flex justify-center gap-2 flex-wrap">
-      <button
+      <Link
+        href={`/chapter/${id}`}
         className="btn btn-accent btn-sm"
         onClick={() => setMiddleColumn("chapter")}
       >
         Chapter
-      </button>
-      <button className="btn btn-accent btn-sm" onClick={() => setMiddleColumn("add")}>
-        Add a Chapter
-      </button>
-      <button
+      </Link>
+      <Link
+        href={`/chapter/${id}`}
         className="btn btn-accent btn-sm"
-        onClick={() => setMiddleColumn("chain")}
+        onClick={() => setMiddleColumn("add")}
       >
+        Add a Chapter
+      </Link>
+      <Link href={`/chain/${id}`} className="btn btn-accent btn-sm">
         View Full Chain
-      </button>
+      </Link>
     </div>
   );
 }

@@ -50,27 +50,38 @@ const NextStory = () => {
     <div className="pl-2 pt-4 min-h-96 flex flex-col">
       <p className="text-xl font-bold">Continue the Story!</p>
       <ul className="pt-2 pl-2 flex-grow">
-        {chapters.length === 0
-          ? <li>No Chapters Yet</li>
-          : topFiveChapters.map((chapters, index) => (
-              <li key={index} className="pt-2 flex justify-around items-center mr-10">
-                <Link href={`/chapter/${chapters.chapterId}`}>
-                  <button className="btn btn-ghost">
-                    {chapters.chapterTitle || chapters.storyTitle}
-                  </button>
-                </Link>
-                <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">
-                  <Heart color="red" fill="red" />
-                  {chapters.likes}
-                </div>
-              </li>
-            ))}
+        {chapters.length === 0 ? (
+          <li>No Chapters Yet</li>
+        ) : (
+          topFiveChapters.map((chapters, index) => (
+            <li
+              key={index}
+              className="pt-2 flex justify-around items-center mr-10"
+            >
+              <Link
+                href={`/chapter/${chapters.chapterId}`}
+                onClick={() => setMiddleColumn("chapter")}
+              >
+                <button className="btn btn-ghost">
+                  {chapters.chapterTitle || chapters.storyTitle}
+                </button>
+              </Link>
+              <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">
+                <Heart color="red" fill="red" />
+                {chapters.likes}
+              </div>
+            </li>
+          ))
+        )}
         {remainingChapters.length > 0 && (
           <div>
             {showMore &&
               remainingChapters.map((chapter, index) => (
                 <div key={index} className="pt-2 flex justify-around mr-10">
-                  <Link to={link(chapter)}>
+                  <Link
+                    to={link(chapter)}
+                    onClick={() => setMiddleColumn("chapter")}
+                  >
                     <p>{name(chapter)}</p>
                   </Link>
                   <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">

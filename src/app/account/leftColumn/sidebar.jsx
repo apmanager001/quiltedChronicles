@@ -16,10 +16,6 @@ const Sidebar = ({ closeDrawer }) => {
     );
   }
 
-  // const handleLinkClick = () => {
-  //   closeDrawer();
-  // };
-
   return (
     <div className="flex flex-col justify-start overflow-y-auto ">
       <ul className="menu rounded-box">

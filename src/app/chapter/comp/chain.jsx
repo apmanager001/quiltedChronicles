@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import axiosInstance from "../../../comps/utility/axios";
 
+
 const Chain = () => {
   const { id } = useParams();
   const [chain, setChain] = useState([]);

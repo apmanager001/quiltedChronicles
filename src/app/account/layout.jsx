@@ -28,14 +28,14 @@ const AccountPage = ({children}) => {
       ) : (
         " "
       )}
-      {pathname && pathname.startsWith("/chapter") ? (
+      {pathname && (pathname.startsWith("/chapter") || pathname.startsWith("/chain")) ? (
       <div className="lg:hidden flex justify-center gap-2 p-4 bg-base-300 ">
         <Buttons />
       </div>
        ) : ("")}
       <main className={`flex-1 p-4 ${universalDiv}`}>{children}</main>
       <div className="flex-2 w-full lg:max-w-96 flex flex-col lg:gap-2 ">
-        {pathname && pathname.startsWith("/chapter") ? (
+        {pathname && (pathname.startsWith("/chapter") || pathname.startsWith("/chain")) ? (
           <>
             <div
               className={`hidden lg:flex justify-center items-center w-full xl:max-w-96 p-4 ${universalDiv}`}
