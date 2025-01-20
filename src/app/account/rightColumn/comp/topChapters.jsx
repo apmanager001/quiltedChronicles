@@ -1,12 +1,14 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../../../comps/utility/axios";
+import Loading from '../../../../comps/utility/loading'
 import validator from 'validator'
 import Link from "next/link";
 import { Heart, User } from "lucide-react";
 
 const TopChapters = () => {
-     const [chapters, setChapters] = useState([]);
+  const [chapters, setChapters] = useState([]);
+  const [loading, setLoading] = useState(true)
 
      const dateNoTime = (dateString) => {
        const date = new Date(dateString);
@@ -25,6 +27,7 @@ const TopChapters = () => {
            );
            const topChapters = sortedChapters.slice(0, 3);
            setChapters(topChapters);
+           setLoading(false)
          } catch (error) {
            console.error(error);
          }
@@ -32,6 +35,8 @@ const TopChapters = () => {
        fetchChapter();
      }, []);
   return (
+    <>
+    {loading ? (<Loading />) : (
     <div className="flex flex-col gap-4 mx-4">
       <h3 className="text-center font-bold">Top of all Chapters</h3>
       {chapters.map((chapter, index) => (
@@ -66,6 +71,8 @@ const TopChapters = () => {
         </div>
       ))}
     </div>
+    )}
+  </>
   );
 }
 

@@ -1,5 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
+import validator from 'validator'
+import Loading from "@/comps/utility/loading";
 import { useParams } from "next/navigation";
 import { Heart } from "lucide-react";
 import accountStore from "../../store/accountStore";
@@ -13,7 +15,6 @@ const NextStory = () => {
   const [chapters, setChapters] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const chaptersArray = Array.isArray(chapters) ? chapters : [];
   useEffect(() => {
     const fetchChapter = async () => {
       try {
@@ -47,23 +48,26 @@ const NextStory = () => {
   const link = (chapter) => `/chapter/${chapter.chapterId}`;
   const name = (chapter) => chapter.chapterTitle;
   return (
+    <>
+    {loading ? (<Loading /> ): (
     <div className="pl-2 pt-4 min-h-96 flex flex-col">
       <p className="text-xl font-bold">Continue the Story!</p>
-      <ul className="pt-2 pl-2 flex-grow">
+      <ul className="pt-2  flex-grow">
         {chapters.length === 0 ? (
           <li>No Chapters Yet</li>
         ) : (
           topFiveChapters.map((chapters, index) => (
             <li
               key={index}
-              className="pt-2 flex justify-around items-center mr-10"
+              className="pt-2 flex justify-between items-center mr-10"
             >
               <Link
                 href={`/chapter/${chapters.chapterId}`}
                 onClick={() => setMiddleColumn("chapter")}
               >
                 <button className="btn btn-ghost">
-                  {chapters.chapterTitle || chapters.storyTitle}
+                  {validator.unescape(chapters.chapterTitle || "") ||
+                    validator.unescape(chapters.storyTitle || "")}
                 </button>
               </Link>
               <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">
@@ -105,6 +109,8 @@ const NextStory = () => {
         </button>
       </div>
     </div>
+    )}
+    </>
   );
 };
 

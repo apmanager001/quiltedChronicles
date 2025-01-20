@@ -1,12 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axiosInstance from "../../../../comps/utility/axios";3
+import axiosInstance from "../../../../comps/utility/axios";
+import Loading from "@/comps/utility/loading";
 import validator from 'validator'
 import Link from "next/link";
 import { Heart, User } from "lucide-react";
 
 const TopStories = () => {
   const [chapters, setChapters] = useState([]);
+  const [loading, setLoading] =useState(true)
 
   const dateNoTime = (dateString) => {
     const date = new Date(dateString);
@@ -25,6 +27,7 @@ const TopStories = () => {
         const sortedChapters = filteredChapters.sort((a, b) => b.likes - a.likes);
         const topChapters = sortedChapters.slice(0, 3);
         setChapters(topChapters);
+        setLoading(false)
       } catch (error) {
         console.error(error);
       }
@@ -33,6 +36,8 @@ const TopStories = () => {
   }, []);
   
   return (
+    <>
+    {loading ? (<Loading />) : (
     <div className="flex flex-col gap-4 mx-4">
       <h3 className="text-center font-bold">Top First Chapters in a Story</h3>
       {chapters.map((chapter, index) => (
@@ -66,6 +71,8 @@ const TopStories = () => {
         </div>
       ))}
     </div>
+  )}
+  </>
   );
 };
 

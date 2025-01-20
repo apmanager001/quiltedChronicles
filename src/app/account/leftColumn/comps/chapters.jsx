@@ -40,7 +40,8 @@ const Chapters = () => {
                       href={`/chapter/${chapters.chapterId}`}
                       onClick={() => setMiddleColumn("chapter")}
                     >
-                      {chapters.entryTitle || chapters.storyTitle}
+                      {validator.unescape(chapters.chapterTitle || "") ||
+                        validator.unescape(chapters.storyTitle || "")}
                     </Link>
                     <p className="flex items-center gap-2">
                       <Heart color="red" fill="red" />

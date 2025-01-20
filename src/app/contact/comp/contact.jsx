@@ -120,7 +120,7 @@ const Contact = () => {
             required
           ></textarea>
 
-          <div className="flex flex-row justify-center text-xl">
+          <div className="flex flex-row justify-center text-xl my-2">
             <input
               type="checkbox"
               className="checkbox mr-2"
