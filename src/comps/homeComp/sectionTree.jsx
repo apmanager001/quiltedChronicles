@@ -145,7 +145,7 @@ const SectionTree = () => {
   );
 
   return (
-    <div className="flex justify-center w-full">
+    <div className="hidden md:flex justify-center w-full ">
       <div className="w-[800px] h-[500px] font-bold my-10">
         <h2 className="text-center my-10">Full Story Chain</h2>
         <ReactFlow

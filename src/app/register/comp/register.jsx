@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
 import axiosInstance from "../../../comps/utility/axios";
-import Link from "next/link";
 
 
 const CreateStory = () => {
