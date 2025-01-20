@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../../../comps/utility/axios";
+import validator from 'validator'
 import Link from "next/link";
 import { Heart, User } from "lucide-react";
 
@@ -41,7 +42,7 @@ const TopChapters = () => {
               onClick={() => setMiddleColumn("chapter")}
             >
               <h2 className="btn btn-ghost btn-sm  text-left">
-                {chapter.chapterTitle || chapter.storyTitle}
+                {validator.unescape(chapter.chapterTitle || "") || validator.unescape(chapter.storyTitle || "")}
               </h2>
             </Link>
             <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">

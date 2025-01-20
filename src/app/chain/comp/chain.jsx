@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import validator from 'validator'
 import { useParams } from "next/navigation";
 import axiosInstance from "../../../comps/utility/axios";
 import AccountPage from "../../account/layout";
@@ -32,7 +33,9 @@ const Chain = () => {
   const processText = (text) => {
     return text
       .split("\n")
-      .map((paragraph, index) => <p key={index}>{paragraph}</p>);
+      .map((paragraph, index) => (
+        <p key={index}>{validator.unescape(paragraph)}</p>
+      ));
   };
 // console.log(chain[0])
   return (
@@ -41,17 +44,19 @@ const Chain = () => {
         <>
           {chain.length > 0 && (
             <>
-              <title>{chain[0].storyTitle}</title>
+              <title>{validator.unescape(chain[0].storyTitle)}</title>
               <meta
                 name="description"
-                content={chain[0].bodyText.slice(0, 150)}
+                content={validator.unescape(chain[0].bodyText).slice(0, 150)}
               />
               <meta name="keywords" content={chain[0].keywords.join(", ")} />
             </>
           )}
           <div className="mx-4">
             <h1 className="text-center font-bold">Full Story Chain</h1>
-            <h2 className="text-center py-5">{storyTitle}</h2>
+            <h2 className="text-center py-5">
+              {validator.unescape(storyTitle)}
+            </h2>
             <div className="flex justify-center lg:justify-end  items-center gap-4 w-full mb-4">
               <Share2 size={32} />
               <ShareButtons />
@@ -67,7 +72,8 @@ const Chain = () => {
                     onClick={() => setMiddleColumn("chapter")}
                   >
                     <h3 className="hover:text-neutral text-sm">
-                      {chapter.chapterTitle || chapter.storyTitle}
+                      {validator.unescape(chapter.chapterTitle || "") ||
+                        validator.unescape(chapter.storyTitle || "")}
                     </h3>
                   </Link>
                   <Link href={`/profile/${chapter.authorName}`}>

@@ -36,26 +36,28 @@ const FollowedAuthors = () => {
 
   return (
     <div>
-      {followedAuthors.length === 0
-        ? "No followed Authors yet"
-        : topFiveAuthors.map((author, index) => (
-            <div key={index}>
-              <ul className=" menu menu-xs rounded-box  gap-2">
-                <li className="flex flex-row justify-between items-center">
-                  <Link
-                    href={`/profile/${author.userName}`}
-                    className="btn btn-ghost btn-sm text-md"
-                  >
-                    {author.userName}
-                  </Link>
-                  <DeleteAuthor
-                    id={author.userId}
-                    onDeleteAuthor={() => toggleDeleteAuthor(author.userId)}
-                  />
-                </li>
-              </ul>
-            </div>
-          ))}
+      {followedAuthors.length === 0 ? (
+        <span className="text-sm pl-4">No followed Authors yet</span>
+      ) : (
+        topFiveAuthors.map((author, index) => (
+          <div key={index}>
+            <ul className=" menu menu-xs rounded-box  gap-2">
+              <li className="flex flex-row justify-between items-center">
+                <Link
+                  href={`/profile/${author.userName}`}
+                  className="btn btn-ghost btn-sm text-md"
+                >
+                  {author.userName}
+                </Link>
+                <DeleteAuthor
+                  id={author.userId}
+                  onDeleteAuthor={() => toggleDeleteAuthor(author.userId)}
+                />
+              </li>
+            </ul>
+          </div>
+        ))
+      )}
       {remainingAuthors.length > 0 && (
         <div>
           {showMore &&

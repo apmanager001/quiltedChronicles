@@ -8,13 +8,13 @@ export default {
   ],
   daisyui: {
     themes: [
-      "light",
-      "dark",
-      "retro",
+      // "light",
+      // "dark",
+      // "retro",
       "coffee",
-      "cyberpunk",
-      "valentine",
-      "aqua",
+      // "cyberpunk",
+      // "valentine",
+      // "aqua",
     ],
   },
   theme: {

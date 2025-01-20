@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
+import validator from 'validator'
 import useStore from "../../../store/store";
 import accountStore from "../../../store/accountStore";
 import MoreButton from "./more";
@@ -33,32 +34,46 @@ const Journal = () => {
 
   return (
     <div>
-      {journal.length === 0
-        ? "No Bookmarks Yet"
-        : topFiveChapters.map((chapters, index) => (
-            <div key={index}>
-              <ul className="menu menu-xs justify-start rounded-box gap-2">
-                <li>
-                  <Link href={`/chapter/${chapters.chapterId}`} className="p-3">
-                    {chapters.chapterTitle || chapters.storyTitle}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          ))}
+      {journal.length === 0 ? (
+        <span className="text-sm pl-4">No Bookmarks Yet</span>
+      ) : (
+        topFiveChapters.map((chapters, index) => (
+          <div
+            key={index}
+            className="menu menu-xs justify-start rounded-box"
+          >
+              <li>
+                <Link
+                  href={`/chapter/${chapters.chapterId}`}
+                  onClick={() => setMiddleColumn("chapter")}
+                >
+                  {validator.unescape(chapters.chapterTitle || "") ||
+                    validator.unescape(chapters.storyTitle || "")}
+                </Link>
+              </li>
+          </div>
+        ))
+      )}
       {remainingChapters.length > 0 && (
         <div>
           {showMore &&
             remainingChapters.map((journal, index) => (
-              <div key={index} className="w-20">
+              <div key={index} className="">
                 <ul className="menu menu-xs justify-start rounded-box gap-2">
                   <li>
-                    <Link href={link(journal)}>{name(journal)}</Link>
+                    <Link
+                      href={link(journal)}
+                      onClick={() => setMiddleColumn("chapter")}
+                    >
+                      {name(journal)}
+                    </Link>
                   </li>
                 </ul>
               </div>
             ))}
-          <MoreButton showMore={showMore} handleShowMore={handleShowMore} />
+          <div className="w-full flex justify-center">
+            <MoreButton showMore={showMore} handleShowMore={handleShowMore} />
+          </div>
         </div>
       )}
     </div>

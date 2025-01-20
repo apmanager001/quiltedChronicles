@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import validator from 'validator'
 import useStore from "../../store/store";
 import Head from "next/head";
 import { User } from "lucide-react";
@@ -53,7 +54,7 @@ const Profile = () => {
 
         setUserInfo(response.data[0]);
         setEntries(response.data[0].publishedChapters);
-        setBio(response.data[0].bio || "No Bio has been setup yet");
+        setBio(validator.unescape(response.data[0].bio) || "No Bio has been setup yet");
         setLoading(true);
       } catch (err) {
         console.error("Error:", err.message);
@@ -135,13 +136,13 @@ const Profile = () => {
                   ) : (
                     <div className="pl-7">
                       {entries.length === 0
-                        ? "No Entries Yet"
+                        ? <span>No Entries Yet</span>
                         : entries.map((chapter, index) => (
                             <div key={index}>
                               <ul className="menu menu-s rounded-box">
                                 <li>
                                   <Link href={`/chapter/${chapter.chapterId}`}>
-                                    {chapter.chapterTitle || chapter.storyTitle}
+                                    {validator.unescape(chapter.chapterTitle || "") || validator.unescape(chapter.storyTitle || "")}
                                   </Link>
                                 </li>
                               </ul>

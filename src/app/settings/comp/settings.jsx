@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import Loading from "../../../comps/utility/loading"
+import validator from "validator";
 // import DarkMode from "../../context/darkmode/DarkMode";
 import useStore from "../../store/store";
 import axiosInstance from "../../../comps/utility/axios";
@@ -21,38 +22,39 @@ const Settings = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+ 
   const handleRadioChange = (e) => {
     const value = e.target.value === "public";
     setEmailPublic(value);
   };
 
   const handleTextAreaChange = (e) => setBio(e.target.value);
-  
-  useEffect(() => {
-    if (!user) return;
-    axiosInstance
-      .get(`/profile`)
-      .then((response) => {
-        const settings = response.data;
-        setEmailPublic(settings.publishEmail);
-        setDarkMode(settings.darkMode);
-        setBio(settings.bio);
-        setLoading(false);
-        setEmail(settings.email);
-        setIsVerified(settings.emailVerified);
-      })
-      .catch((error) => {
-        console.error("There was an error getting user settings", error);
-      });
-  }, [user]);
+      useEffect(() => {
+        if (!user) return;
+        axiosInstance
+          .get(`/profile`)
+          .then((response) => {
+            const settings = response.data;
+            setEmailPublic(settings.publishEmail);
+            setDarkMode(settings.darkMode);
+            setBio(validator.unescape(settings.bio));
+            setLoading(false);
+            setEmail(settings.email);
+            setIsVerified(settings.emailVerified);
+          })
+          .catch((error) => {
+            console.error("There was an error getting user settings", error);
+          });
+      }, [user]);
 
-  const handleTextAreaButtonClick = () => {
-    const settingsData = {
-      publishEmail: emailPublic,
-      email,
-      darkMode,
-      bio,
-    };
+      const handleTextAreaButtonClick = () => {
+
+        const settingsData = {
+          publishEmail: emailPublic,
+          email,
+          darkMode,
+          bio,
+        };
 
     axiosInstance
       .put("/profile", settingsData)
@@ -121,14 +123,14 @@ const Settings = () => {
           <>
             <div className="p-10">Your Settings</div>
             <div className="flex flex-col gap-5 w-full">
-              <div className="flex h-24 w-full items-center justify-center">
+              {/* <div className="flex h-24 w-full items-center justify-center">
                 <div className="flex flex-col w-1/3 font-bold">
                   Set Your Color Scheme:
                 </div>
                 <div className="flex flex-col justify-center items-center w-2/3">
                   <ThemeSelector />
                 </div>
-              </div>
+              </div> */}
               {/* <div className="flex w-full items-center justify-center h-32">
                 <div className="flex flex-col w-1/3">Your Story Font:</div>
                 <div className="flex flex-col justify-center items-center w-2/3">

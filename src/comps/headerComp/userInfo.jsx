@@ -101,7 +101,7 @@ const UserInfo = () => {
           </div>
         </div>
       ) : (
-        <Link href="/login" className="mr-2" aria-label='This link will take you to login page'>
+        <Link href="/login" className="mr-2 btn btn-ghost" aria-label='This link will take you to login page'>
           Sign In
         </Link>
       )}

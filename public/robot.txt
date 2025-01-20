@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /private/
+Disallow: /account/
+Allow: /public/
+
+Sitemap: https://www.quiltedchronicles.com/sitemap.xml

@@ -74,6 +74,7 @@ const CreateStory = () => {
                 onChange={(e) => setData({ ...data, userName: e.target.value })}
                 required
                 autoComplete="false"
+                minLength={6}
               />
             </div>
             <div className="form-control">

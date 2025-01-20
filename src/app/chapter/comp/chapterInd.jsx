@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import useStore from "../../store/store";
+import validator from 'validator'
 import Link from "next/link";
 import { Share2 } from "lucide-react";
 import { useParams } from "next/navigation";
@@ -77,14 +78,16 @@ const ChapterInd = () => {
     continuationChapters,
   } = chapterData;
 
-  const paragraphs = body
-    .split("\n")
-    .map((paragraph, index) => <p key={index}>{paragraph}</p>);
-
+    const paragraphs = body
+      .split("\n")
+      .map((paragraph, index) => (
+        <p key={index}>{validator.unescape(paragraph)}</p>
+      ));
+  
   return loading ? (
     <>
       <title>{chapter.chapterTitle || chapter.storyTitle}</title>
-      <meta name="description" content={body.slice(0, 150)} />
+      <meta name="description" content={body.slice(0, 50)} />
       <meta name="keywords" content={chapter.keywords.join(", ")} />
       <div className="flex flex-col p-0 lg:pb-5 lg:h-full ">
         <div className="pl-2">
@@ -120,14 +123,16 @@ const ChapterInd = () => {
           <div className="flex items-center py-2">
             <div className="flex items-center gap-2">
               <div className="text-sm">Main Story Title: </div>
-              <div className="font-bold">{storyTitle}</div>
+              <div className="font-bold">{validator.unescape(storyTitle)}</div>
             </div>
           </div>
           <div className="flex items-center py-2">
             {chapterTitle && (
               <div className="flex items-center gap-2">
                 <div className="text-sm">This Chapter Title:</div>
-                <div className="font-bold">{chapterTitle}</div>
+                <div className="font-bold">
+                  {validator.unescape(chapterTitle)}
+                </div>
               </div>
             )}
           </div>
