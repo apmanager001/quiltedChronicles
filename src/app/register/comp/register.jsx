@@ -1,15 +1,12 @@
 'use client'
 import React, { useState } from "react";
-import { useRouter } from "next/router";
+import Link from "next/link";
+import { toast } from "react-hot-toast";
+import axiosInstance from "../../../comps/utility/axios";
 import Link from "next/link";
 
-// import axios from "axios";
-// import { Link } from "react-router-dom";
-// import { toast } from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
 
 const CreateStory = () => {
-//   const navigate = useRouter();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -30,7 +27,7 @@ const CreateStory = () => {
     }
 
     try {
-      const { data } = await axios.post("/register", {
+      const { data } = await axiosInstance.post("/register", {
         email,
         password,
         userName,
@@ -41,7 +38,7 @@ const CreateStory = () => {
         setData({});
         setValue({});
         toast.success("Register Successful. Welcome!");
-        // navigate.push("/login");
+        window.location.href = "/login";
       }
     } catch (error) {
       if (error.response && error.response.status === 409) {
