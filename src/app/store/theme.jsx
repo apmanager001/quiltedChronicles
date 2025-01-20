@@ -26,13 +26,13 @@ const ThemeSelector = () => {
         value={theme}
         onChange={handleThemeChange}
       >
-        <option value="dark">Dark</option>
-        <option value="light">Light</option>
+        {/* <option value="dark">Dark</option>
+        <option value="light">Light</option> */}
         <option value="coffee">Coffee</option>
-        <option value="retro">Retro</option>
+        {/* <option value="retro">Retro</option>
         <option value="cyberpunk">Cyberpunk</option>
         <option value="valentine">Valentine</option>
-        <option value="aqua">Aqua</option>
+        <option value="aqua">Aqua</option> */}
       </select>
     </div>
   );
