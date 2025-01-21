@@ -21,7 +21,7 @@ const AccountPage = ({children}) => {
     <div className="flex flex-col lg:flex-row lg:gap-4 lg:p-6 xl:p-12 bg-gradient-to-b from-base-100 via-base-100 to-neutral">
       {user ? (
         <div
-          className={`hidden lg:block flex-2 max-w-60 xl:max-w-72 p-4 ${transition}`}
+          className={`hidden lg:block flex-2 max-w-60 xl:max-w-72 p-4 ${universalDiv}`}
         >
           <Sidebar />
         </div>

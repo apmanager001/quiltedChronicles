@@ -22,10 +22,9 @@ const useStore = create((set, get) => ({
             user: data, 
             loading: false, 
         }); 
-        console.log(data); 
-        console.log("userContext logged in"); 
+        // console.log(data); 
     } catch (error) { 
-        console.error("Error fetching user:", error); 
+        // console.error("Error fetching user:", error); 
         set({ user: null, loading: false }); 
         }
     },
