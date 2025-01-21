@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import "daisyui/dist/full.css";
 
 const ThemeSelector = () => {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("coffee");
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "dark";
+    const savedTheme = localStorage.getItem("theme") || "coffee";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
   }, []);

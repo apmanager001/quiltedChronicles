@@ -7,8 +7,8 @@ import validator from "validator";
 import useStore from "../../store/store";
 import axiosInstance from "../../../comps/utility/axios";
 import AccountPage from "../../account/layout";
-import ThemeSelector from "../../store/theme";
-import FontSelector from "../../store/font";
+// import ThemeSelector from "../../store/theme";
+// import FontSelector from "../../store/font";
 
 const Settings = () => {
   const user = useStore((state) => state.user);
