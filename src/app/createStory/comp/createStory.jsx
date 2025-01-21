@@ -33,10 +33,9 @@ const CreateStory = () => {
           return;
         }
         const keywordsArray = keywords.split(" ").filter(Boolean);
-        const stringifiedBodyText = JSON.stringify(bodyText);
         const { data } = await axiosInstance.post("/chapter", {
           storyTitle,
-          bodyText: stringifiedBodyText,
+          bodyText,
           keywords: keywordsArray,
         });
         if (data.error) {
