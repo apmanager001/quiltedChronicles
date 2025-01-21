@@ -121,7 +121,11 @@ const Footer = () => {
             <p className="text-sm ">© 2025 Quilted Chronicles.</p>
           </div>
 
-          <div>Socials</div>
+          <div>
+            <a href="mailto:contact@quiltedchronicles.com">
+              contact@quiltedchronicles.com
+            </a>
+          </div>
         </div>
       </div>
     </footer>
