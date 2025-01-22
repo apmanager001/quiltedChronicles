@@ -50,7 +50,7 @@ const CreateStory = () => {
   return (
     <div className="hero min-h-screen">
       <div className="hero-content flex-col gap-14 lg:flex-row-reverse">
-        <div className="text-center lg:text-left w-96">
+        <div className="text-center lg:text-left md:w-96">
           <h1 className="text-5xl font-bold">Register</h1>
           <p className="py-6">
             Start here to be able to interact with our community! You need an

@@ -20,7 +20,7 @@ const Profile = () => {
   const [showMore, setShowMore] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [bio, setBio] = useState("No Bio has been setup yet");
-  const [entries, setEntries] = useState([]);
+  const [chapters, setChapters] = useState([]);
   const [admin, setAdmin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activeContent, setActiveContent] = useState("bio");
@@ -53,7 +53,7 @@ const Profile = () => {
         }
 
         setUserInfo(response.data[0]);
-        setEntries(response.data[0].publishedChapters);
+        setChapters(response.data[0].publishedChapters);
         setBio(validator.unescape(response.data[0].bio) || "No Bio has been setup yet");
         setLoading(true);
       } catch (err) {
@@ -85,7 +85,7 @@ const Profile = () => {
             <meta property="og:type" content="profile" />
             <meta property="og:url" content={`/profile/${id}`} />
           </Head>
-          <div className="flex flex-col w-full px-5 ">
+          <div className="flex flex-col w-full min-h-[600px] ">
             <div className="flex flex-col justify-center w-full py-4 md:py-20  md:flex-row">
               <div className="flex flex-col rounded h-full w-full  p-7">
                 <div className="w-full flex flex-col md:flex-row items-center justify-center border-b-2 p-2 gap-6">
@@ -135,9 +135,9 @@ const Profile = () => {
                     </div>
                   ) : (
                     <div className="pl-7">
-                      {entries.length === 0
-                        ? <span>No Entries Yet</span>
-                        : entries.map((chapter, index) => (
+                      {chapters.length === 0
+                        ? <span>No Chapters Yet</span>
+                        : chapters.map((chapter, index) => (
                             <div key={index}>
                               <ul className="menu menu-s rounded-box">
                                 <li>

@@ -1,7 +1,9 @@
 'use client'
 import React from 'react'
 import Link from 'next/link';
-import { Library, Bookmark, UserRoundPen, Pen, Settings, Lock, MessageSquareMore, Search, User } from 'lucide-react';
+import axiosInstance from '@/comps/utility/axios';
+import toast from 'react-hot-toast';
+import { Library, Bookmark, UserRoundPen, Pen, Settings, Lock, MessageSquareMore, Search, User, LogOut } from 'lucide-react';
 import useStore from '../../store/store';
 import FollowedAuthors from './comps/followedAuthors';
 import Journal from './comps/journal';
@@ -15,6 +17,15 @@ const Sidebar = ({ closeDrawer }) => {
       <Loading />
     );
   }
+
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post("/logout");
+      window.location.href = "/login";
+    } catch (error) {
+      toast.error(error);
+    }
+  };
 
   return (
     <div className="flex flex-col justify-start overflow-y-auto ">
@@ -49,6 +60,18 @@ const Sidebar = ({ closeDrawer }) => {
             Search
           </Link>
         </li>
+        <li className="pl-2">
+          <Link
+            href="/search"
+            className="hover:bg-red-600 hover:text-white"
+            onClick={handleLogout}
+            data-name="logout"
+            aria-label="This link will log you out of your account. "
+          >
+            <LogOut />
+            Logout
+          </Link>
+        </li>
         {user.admin && (
           <li className="pl-2">
             <Link href="/admin">
@@ -60,7 +83,9 @@ const Sidebar = ({ closeDrawer }) => {
       </ul>
 
       <div className="collapse collapse-arrow ">
-        <label htmlFor="authors" className="sr-only">Authors</label>
+        <label htmlFor="authors" className="sr-only">
+          Authors
+        </label>
         <input type="radio" id="authors" name="accordion" />
         <div className="collapse-title text-l font-medium">
           <div className="flex gap-2">
