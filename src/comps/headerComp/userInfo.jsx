@@ -1,7 +1,7 @@
 'use client'
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link';
-import {User, LogOut, Menu, PanelLeftOpen} from "lucide-react";
+import {User, Search} from "lucide-react";
 import useStore from '../../app/store/store'
 import toast from 'react-hot-toast';
 import Drawer from './drawer'
@@ -85,9 +85,14 @@ const UserInfo = () => {
           </div>
         </div>
       ) : (
-        <Link href="/login" className="mr-2 btn btn-ghost" aria-label='This link will take you to login page'>
+        <div className='flex justify-center items-center gap-4 mr-2 '>
+        <Link href="/search" className="btn btn-ghost hidden lg:flex" aria-label='This link will take you to login page'>
+          <Search />
+        </Link>
+        <Link href="/login" className="btn btn-ghost" aria-label='This link will take you to login page'>
           Sign In
         </Link>
+        </div>
       )}
     </div>
   );

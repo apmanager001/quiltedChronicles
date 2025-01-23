@@ -15,7 +15,12 @@ const Sidebar = ({ closeDrawer }) => {
   const id = useId()
   if (!user) {
     return (
-      <Loading />
+      // <Loading />
+      <Link href='/login' className='flex h-[500px] justify-center items-center'>
+        <div className='btn btn-accent'>
+          Login
+        </div>
+      </Link>
     );
   }
 

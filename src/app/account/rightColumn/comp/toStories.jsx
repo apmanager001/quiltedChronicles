@@ -39,7 +39,7 @@ const TopStories = () => {
     <>
     {loading ? (<Loading />) : (
     <div className="flex flex-col gap-4 mx-4">
-      <h3 className="text-center font-bold">Top First Chapters in a Story</h3>
+      <h3 className="text-center font-bold">Top First Chapter in a Story</h3>
       {chapters.map((chapter, index) => (
         <div key={index} className="flex flex-col gap-2 ">
           <div className="flex justify-between items-center">
