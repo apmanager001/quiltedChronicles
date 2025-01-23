@@ -59,7 +59,7 @@ const Chain = () => {
             </h2>
             <div className="flex justify-center lg:justify-end  items-center gap-4 w-full mb-4">
               <Share2 size={32} />
-              <ShareButtons />
+              <ShareButtons title={storyTitle}/>
             </div>
             {chain.map((chapter, index) => (
               <div
