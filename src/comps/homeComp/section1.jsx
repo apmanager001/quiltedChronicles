@@ -51,14 +51,14 @@ const Section = () => {
       <div className="flex flex-col items-center justify-center">
         <h1 className="mb-8 text-2xl">Top Adventures</h1>
         <div className="flex flex-col xl:flex-row flex-wrap gap-5 justify-center items-center w-full m-2 mb-20">
-          {topChapters.map((chapter) => (
+          {topChapters.map((chapter, index) => (
             <div
               key={chapter.chapterId}
               className="flex flex-col bg-base-200 rounded-box w-80 md:max-w-96 hover:shadow-xl"
             >
               <div className="rounded-t-box w-full h-72">
                 <Image
-                  src="/icon1.jpeg"
+                  src={`/icon${index+1}.jpeg`}
                   alt="Cover"
                   width={350}
                   height={200}
