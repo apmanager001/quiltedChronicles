@@ -16,7 +16,7 @@ const DeleteAuthor = ({ id, onDeleteAuthor }) => {
   };
   return (
     <div className="tooltip tooltip-left" data-tip='Delete this author'>
-      <button className="btn btn-xs hover:btn-sm btn-error" onClick={handleDelete}>
+      <button className="btn btn-xs hover:btn-sm bg-red-500 hover:bg-red-500" onClick={handleDelete}>
         <UserMinus color='white' fill='white' size={16} strokeWidth={2}/>
       </button>
     </div>

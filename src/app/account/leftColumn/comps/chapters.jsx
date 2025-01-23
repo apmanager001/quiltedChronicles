@@ -25,62 +25,90 @@ const Chapters = () => {
     setShowMore(!showMore);
   };
 
-  const link = (entry) => `/entry/${entry.entryId}`;
-  const name = (entry) => entry.entryTitle;
+  const link = (chapter) => `/chapter/${chapter.chapterId}`;
+  const name = (chapter) => chapter.chapterTitle || chapter.storyTitle;
 
   return (
     <div>
-      {chapters.length === 0
-        ? <span className="text-sm pl-4">No chapters Yet</span>
-        : topFiveChapters.map((chapters, index) => (
-            <div key={index} className="menu menu-xs justify-start rounded-box">
-              {chapters.previousEntry ? (
-                  <li>
-                    <Link
-                      href={`/chapter/${chapters.chapterId}`}
-                      onClick={() => setMiddleColumn("chapter")}
-                    >
-                      {validator.unescape(chapters.chapterTitle || "") ||
-                        validator.unescape(chapters.storyTitle || "")}
-                    </Link>
-                    <p className="flex items-center gap-2">
-                      <Heart color="red" fill="red" />
-                      {chapters.likes}
-                    </p>
-                  </li>
-              ) : (
-                  <li>
-                    <Link
-                      href={`/chapter/${chapters.chapterId}`}
-                      onClick={() => setMiddleColumn("chapter")}
-                      className="flex justify-between"
-                    >
-                      {validator.unescape(chapters.chapterTitle || '') || validator.unescape(chapters.storyTitle || '')}
-                      <p className="flex items-center gap-2">
-                        <Heart color="red" fill="red" />
-                        {chapters.likes}
-                      </p>
-                    </Link>
-                  </li>
-                // </ul>
-              )}
-            </div>
-          ))}
+      {chapters.length === 0 ? (
+        <span className="text-sm pl-4">No chapters Yet</span>
+      ) : (
+        topFiveChapters.map((chapters, index) => (
+          <div
+            key={index}
+            className="menu menu-xs justify-start rounded-box w-full"
+          >
+            {chapters.previousChapter ? (
+              <li className="flex justify-between items-center w-full">
+                <Link
+                  href={`/chapter/${chapters.chapterId}`}
+                  onClick={() => setMiddleColumn("chapter")}
+                  className="flex justify-between w-full"
+                >
+                  <span>
+                    {validator.unescape(chapters.chapterTitle || "") ||
+                      validator.unescape(chapters.storyTitle || "")}
+                  </span>
+                  <p className="flex items-center gap-2">
+                    <Heart color="red" fill="red" />
+                    {chapters.likes}
+                  </p>
+                </Link>
+              </li>
+            ) : (
+              <li className="flex justify-between items-center w-full">
+                <Link
+                  href={`/chapter/${chapters.chapterId}`}
+                  onClick={() => setMiddleColumn("chapter")}
+                  className="flex justify-between w-full"
+                >
+                  <span>
+                    {validator.unescape(chapters.chapterTitle || "") ||
+                      validator.unescape(chapters.storyTitle || "")}
+                  </span>
+                  <p className="flex items-center gap-2">
+                    <Heart color="red" fill="red" />
+                    {chapters.likes}
+                  </p>
+                </Link>
+              </li>
+              // </ul>
+            )}
+          </div>
+        ))
+      )}
       {remainingChapters.length > 0 && (
         <div>
           {showMore &&
-            remainingChapters.map((entry, index) => (
+            remainingChapters.map((chapter, index) => (
               <div key={index}>
                 <ul className="menu menu-xs justify-start rounded-box gap-2">
-                  {entry.previousEntry ? (
-                    <li className="text-center">
-                      <Link href={link(entry)}>{name(entry)}</Link>
+                  {chapter.previousChapter ? (
+                    <li className="flex justify-between items-center w-full">
+                      <Link
+                        href={link(chapter)}
+                        onClick={() => setMiddleColumn("chapter")}
+                        className="flex justify-between w-full"
+                      >
+                        {name(chapter)}
+                        <p className="flex items-center gap-2">
+                          <Heart color="red" fill="red" />
+                          {chapter.likes}
+                        </p>
+                      </Link>
                     </li>
                   ) : (
                     <li className="text-center">
-                      <Link href={link(entry)}>
-                        {name(entry)}
-                        <BookHeart />
+                      <Link
+                        href={link(chapter)}
+                        onClick={() => setMiddleColumn("chapter")}
+                        className="flex justify-between w-full"
+                      >
+                        {name(chapter)}
+                        <p className="flex items-center gap-2">
+                          <Heart color="red" fill="red" />
+                          {chapter.likes}
+                        </p>
                       </Link>
                     </li>
                   )}

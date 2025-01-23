@@ -47,6 +47,12 @@ const NextStory = () => {
 
   const link = (chapter) => `/chapter/${chapter.chapterId}`;
   const name = (chapter) => chapter.chapterTitle;
+
+  
+  const scrollToTop = () => {
+    setMiddleColumn("add")
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
   return (
     <>
     {loading ? (<Loading /> ): (
@@ -103,7 +109,7 @@ const NextStory = () => {
       <div className="lg:hidden flex justify-center">
         <button
           className="btn btn-accent"
-          onClick={() => setMiddleColumn("add")}
+          onClick={scrollToTop}
         >
           Add a Chapter
         </button>

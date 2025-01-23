@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import validator from 'validator'
 import useStore from "../../store/store";
+import accountStore from "../../store/accountStore";
 import Head from "next/head";
 import { User } from "lucide-react";
 import AccountPage from "../../account/layout";
@@ -14,6 +15,7 @@ import FollowAuthor from "./followAuthor";
 
 const Profile = () => {
   const user = useStore.getState().user;
+  const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("bio");
   const [check, setCheck] = useState("");
@@ -88,7 +90,7 @@ const Profile = () => {
           <div className="flex flex-col w-full min-h-[600px] ">
             <div className="flex flex-col justify-center w-full py-4 md:py-20  md:flex-row">
               <div className="flex flex-col rounded h-full w-full  p-7">
-                <div className="w-full flex flex-col md:flex-row items-center justify-center border-b-2 p-2 gap-6">
+                <div className="w-full flex flex-col md:flex-row items-center justify-center p-2 gap-6">
                   <div>
                     <User size={48} />
                   </div>
@@ -109,6 +111,7 @@ const Profile = () => {
                     </div>
                   </div>
                 </div>
+                <div className="divider"></div>
                 <div role="tablist" className="tabs tabs-bordered p-4">
                   <a
                     role="tab"
@@ -135,19 +138,29 @@ const Profile = () => {
                     </div>
                   ) : (
                     <div className="pl-7">
-                      {chapters.length === 0
-                        ? <span>No Chapters Yet</span>
-                        : chapters.map((chapter, index) => (
-                            <div key={index}>
-                              <ul className="menu menu-s rounded-box">
-                                <li>
-                                  <Link href={`/chapter/${chapter.chapterId}`}>
-                                    {validator.unescape(chapter.chapterTitle || "") || validator.unescape(chapter.storyTitle || "")}
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-                          ))}
+                      {chapters.length === 0 ? (
+                        <span>No Chapters Yet</span>
+                      ) : (
+                        chapters.map((chapter, index) => (
+                          <div key={index}>
+                            <ul className="menu menu-s rounded-box">
+                              <li>
+                                <Link
+                                  href={`/chapter/${chapter.chapterId}`}
+                                  onClick={() => setMiddleColumn("chapter")}
+                                >
+                                  {validator.unescape(
+                                    chapter.chapterTitle || ""
+                                  ) ||
+                                    validator.unescape(
+                                      chapter.storyTitle || ""
+                                    )}
+                                </Link>
+                              </li>
+                            </ul>
+                          </div>
+                        ))
+                      )}
                     </div>
                   )}
                 </div>

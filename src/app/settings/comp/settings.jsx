@@ -230,7 +230,7 @@ const Settings = () => {
                 </button>
               </div>
               <dialog id="my_modal_2" className="modal">
-                <div className="modal-box w-full">
+                <div className="modal-box w-full border border-gray-600">
                   <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                       ✕
@@ -239,36 +239,51 @@ const Settings = () => {
                   <h3 className="font-bold text-lg text-center pb-4">
                     Change Password
                   </h3>
-                  <div className="flex flex-col w-full justify-center items-center gap-2">
-                    <input
-                      type="password"
-                      name="oldPassword"
-                      className="input input-bordered w-80"
-                      placeholder="Old Password"
-                      value={oldPassword}
-                      onChange={(e) => setOldPassword(e.target.value)}
-                    />
-                    <input
-                      type="password"
-                      className="input input-bordered w-80"
-                      name="newPassword"
-                      placeholder="New Password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                    />
-                    <input
-                      type="password"
-                      className="input input-bordered w-80"
-                      name="confirmPassword"
-                      placeholder="Confirm New Password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
-                    <input
-                      onClick={handleChangePassword}
-                      className="btn btn-accent "
-                      defaultValue="Submit"
-                    />
+                  <div className="flex flex-col w-full justify-center items-center gap-2 text-left">
+                    <div className="form-control">
+                      <label htmlFor="oldPassword" className="label">Old Password</label>
+                      <input
+                        type="password"
+                        id="oldPassword"
+                        name="oldPassword"
+                        className="input input-bordered w-80"
+                        placeholder="Old Password"
+                        value={oldPassword}
+                        onChange={(e) => setOldPassword(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-control">
+                      <label htmlFor="newPassword" className="label">New Password</label>
+                      <input
+                        type="password"
+                        className="input input-bordered w-80"
+                        id='newPassword'
+                        name="newPassword"
+                        placeholder="New Password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-control">
+                      <label htmlFor="confirmPassword" className="label">Confirm Password</label>
+                      <input
+                        type="password"
+                        id='confirmPassword'
+                        className="input input-bordered w-80"
+                        name="confirmPassword"
+                        placeholder="Confirm New Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-control mt-4">
+                      <input
+                        onClick={handleChangePassword}
+                        name='submit'
+                        className="btn btn-accent "
+                        defaultValue="Submit"
+                      />
+                    </div>
                   </div>
                 </div>
                 <form method="dialog" className="modal-backdrop">

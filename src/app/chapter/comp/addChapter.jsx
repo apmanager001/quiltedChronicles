@@ -86,6 +86,7 @@ const AddChapter = () => {
         </label>
         <input
           className="input input-bordered text-2xl w-full"
+          id="keywords"
           name="keywords"
           onChange={(e) => setData({ ...data, keywords: e.target.value })}
           placeholder="Keywords"
@@ -94,6 +95,7 @@ const AddChapter = () => {
         <label htmlFor="bodyText">Your Story</label>
         <textarea
           placeholder="Create your adventure here..."
+          id="bodyText"
           name="body"
           className="textarea textarea-bordered w-full h-80 text-lg"
           onChange={(e) => setData({ ...data, body: e.target.value })}

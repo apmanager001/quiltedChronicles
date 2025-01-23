@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, {useId} from 'react'
 import Link from 'next/link';
 import axiosInstance from '@/comps/utility/axios';
 import toast from 'react-hot-toast';
@@ -12,6 +12,7 @@ import Loading from '@/comps/utility/loading';
 
 const Sidebar = ({ closeDrawer }) => {
   const user = useStore((state) => state.user);
+  const id = useId()
   if (!user) {
     return (
       <Loading />
@@ -83,10 +84,10 @@ const Sidebar = ({ closeDrawer }) => {
       </ul>
 
       <div className="collapse collapse-arrow ">
-        <label htmlFor="authors" className="sr-only">
+        <label htmlFor={`authors-${id}`} className="sr-only">
           Authors
         </label>
-        <input type="radio" id="authors" name="accordion" />
+        <input type="radio" id={`authors-${id}`} name="accordion" />
         <div className="collapse-title text-l font-medium">
           <div className="flex gap-2">
             <UserRoundPen />
@@ -99,10 +100,10 @@ const Sidebar = ({ closeDrawer }) => {
       </div>
 
       <div className="collapse collapse-arrow ">
-        <label htmlFor="chapters" className="sr-only">
+        <label htmlFor={`chapters-${id}`} className="sr-only">
           Chapters
         </label>
-        <input type="radio" id="chapters" name="accordion" />
+        <input type="radio" id={`chapters-${id}`} name="accordion" />
         <div className="collapse-title text-l font-medium">
           <div className="flex gap-2">
             <Library />
@@ -115,10 +116,10 @@ const Sidebar = ({ closeDrawer }) => {
       </div>
 
       <div className="collapse collapse-arrow ">
-        <label htmlFor="journal" className="sr-only">
+        <label htmlFor={`journal-${id}`} className="sr-only">
           Journal
         </label>
-        <input type="radio" id="journal" name="accordion" />
+        <input type="radio" id={`journal-${id}`} name="accordion" />
         <div className="collapse-title text-l font-medium">
           <div className="flex gap-2">
             <Bookmark />

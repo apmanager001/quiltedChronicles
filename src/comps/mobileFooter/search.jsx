@@ -59,10 +59,9 @@ const SearchDrawer = () => {
       </button>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-10"
+          className="fixed inset-0 bg-black bg-opacity-50 z-10 transform"
           onClick={handleOverlayClick}
         >
-          {/* Drawer content */}
           <div
             className="fixed top-0 w-full bg-base-100 p-4 shadow-lg"
             onClick={(e) => e.stopPropagation()}
@@ -74,19 +73,6 @@ const SearchDrawer = () => {
               className="w-full p-3 border border-gray-600 rounded-md mb-4"
               placeholder="Search..."
             />
-
-        
-            {/* {results.length > 0 ? (
-              <ul className="space-y-2">
-                {results.map((result, index) => (
-                  <li key={index} className="">
-                    {result}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p></p>
-            )} */}
             {results.length > 0 && <p className="text-gray-400">Users</p>}
             {results.map(
               (result, index) =>

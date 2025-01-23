@@ -17,11 +17,18 @@ const useStore = create((set, get) => ({
             throw new Error('Network response issue'); 
         } 
         const data = await response.data; 
-        set({ 
-            session: data, 
-            user: data, 
-            loading: false, 
-        }); 
+        if (data) {
+            set({
+                session: data,
+                user: data,
+                loading: false,
+            });
+        } else {
+            set({
+                user: null,
+                loading: false,
+            });
+        }
     } catch (error) { 
         console.error("Error fetching user:", error); 
         set({ user: null, loading: false }); 
