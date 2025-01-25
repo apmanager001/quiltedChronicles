@@ -74,9 +74,10 @@ const Profile = () => {
       </div>
     );
   }
-
+  
+  
   return (
-    <AccountPage>
+    <AccountPage >
       {loading ? (
         <>
           <Head>

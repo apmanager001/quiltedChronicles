@@ -68,7 +68,7 @@ const Sidebar = ({ closeDrawer }) => {
         </li>
         <li className="pl-2">
           <Link
-            href="/search"
+            href="#"
             className="hover:bg-red-600 hover:text-white"
             onClick={handleLogout}
             data-name="logout"
@@ -80,7 +80,10 @@ const Sidebar = ({ closeDrawer }) => {
         </li>
         {user.admin && (
           <li className="pl-2">
-            <Link href="/admin">
+            <Link 
+              href="/admin"
+              className='hover:bg-yellow-300 hover:text-black hover:font-bold'
+            >
               <Lock />
               Admin
             </Link>

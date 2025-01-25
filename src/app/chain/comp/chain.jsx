@@ -5,15 +5,18 @@ import validator from 'validator'
 import { useParams } from "next/navigation";
 import axiosInstance from "../../../comps/utility/axios";
 import AccountPage from "../../account/layout";
+import ExpandStore from "../../store/expandStore";
 import ShareButtons from "../../chapter/comp/shareButtons"
-import { Share2 } from "lucide-react";
+import { Share2, Expand, Minimize } from "lucide-react";
 import Loading from '../../../comps/utility/loading'
 
 const Chain = () => {
+  const setExpand = ExpandStore((state) => state.setExpand);
+  const expand = ExpandStore((state) => state.expand);
   const { id } = useParams();
   const [chain, setChain] = useState([]);
   const [storyTitle, setStoryTitle] = useState("");
-  const [loading, setLoading] =useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +24,7 @@ const Chain = () => {
         const response = await axiosInstance.get(`/chain/${id}`);
         setChain(response.data);
         setStoryTitle(response.data[0].storyTitle);
-        setLoading(true)
+        setLoading(true);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -37,7 +40,8 @@ const Chain = () => {
         <p key={index}>{validator.unescape(paragraph)}</p>
       ));
   };
-// console.log(chain[0])
+  
+
   return (
     <AccountPage>
       {loading ? (
@@ -53,13 +57,25 @@ const Chain = () => {
             </>
           )}
           <div className="mx-4">
-            <h1 className="text-center font-bold">Full Story Chain</h1>
+            <div className="flex items-center justify-between">
+              <h1 className="flex-grow text-center font-bold">Full Story Chain</h1>
+              <div
+                onClick={setExpand}
+                className="bg-gray-700 hover:bg-gray-400 rounded-full p-2 font-extrabold"
+              >
+                {expand ? (
+                  <Minimize strokeWidth={3} />
+                ) : (
+                  <Expand strokeWidth={3} />
+                )}
+              </div>
+            </div>
             <h2 className="text-center py-5">
               {validator.unescape(storyTitle)}
             </h2>
             <div className="flex justify-center lg:justify-end  items-center gap-4 w-full mb-4">
               <Share2 size={32} />
-              <ShareButtons title={storyTitle}/>
+              <ShareButtons title={storyTitle} />
             </div>
             {chain.map((chapter, index) => (
               <div

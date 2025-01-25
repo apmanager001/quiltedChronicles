@@ -5,7 +5,7 @@ import accountStore from '../../../store/accountStore';
 
 const Buttons = () => {
   const { id } = useParams();
-    const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
+  const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
 
   return (
     <div className="flex justify-center gap-2 flex-wrap">
