@@ -61,7 +61,7 @@ const Chain = () => {
               <h1 className="flex-grow text-center font-bold">Full Story Chain</h1>
               <div
                 onClick={setExpand}
-                className="bg-gray-700 hover:bg-gray-400 rounded-full p-2 font-extrabold"
+                className="hidden lg:block bg-gray-700 hover:bg-gray-400 rounded-full p-2 font-extrabold"
               >
                 {expand ? (
                   <Minimize strokeWidth={3} />
