@@ -169,7 +169,7 @@ const Profile = () => {
               <div className="min-h-40">
                 <h2 className="text-xl font-bold">Bio</h2>
                 <div className="pl-7">
-                  <p>{bio}</p>
+                  <p className="max-w-96">{bio}</p>
                 </div>
               </div>
               <div className="min-h-40">
@@ -180,7 +180,7 @@ const Profile = () => {
                   ) : (
                     chapters.map((chapter, index) => (
                       <div key={index}>
-                        <ul className="menu menu-s rounded-box">
+                        <ul className="menu menu-s rounded-box max-w-96">
                           <li>
                             <Link
                               href={`/chapter/${chapter.chapterId}`}

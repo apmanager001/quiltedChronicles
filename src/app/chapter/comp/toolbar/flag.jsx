@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axiosInstance from "../../../../comps/utility/axios";
-import { Flag } from "lucide-react";
+import { Flag, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 
 
@@ -41,10 +41,10 @@ const Flagged = ({ chapterId }) => {
   return (
     <div
       className="tooltip tooltip-bottom relative flex gap-5"
-      data-tip="Flag as Inappropriate"
+      data-tip="Flag this Chapter"
     >
       <button
-        className={`btn btn-ghost hover:bg-toolbarHover rounded-full h-4 text-xl ${
+        className={`btn btn-ghost rounded-full h-4 text-xl ${
           onFlag ? "text-red-600" : "currentValue"
         }`}
         onClick={() => handleFlag("")}
@@ -63,18 +63,25 @@ const Flagged = ({ chapterId }) => {
           </button>
           <button
             className={`btn ${onFlag ? "text-red-600" : ""}`}
-            onClick={() => handleFlag("inappropriate")}
-            aria-label={onFlag ? "Flagged Chapter" : "Unflagged Chapter"}
-          >
-            <div>Inappropriate</div>
-          </button>
-          <button
-            className={`btn ${onFlag ? "text-red-600" : ""}`}
             onClick={() => handleFlag("offensive")}
             aria-label={onFlag ? "Flagged Chapter" : "Unflagged Chapter"}
           >
             <div>Offensive</div>
           </button>
+          <div
+            className="tooltip tooltip-top "
+            data-tip="Owner Request to Delete"
+          >
+            <button
+              className={`btn ${onFlag ? "text-red-600" : ""}`}
+              onClick={() => handleFlag("owner")}
+              aria-label={onFlag ? "Flagged Chapter" : "Unflagged Chapter"}
+            >
+              <div className="flex justify-center items-center gap-2">
+                Owner <Trash2 color='red'/>
+              </div>
+            </button>
+          </div>
         </div>
       )}
     </div>

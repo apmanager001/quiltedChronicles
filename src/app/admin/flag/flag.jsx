@@ -45,17 +45,19 @@ const Flag = () => {
           <div className="flex flex-row p-2">
             <div className="flex-1 flex w-1/2">Who Flagged:</div>
             <div className="flex-2 flex justify-center items-center text-center">
-              {flag.user?.userName ?  (
-              <Link href={`/profile/${flag.user.userName}`}>
-                {flag.user.userName}
-              </Link>
-              ):('Anonymous')}
+              {flag.user?.userName ? (
+                <Link href={`/profile/${flag.user.userName}`} target="_blank">
+                  {flag.user.userName}
+                </Link>
+              ) : (
+                "Anonymous"
+              )}
             </div>
           </div>
           <div className="flex flex-row p-2">
             <div className="flex-1 flex ">Chapter Title:</div>
             <div className="flex-2 flex justify-center items-center text-center">
-              <Link href={`/chapter/${flag.chapter.id}`}>
+              <Link href={`/chapter/${flag.chapter.id}`} target="_blank">
                 {flag.chapter.chapterTitle || flag.chapter.storyTitle}
               </Link>
             </div>
