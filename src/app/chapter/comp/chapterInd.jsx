@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Share2 } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Heart, ArrowBigLeft, Rewind } from "lucide-react";
+import Expanded from '../../chain/comp/expand'
 import FollowAuthor from "../../profile/comp/followAuthor";
 import SharedButtons from "./shareButtons";
 import axiosInstance from "../../../comps/utility/axios";
@@ -92,6 +93,7 @@ const ChapterInd = () => {
       <div className="flex flex-col p-0 lg:pb-5 lg:h-full ">
         <div className="pl-2">
           <div className="flex flex-col items-start">
+            <div className="w-full flex items-center justify-end"><Expanded /></div>
             <div className="w-full flex justify-between items-center pt-4 pr-4 gap-2">
               <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">
                 <Heart color="red" fill="red" />

@@ -60,7 +60,7 @@ const NextStory = () => {
       <p className="text-xl font-bold">Continue the Story!</p>
       <ul className="pt-2  flex-grow">
         {chapters.length === 0 ? (
-          <li>No Chapters Yet</li>
+          <li className="pl-4">No Chapters Yet, be the first to create one</li>
         ) : (
           topFiveChapters.map((chapters, index) => (
             <li

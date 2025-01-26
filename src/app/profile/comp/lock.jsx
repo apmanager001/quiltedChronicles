@@ -39,9 +39,9 @@ const LockandUnlock = ({ userId }) => {
   return (
     <div className="cursor-pointer">
       {lock ? (
-        <Lock onClick={handleLock}/>
+        <Lock onClick={handleLock} color="red" />
       ) : (
-        <LockOpen onClick={handleLock}/>
+        <LockOpen onClick={handleLock} color="#3BB143"/>
       )}
     </div>
   );

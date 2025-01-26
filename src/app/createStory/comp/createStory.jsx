@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
 import { Info } from "lucide-react";
+import Expanded from "../../chain/comp/expand";
 import useStore from '../../store/store'
 import axiosInstance from "../../../comps/utility/axios";
 import AccountPage from "../../account/layout"
@@ -57,7 +58,10 @@ const CreateStory = () => {
     <AccountPage>
       {loading ? 
       <div className="flex flex-col gap-5 items-center w-full p-5">
-        <p className="text-center text-xl">Create Your New Story</p>
+        <div className="w-full flex justify-between items-center">
+          <p className="flex-grow text-center text-xl">Create Your New Story</p>
+          <Expanded />
+        </div>
         <form
           onSubmit={handleAddStory}
           className="flex flex-col w-full gap-2 justify-center"
@@ -71,7 +75,7 @@ const CreateStory = () => {
             placeholder="Story Title"
             required
           />
-          <label htmlFor="keys">
+          <label htmlFor="keys" className="w-24">
             <div className="flex gap-2 tooltip tooltip-right" data-tip="Space between keywords, no commas">
               Keywords
               <div>
@@ -99,12 +103,12 @@ const CreateStory = () => {
             placeholder="Type the first chapter in your story..."
             required
           ></textarea>
-          <input type="submit" className="btn btn-accent" value="Submit" />
+          <input type="submit" className="btn btn-primary" value="Submit" />
         </form>
       </div>:
       <div className="flex justify-center items-center min-h-96">
         <Link href="/login">
-          <button className="btn btn-accent">Login</button>
+          <button className="btn btn-primary">Login</button>
         </Link>
       </div>
       }

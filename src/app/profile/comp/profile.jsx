@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Expanded from "../../chain/comp/expand";
 import validator from 'validator'
 import useStore from "../../store/store";
 import accountStore from "../../store/accountStore";
@@ -18,6 +19,8 @@ const Profile = () => {
   const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("bio");
+  const [title, setTitle] = useState("");
+  const [tooltip, setTooltip] = useState("")
   const [check, setCheck] = useState("");
   const [showMore, setShowMore] = useState(false);
   const [userInfo, setUserInfo] = useState({});
@@ -53,10 +56,42 @@ const Profile = () => {
         if (response.status !== 200) {
           throw new Error("Unable to get Author Information");
         }
+        const user = response.data[0]
+        setUserInfo(user);
+        if (user.publishedChapters.length < 5) {
+          setTitle("Novice Author");
+          setTooltip("Novice Author: Less than 5 chapters written");
+        } else if (user.publishedChapters.length < 10) {
+          setTitle("Aspiring Writer");
+          setTooltip("Aspiring Writer: 5-9 chapters written");
+        } else if (user.publishedChapters.length < 20) {
+          setTitle("Emerging Storyteller");
+          setTooltip("Emerging Storyteller: 10-19 chapters written");
+        } else if (user.publishedChapters.length < 35) {
+          setTitle("Dedicated Scribe");
+          setTooltip("Dedicated Scribe: 20-34 chapters written");
+        } else if (user.publishedChapters.length < 50) {
+          setTitle("Talented Wordsmith");
+          setTooltip("Talented Wordsmith: 35-49 chapters written");
+        } else if (user.publishedChapters.length < 70) {
+          setTitle("Skilled Narrator");
+          setTooltip("Skilled Narrator: 50-69 chapters written");
+        } else if (user.publishedChapters.length < 90) {
+          setTitle("Prolific Author");
+          setTooltip("Prolific Author: 70-89 chapters written");
+        } else if (user.publishedChapters.length < 120) {
+          setTitle("Accomplished Word Weaver");
+          setTooltip("Accomplished Word Weaver: 90-119 chapters written");
+        } else if (user.publishedChapters.length < 150) {
+          setTitle("Master Storyteller");
+          setTooltip("Master Storyteller: 120-149 chapters written");
+        } else {
+          setTitle("Literary Virtuoso");
+          setTooltip("Literary Virtuoso: 150+ chapters written");
+        }
 
-        setUserInfo(response.data[0]);
-        setChapters(response.data[0].publishedChapters);
-        setBio(validator.unescape(response.data[0].bio) || "No Bio has been setup yet");
+        setChapters(user.publishedChapters);
+        setBio(validator.unescape(user.bio) || "No Bio has been setup yet");
         setLoading(true);
       } catch (err) {
         console.error("Error:", err.message);
@@ -75,9 +110,8 @@ const Profile = () => {
     );
   }
   
-  
   return (
-    <AccountPage >
+    <AccountPage>
       {loading ? (
         <>
           <Head>
@@ -88,81 +122,77 @@ const Profile = () => {
             <meta property="og:type" content="profile" />
             <meta property="og:url" content={`/profile/${id}`} />
           </Head>
-          <div className="flex flex-col w-full min-h-[600px] ">
-            <div className="flex flex-col justify-center w-full py-4 md:py-20  md:flex-row">
-              <div className="flex flex-col rounded h-full w-full  p-7">
-                <div className="w-full flex flex-col md:flex-row items-center justify-center p-2 gap-6">
-                  <div>
-                    <User size={48} />
-                  </div>
-                  <div className="flex gap-4">
-                    <div className="flex flex-col justify-center items-start  ">
-                      <div className="flex flex-col md:flex-row gap-2 justify-center items-center">
-                        <p className="text-3xl">{userInfo.userName}</p>
-                        <FollowAuthor userId={userInfo.userId} />
-                      </div>
-                      {userInfo.email ? (
-                        <p>{`You can reach me at : ${userInfo.email}`}</p>
-                      ) : (
-                        ""
-                      )}
+          <div className="w-full flex justify-end items-center">
+            <Expanded />
+          </div>
+          <div className="flex flex-col md:flex-row w-full min-h-[600px] ">
+            <div className="w-full md:w-1/3 flex flex-col justify-center md:justify-start">
+              <div className="w-full flex flex-col items-center my-10">
+                <div className="indicator text-center">
+                  <span className="indicator-item  p-4">
+                    {admin ? <LockandUnlock userId={userInfo.userId} /> : ""}
+                  </span>
+                  <span className="">
+                    <User size={60} />
+                  </span>
+                </div>
+                <div className="flex flex-col justify-center items-start  ">
+                  <div className="flex flex-col gap-2 justify-center items-center">
+                    <p className="text-3xl">{userInfo.userName}</p>
+                    <FollowAuthor userId={userInfo.userId} />
+                    <div
+                      className="badge badge-primary tooltip tooltip-bottom"
+                      data-tip={tooltip}
+                    >
+                      {title}
                     </div>
-                    <div className="flex flex-col justify-center items-end ">
-                      {admin ? <LockandUnlock userId={userInfo.userId} /> : ""}
+                    <div className="text-center">
+                      <a href={`mailto:${userInfo.email}`}>
+                        {userInfo.email || ""}
+                      </a>
                     </div>
                   </div>
                 </div>
-                <div className="divider"></div>
-                <div role="tablist" className="tabs tabs-bordered p-4">
-                  <a
-                    role="tab"
-                    className={`tab ${activeTab === "bio" ? "tab-active" : ""}`}
-                    onClick={() => handleContentChange("bio")}
-                  >
-                    Bio
-                  </a>
-
-                  <a
-                    role="tab"
-                    className={`tab ${
-                      activeTab === "chapters" ? "tab-active" : ""
-                    }`}
-                    onClick={() => handleContentChange("chapters")}
-                  >
-                    Chapters
-                  </a>
+              </div>
+              {/* <div>
+                <ul className="menu menu-md rounded-box">
+                  <li>
+                    <a>md item 1</a>
+                  </li>
+                  <li>
+                    <a>md item 2</a>
+                  </li>
+                </ul>
+              </div> */}
+            </div>
+            <div className="flex flex-col justify-around w-full md:w-2/3 break-words">
+              <div className="min-h-40">
+                <h2 className="text-xl font-bold">Bio</h2>
+                <div className="pl-7">
+                  <p>{bio}</p>
                 </div>
-                <div className="flex flex-col w-full break-words">
-                  {activeContent === "bio" ? (
-                    <div className="pl-7 pt-7">
-                      <p>{bio}</p>
-                    </div>
+              </div>
+              <div className="min-h-40">
+                <h2 className="text-xl font-bold">Chapters</h2>
+                <div className="pl-7">
+                  {chapters.length === 0 ? (
+                    <span>No Chapters Yet</span>
                   ) : (
-                    <div className="pl-7">
-                      {chapters.length === 0 ? (
-                        <span>No Chapters Yet</span>
-                      ) : (
-                        chapters.map((chapter, index) => (
-                          <div key={index}>
-                            <ul className="menu menu-s rounded-box">
-                              <li>
-                                <Link
-                                  href={`/chapter/${chapter.chapterId}`}
-                                  onClick={() => setMiddleColumn("chapter")}
-                                >
-                                  {validator.unescape(
-                                    chapter.chapterTitle || ""
-                                  ) ||
-                                    validator.unescape(
-                                      chapter.storyTitle || ""
-                                    )}
-                                </Link>
-                              </li>
-                            </ul>
-                          </div>
-                        ))
-                      )}
-                    </div>
+                    chapters.map((chapter, index) => (
+                      <div key={index}>
+                        <ul className="menu menu-s rounded-box">
+                          <li>
+                            <Link
+                              href={`/chapter/${chapter.chapterId}`}
+                              onClick={() => setMiddleColumn("chapter")}
+                            >
+                              {validator.unescape(chapter.chapterTitle || "") ||
+                                validator.unescape(chapter.storyTitle || "")}
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    ))
                   )}
                 </div>
               </div>

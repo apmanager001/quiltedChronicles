@@ -11,7 +11,7 @@ export default {
       // "light",
       // "dark",
       // "retro",
-      "coffee",
+      "dim",
       // "cyberpunk",
       // "valentine",
       // "aqua",

@@ -5,14 +5,12 @@ import validator from 'validator'
 import { useParams } from "next/navigation";
 import axiosInstance from "../../../comps/utility/axios";
 import AccountPage from "../../account/layout";
-import ExpandStore from "../../store/expandStore";
+import Expanded from "./expand";
 import ShareButtons from "../../chapter/comp/shareButtons"
-import { Share2, Expand, Minimize } from "lucide-react";
+import { Share2 } from "lucide-react";
 import Loading from '../../../comps/utility/loading'
 
 const Chain = () => {
-  const setExpand = ExpandStore((state) => state.setExpand);
-  const expand = ExpandStore((state) => state.expand);
   const { id } = useParams();
   const [chain, setChain] = useState([]);
   const [storyTitle, setStoryTitle] = useState("");
@@ -59,16 +57,7 @@ const Chain = () => {
           <div className="mx-4">
             <div className="flex items-center justify-between">
               <h1 className="flex-grow text-center font-bold">Full Story Chain</h1>
-              <div
-                onClick={setExpand}
-                className="hidden lg:block bg-gray-700 hover:bg-gray-400 rounded-full p-2 font-extrabold"
-              >
-                {expand ? (
-                  <Minimize strokeWidth={3} />
-                ) : (
-                  <Expand strokeWidth={3} />
-                )}
-              </div>
+              <Expanded />
             </div>
             <h2 className="text-center py-5">
               {validator.unescape(storyTitle)}

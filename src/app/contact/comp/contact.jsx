@@ -4,6 +4,7 @@ import axiosInstance from "../../../comps/utility/axios";
 import useStore from "../../store/store";
 import { toast } from "react-hot-toast";
 import AccountPage from "../../account/layout";
+import Expanded from "../../chain/comp/expand";
 
 const Contact = () => {
   const user = useStore((state) => state.user);
@@ -84,12 +85,18 @@ const Contact = () => {
           onSubmit={handleSubmit}
           className="flex flex-col items-center w-full gap-2 justify-center"
         >
-          <p className="text-3xl mb-10">Contact Us</p>
-          <label htmlFor="name">Name:</label>
+          <div className="flex justify-between items-center w-full mb-10">
+            <p className="flex-grow text-xl text-center ">Contact Us</p>
+            <Expanded />
+          </div>
+
+          <label htmlFor="name" className="text-left w-full">
+            Name:
+          </label>
           <input
             type="text"
             className="input input-bordered w-full text-2xl"
-            id='name'
+            id="name"
             name="name"
             placeholder={username}
             value={formData.name}
@@ -97,11 +104,13 @@ const Contact = () => {
             autoComplete="off"
           />
 
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email" className="text-left w-full">
+            Email:
+          </label>
           <input
             type="email"
             className="input input-bordered w-full text-2xl"
-            id='email'
+            id="email"
             name="email"
             placeholder={email}
             value={formData.email}
@@ -109,10 +118,12 @@ const Contact = () => {
             autoComplete="off"
           />
 
-          <label htmlFor="messageText">Message:</label>
+          <label htmlFor="messageText" className="text-left w-full">
+            Message:
+          </label>
           <textarea
             className="textarea textarea-bordered h-72 text-2xl w-full"
-            id='messageText'
+            id="messageText"
             name="messageText"
             placeholder="Message"
             value={formData.messageText}
@@ -139,7 +150,7 @@ const Contact = () => {
             </label>
             <div></div>
           </div>
-          <button type="submit" className="btn w-full btn-accent">
+          <button type="submit" className="btn w-full btn-primary">
             Send
           </button>
         </form>

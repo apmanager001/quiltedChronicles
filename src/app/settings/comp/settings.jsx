@@ -7,6 +7,7 @@ import validator from "validator";
 import useStore from "../../store/store";
 import axiosInstance from "../../../comps/utility/axios";
 import AccountPage from "../../account/layout";
+import Expanded from "../../chain/comp/expand";
 // import ThemeSelector from "../../store/theme";
 // import FontSelector from "../../store/font";
 
@@ -121,7 +122,10 @@ const Settings = () => {
           <Loading />
         ) : (
           <>
-            <div className="p-10">Your Settings</div>
+            <div className="py-4 w-full flex justify-between items-center ">
+              <h1 className="flex-grow text-center text-xl">Your Settings</h1>
+              <Expanded />
+            </div>
             <div className="flex flex-col gap-5 w-full">
               {/* <div className="flex h-24 w-full items-center justify-center">
                 <div className="flex flex-col w-1/3 font-bold">
@@ -241,7 +245,9 @@ const Settings = () => {
                   </h3>
                   <div className="flex flex-col w-full justify-center items-center gap-2 text-left">
                     <div className="form-control">
-                      <label htmlFor="oldPassword" className="label">Old Password</label>
+                      <label htmlFor="oldPassword" className="label">
+                        Old Password
+                      </label>
                       <input
                         type="password"
                         id="oldPassword"
@@ -253,11 +259,13 @@ const Settings = () => {
                       />
                     </div>
                     <div className="form-control">
-                      <label htmlFor="newPassword" className="label">New Password</label>
+                      <label htmlFor="newPassword" className="label">
+                        New Password
+                      </label>
                       <input
                         type="password"
                         className="input input-bordered w-80"
-                        id='newPassword'
+                        id="newPassword"
                         name="newPassword"
                         placeholder="New Password"
                         value={newPassword}
@@ -265,10 +273,12 @@ const Settings = () => {
                       />
                     </div>
                     <div className="form-control">
-                      <label htmlFor="confirmPassword" className="label">Confirm Password</label>
+                      <label htmlFor="confirmPassword" className="label">
+                        Confirm Password
+                      </label>
                       <input
                         type="password"
-                        id='confirmPassword'
+                        id="confirmPassword"
                         className="input input-bordered w-80"
                         name="confirmPassword"
                         placeholder="Confirm New Password"
@@ -279,8 +289,8 @@ const Settings = () => {
                     <div className="form-control mt-4">
                       <input
                         onClick={handleChangePassword}
-                        name='submit'
-                        className="btn btn-accent "
+                        name="submit"
+                        className="btn btn-primary "
                         defaultValue="Submit"
                       />
                     </div>

@@ -19,7 +19,7 @@ const AccountPage = ({ children }) => {
   const universalDiv =
     "lg:border-r lg:border-b hover:border-gray-500 border-neutral bg-base-300 hover:shadow-xl lg:rounded-xl";
   return (
-    <div className="flex flex-col lg:flex-row lg:gap-4 lg:p-6 xl:p-12 bg-gradient-to-b from-base-100 via-base-100 to-neutral">
+    <div className="flex flex-col lg:flex-row lg:gap-4 lg:p-6 xl:p-12 bg-gradient-to-b from-base-100 via-base-200 to-base-300">
       {user? (
         <div
           className={`${expand ? 'hidden' : `hidden lg:block flex-2 max-w-60 xl:max-w-72 p-4 ${universalDiv}`}`}

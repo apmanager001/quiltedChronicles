@@ -11,19 +11,19 @@ const Buttons = () => {
     <div className="flex justify-center gap-2 flex-wrap">
       <Link
         href={`/chapter/${id}`}
-        className="btn btn-accent btn-sm"
+        className="btn btn-primary btn-sm"
         onClick={() => setMiddleColumn("chapter")}
       >
         Chapter
       </Link>
       <Link
         href={`/chapter/${id}`}
-        className="btn btn-accent btn-sm"
+        className="btn btn-primary btn-sm"
         onClick={() => setMiddleColumn("add")}
       >
         Add a Chapter
       </Link>
-      <Link href={`/chain/${id}`} className="btn btn-accent btn-sm">
+      <Link href={`/chain/${id}`} className="btn btn-primary btn-sm">
         View Full Chain
       </Link>
     </div>

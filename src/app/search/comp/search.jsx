@@ -5,6 +5,7 @@ import accountStore from "../../store/accountStore";
 import axiosInstance from "../../../comps/utility/axios";
 import AccountPage from "../../account/layout";
 import { Heart } from "lucide-react";
+import Expanded from "../../chain/comp/expand";
 
 const Search = () => {
   const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
@@ -74,19 +75,20 @@ const Search = () => {
   return (
     <AccountPage>
       <div className="flex flex-col w-full items-center p-4 min-h-[500px]">
-        <div className="w-full max-w-md">
+        <div className="w-full flex gap-4 justify-between items-center">
           <label htmlFor="search" className="hidden"></label>
           <input
             type="text"
             placeholder="Search..."
             id="search"
             name="search"
-            className="input input-bordered w-full mb-4"
+            className="flex-grow input input-bordered "
             value={searchTerm}
             onChange={handleSearchChange}
           />
+          <Expanded />
         </div>
-        <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
+        <div className="flex flex-col md:flex-row items-center gap-4 my-4">
           <div className="flex gap-2">
             <select
               className="select select-bordered"
