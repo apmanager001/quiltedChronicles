@@ -5,7 +5,7 @@ import Sidebar from '@/app/account/leftColumn/sidebar';
 
 const Menus = () => {
   return (
-    <div className="drawer drawer-end z-50 w-14">
+    <div className="drawer drawer-end z-50 w-14 ">
       <input
         id="menuDrawer"
         type="checkbox"
@@ -15,14 +15,14 @@ const Menus = () => {
       <label className="drawer-content" htmlFor="menuDrawer">
         <Menu size={24} />
       </label>
-      <div className="drawer-side">
+      <div className="drawer-side rounded-xl">
         <label
           htmlFor="menuDrawer"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
         <ul
-          className="menu bg-base-200 text-base-content min-h-full w-72 p-4"
+          className="menu bg-base-200 text-base-content min-h-full w-72 p-4 rounded-l-2xl shadow-xl"
           aria-label="close sidebar"
         >
           <Sidebar />

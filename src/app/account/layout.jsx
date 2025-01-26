@@ -17,7 +17,7 @@ const AccountPage = ({ children }) => {
   const transition =
     "lg:border-r lg:border-b border-gray-500 hover:border-neutral bg-base-300 hover:shadow-xl lg:rounded-xl transition-transform transform hover:scale-105 lg:shadow-lg";
   const universalDiv =
-    "lg:border-r lg:border-b hover:border-gray-500 border-neutral bg-base-300 hover:shadow-xl lg:rounded-xl";
+    "lg:border-r lg:border-b hover:border-gray-500 border-neutral bg-base-300 hover:shadow-xl lg:rounded-xl ";
   return (
     <div className="flex flex-col lg:flex-row lg:gap-4 lg:p-6 xl:p-12 bg-gradient-to-b from-base-100 via-base-200 to-base-300">
       {user? (

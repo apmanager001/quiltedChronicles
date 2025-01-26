@@ -34,7 +34,7 @@ const Sidebar = ({ closeDrawer }) => {
   };
 
   return (
-    <div className="flex flex-col justify-start overflow-y-auto ">
+    <div className="flex flex-col justify-start overflow-y-auto">
       <ul className="menu rounded-box">
         <li className="text-xl">
           <Link href={`/profile/${user.userName}`}>

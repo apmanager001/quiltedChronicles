@@ -12,58 +12,58 @@ const Footer = () => {
         <div className="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
             <div className="col-span-full lg:col-span-1">
-              <a
+              <Link
                 className="flex-none text-xl font-semibold  focus:outline-none focus:opacity-80"
-                href="#"
+                href="/"
                 aria-label="Brand"
               >
                 <h1>Quilted Chronicles</h1>
-              </a>
+              </Link>
             </div>
 
             <div className="col-span-1">
-              <h2 className="font-semibold">About Us</h2>
+              <h2 className="font-semibold">About</h2>
 
               <div className="mt-3 grid space-y-3">
                 <p>
-                  <a
-                    className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
+                  <Link
+                    className="inline-flex gap-x-2 text-primary hover:underline"
                     href="/faq"
                   >
                     F.A.Q.
-                  </a>
+                  </Link>
                 </p>
                 <p>
-                  <a
-                    className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
+                  <Link
+                    className="inline-flex gap-x-2 text-primary hover:underline"
                     href="/howitworks"
                   >
                     How It Works
-                  </a>
+                  </Link>
                 </p>
                 <p>
-                  <a
-                    className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
+                  <Link
+                    className="inline-flex gap-x-2 text-primary hover:underline"
                     href="/search"
                   >
                     Search
-                  </a>
+                  </Link>
                 </p>
                 {/* <p>
                 <a
-                  className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
+                  className="inline-flex gap-x-2 text-primary hover:underline"
                   href="/about"
                 >
                   About Us
                 </a>
               </p> */}
                 <p>
-                  <a
-                    className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
+                  <Link
+                    className="inline-flex gap-x-2 text-primary hover:underline"
                     href="/contact"
                   >
                     Contact
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>
@@ -73,20 +73,20 @@ const Footer = () => {
 
               <div className="mt-3 grid space-y-3">
                 <p>
-                  <a
-                    className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none"
+                  <Link
+                    className="inline-flex gap-x-2 text-primary hover:underline"
                     href="/login"
                   >
                     Login
-                  </a>
+                  </Link>
                 </p>
                 <p>
-                  <a
-                    className="inline-flex gap-x-2 text-primary hover:text-neutral focus:outline-none "
+                  <Link
+                    className="inline-flex gap-x-2 text-primary hover:underline"
                     href="/register"
                   >
                     Register
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>
@@ -137,9 +137,9 @@ const Footer = () => {
       </footer>
       <footer className="block lg:hidden fixed bottom-0 left-0 right-0 bg-base-200 p-4">
         <div className="flex justify-around">
-          <a href="/" className=" hover:text-gray-400">
+          <Link href="/" className=" hover:text-gray-400">
             <Home size={24} />
-          </a>
+          </Link>
           <Searched />
           <Profile />
           <Menus />

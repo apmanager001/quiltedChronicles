@@ -169,8 +169,8 @@ const Settings = () => {
                 </div>
               </div>
               <div className="flex  w-full items-center justify-center">
-                <div className="flex flex-col justify-start xl:items-start items-center xl:flex-row w-1/3 gap-2">
-                  <div className="flex flex-col lg:flex-row gap-1 items-center font-bold">
+                <div className="flex flex-col justify-start items-start xl:flex-row w-1/3 gap-2">
+                  <div className="flex flex-col gap-1 items-center font-bold">
                     Your Email:{isVerified ? verified() : notVerified()}
                   </div>
                   <div>

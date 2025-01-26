@@ -71,24 +71,24 @@ const Chain = () => {
                 key={index}
                 className="flex gap-2 items-center w-full mb-5 p-2"
               >
-                <div className="lg:w-1/3 hidden md:block pr-5 text-center">
+                <div className="lg:w-24 hidden md:block pr-5 text-center">
                   <Link
                     href={`/chapter/${chapter.chapterId}`}
                     onClick={() => setMiddleColumn("chapter")}
                   >
-                    <h3 className="hover:text-neutral text-sm">
+                    <h3 className="hover:underline text-sm">
                       {validator.unescape(chapter.chapterTitle || "") ||
                         validator.unescape(chapter.storyTitle || "")}
                     </h3>
                   </Link>
                   <Link href={`/profile/${chapter.authorName}`}>
-                    <p className="hover:text-neutral">{chapter.authorName}</p>
+                    <p className="hover:underline">{chapter.authorName}</p>
                   </Link>
                   <p className="text-xs">
                     {new Date(chapter.createDate).toLocaleDateString()}
                   </p>
                 </div>
-                <div className="lg:w-2/3">{processText(chapter.bodyText)}</div>
+                <div className="lg:w-full">{processText(chapter.bodyText)}</div>
               </div>
             ))}
           </div>
