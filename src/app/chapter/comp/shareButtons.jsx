@@ -4,14 +4,18 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { SocialIcon } from "react-social-icons";
 
+
 const SharedButtons = ({ title }) => {
   const { id } = useParams();
 
   const link = encodeURI(window.location.href);
   const msg = encodeURIComponent("Check out this story on Quilted!");
   const shareTitle = encodeURIComponent(title);
+
+
+
   return (
-    <div className="flex justify-between gap-2 lg:gap-4 text-2xl p-2 bg-white rounded-xl">
+    <div className="flex justify-between items-center gap-2 lg:gap-4 text-2xl p-2 bg-white rounded-xl">
       <div className="tooltip tooltip-bottom" data-tip="Share to Threads">
         <SocialIcon
           network="threads"

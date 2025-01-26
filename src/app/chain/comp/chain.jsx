@@ -7,8 +7,9 @@ import axiosInstance from "../../../comps/utility/axios";
 import AccountPage from "../../account/layout";
 import Expanded from "./expand";
 import ShareButtons from "../../chapter/comp/shareButtons"
-import { Share2 } from "lucide-react";
+import { Share2, ClipboardCopy } from "lucide-react";
 import Loading from '../../../comps/utility/loading'
+import toast from "react-hot-toast";
 
 const Chain = () => {
   const { id } = useParams();
@@ -31,15 +32,25 @@ const Chain = () => {
     fetchData();
   }, [id]);
 
-  const processText = (text) => {
-    return text
-      .split("\n")
-      .map((paragraph, index) => (
-        <p key={index}>{validator.unescape(paragraph)}</p>
-      ));
-  };
+const processText = (text) => {
+  return text
+    .split("\n")
+    .map((paragraph, index) => (
+      <p key={index}>{validator.unescape(paragraph)}</p>
+    ));
+};
   
-
+function copyURL() {
+  const url = window.location.href;
+  navigator.clipboard
+    .writeText(url)
+    .then(() => {
+      toast.success("URL Copied!");
+    })
+    .catch((err) => {
+      toast.error("Failed to copy the URL");
+    });
+}
   return (
     <AccountPage>
       {loading ? (
@@ -56,14 +67,23 @@ const Chain = () => {
           )}
           <div className="mx-4">
             <div className="flex items-center justify-between">
-              <h1 className="flex-grow text-center font-bold">Full Story Chain</h1>
+              <h1 className="flex-grow text-center font-bold">
+                Full Story Chain
+              </h1>
               <Expanded />
             </div>
             <h2 className="text-center py-5">
               {validator.unescape(storyTitle)}
             </h2>
             <div className="flex justify-center lg:justify-end  items-center gap-4 w-full mb-4">
-              <Share2 size={32} />
+              <Share2 />
+              <div
+                className="tooltip tooltip-bottom rounded-full h-[35px] w-[35px] hover:bg-base-100 flex justify-center items-center cursor-pointer"
+                data-tip="Click to Copy URL"
+                onClick={copyURL}
+              >
+                <ClipboardCopy />
+              </div>
               <ShareButtons title={storyTitle} />
             </div>
             {chain.map((chapter, index) => (

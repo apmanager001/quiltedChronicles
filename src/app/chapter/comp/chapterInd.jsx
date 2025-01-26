@@ -5,13 +5,14 @@ import validator from 'validator'
 import Link from "next/link";
 import { Share2 } from "lucide-react";
 import { useParams } from "next/navigation";
-import { Heart, ArrowBigLeft, Rewind } from "lucide-react";
+import { Heart, ArrowBigLeft, Rewind, ClipboardCopy } from "lucide-react";
 import Expanded from '../../chain/comp/expand'
 import FollowAuthor from "../../profile/comp/followAuthor";
 import SharedButtons from "./shareButtons";
 import axiosInstance from "../../../comps/utility/axios";
 import Toolbar from "./toolbar/toolbar";
 import Loading from '../../../comps/utility/loading'
+import toast from "react-hot-toast";
 
 const ChapterInd = () => {
   const user = useStore((state) => state.user);
@@ -84,6 +85,18 @@ const ChapterInd = () => {
       .map((paragraph, index) => (
         <p key={index}>{validator.unescape(paragraph)}</p>
       ));
+
+  function copyURL() {
+    const url = window.location.href;
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        toast.success("URL Copied!");
+      })
+      .catch((err) => {
+        toast.error("Failed to copy the URL");
+      });
+  }
   
   return loading ? (
     <>
@@ -101,6 +114,13 @@ const ChapterInd = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Share2 />
+              <div
+                className="tooltip tooltip-bottom rounded-full h-[35px] w-[35px] hover:bg-base-100 flex justify-center items-center cursor-pointer"
+                data-tip="Click to Copy URL"
+                onClick={copyURL}
+              >
+                <ClipboardCopy />
+              </div>
                 <SharedButtons title={chapterData.storyTitle} />
               </div>
             </div>
