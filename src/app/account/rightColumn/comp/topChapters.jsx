@@ -2,11 +2,13 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../../../comps/utility/axios";
 import Loading from '../../../../comps/utility/loading'
+import accountStore from "@/app/store/accountStore";
 import validator from 'validator'
 import Link from "next/link";
 import { Heart, User } from "lucide-react";
 
 const TopChapters = () => {
+  const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
   const [chapters, setChapters] = useState([]);
   const [loading, setLoading] = useState(true)
 

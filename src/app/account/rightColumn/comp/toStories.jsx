@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import accountStore from "@/app/store/accountStore";
 import axiosInstance from "../../../../comps/utility/axios";
 import Loading from "@/comps/utility/loading";
 import validator from 'validator'
@@ -7,6 +8,7 @@ import Link from "next/link";
 import { Heart, User } from "lucide-react";
 
 const TopStories = () => {
+  const setMiddleColumn = accountStore((state) => state.setMiddleColumn);
   const [chapters, setChapters] = useState([]);
   const [loading, setLoading] =useState(true)
 
