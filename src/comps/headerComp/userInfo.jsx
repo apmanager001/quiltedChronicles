@@ -18,7 +18,7 @@ const UserInfo = () => {
   };
     useEffect(() => {
       validateSession();
-    }, [validateSession]);
+    }, []);
 
   const closeDrawer = () => {
     setIsDrawerOpen(false);

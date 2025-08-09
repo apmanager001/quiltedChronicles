@@ -8,7 +8,6 @@ import { toast } from "react-hot-toast";
 const LockandUnlock = ({ userId }) => {
     const user = useStore((state) => state.user);
     const [lock, setLock] = useState(false);
-
   useEffect(() => {
     const fetchData = async () => {
       if (user.admin === true) {

@@ -128,8 +128,8 @@ const Footer = () => {
             </div>
 
             <div>
-              <a href="mailto:contact@quiltedchronicles.com">
-                contact@quiltedchronicles.com
+              <a href="mailto:contact@quiltedchronicles.org">
+                contact@quiltedchronicles.org
               </a>
             </div>
           </div>

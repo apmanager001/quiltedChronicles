@@ -12,6 +12,8 @@ import Loading from '@/comps/utility/loading';
 
 const Sidebar = ({ closeDrawer }) => {
   const user = useStore((state) => state.user);
+  const logout = useStore((state) => state.logout);
+
   const id = useId()
   if (!user) {
     return (
@@ -27,6 +29,7 @@ const Sidebar = ({ closeDrawer }) => {
   const handleLogout = async () => {
     try {
       await axiosInstance.post("/logout");
+      logout()
       window.location.href = "/login";
     } catch (error) {
       toast.error(error);

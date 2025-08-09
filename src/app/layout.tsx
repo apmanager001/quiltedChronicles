@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-} from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import Script from "next/script";
 import "./globals.css";
-import Header from '../comps/header'
-import Footer from '../comps/footer'
+import Header from "../comps/header";
+import Footer from "../comps/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,9 +16,73 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Quilted Chronicles",
-  description: "Complete a story as a community. Each user writes a chapter and the next person writes the next one. Each story has multiple middles and endings.",
-  keywords: "chapter, story, book, writing, journal, community",
+  title: {
+    default: "Quilted Chronicles - Collaborative Storytelling Community",
+    template: "%s | Quilted Chronicles",
+  },
+  description:
+    "Join the ultimate collaborative storytelling community. Write chapters, continue stories, and explore multiple endings in this unique creative writing platform.",
+  keywords: [
+    "collaborative storytelling",
+    "community writing",
+    "creative writing",
+    "story chapters",
+    "interactive fiction",
+    "writing community",
+    "shared stories",
+    "creative collaboration",
+  ],
+  authors: [{ name: "Quilted Chronicles Team" }],
+  creator: "Quilted Chronicles",
+  publisher: "Quilted Chronicles",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL("https://www.quiltedchronicles.org"),
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-US": "/en-US",
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://www.quiltedchronicles.org",
+    title: "Quilted Chronicles - Collaborative Storytelling Community",
+    description:
+      "Join the ultimate collaborative storytelling community. Write chapters, continue stories, and explore multiple endings in this unique creative writing platform.",
+    siteName: "Quilted Chronicles",
+    images: [
+      {
+        url: "/quilted.webp",
+        width: 1200,
+        height: 630,
+        alt: "Quilted Chronicles - Collaborative Storytelling Platform",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Quilted Chronicles - Collaborative Storytelling Community",
+    description:
+      "Join the ultimate collaborative storytelling community. Write chapters, continue stories, and explore multiple endings.",
+    creator: "@quiltedchronicles",
+    images: ["/quilted.webp"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 export default function RootLayout({
   children,
@@ -33,7 +94,7 @@ export default function RootLayout({
       <head>
         <Script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-CWG0K8DNT9"
+          src="https://www.googletagmanager.org/gtag/js?id=G-CWG0K8DNT9"
         ></Script>
         <Script id="google-analytics">
           {`window.dataLayer = window.dataLayer || [];
@@ -42,15 +103,38 @@ export default function RootLayout({
 
           gtag('config', 'G-CWG0K8DNT9');`}
         </Script>
-        <title>Quilted Chronicles</title>
-        <meta
-          name="description"
-          content="Complete a story as a community. Each user writes a chapter and the next person writes the next one. Each story has multiple middles and endings."
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Quilted Chronicles",
+              description:
+                "Join the ultimate collaborative storytelling community. Write chapters, continue stories, and explore multiple endings in this unique creative writing platform.",
+              url: "https://www.quiltedchronicles.org",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate:
+                    "https://www.quiltedchronicles.org/search?q={search_term_string}",
+                },
+                "query-input": "required name=search_term_string",
+              },
+              publisher: {
+                "@type": "Organization",
+                name: "Quilted Chronicles",
+                url: "https://www.quiltedchronicles.org",
+              },
+            }),
+          }}
         />
-        <meta
-          name="keywords"
-          content="chapter, story, book, writing, journal, community, collaborative, storytelling"
-        />
+        <link rel="canonical" href="https://www.quiltedchronicles.org" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}

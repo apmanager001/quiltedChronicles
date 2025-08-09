@@ -10,6 +10,7 @@ import AccountPage from "../../account/layout"
 
 const CreateStory = () => {
   const user = useStore((state) => state.user);
+  const updateUser = useStore((state) => state.updateUser);
   const [authorName, setAuthorName] = useState("");
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState({
@@ -43,8 +44,9 @@ const CreateStory = () => {
           toast.error(data.error);
         } else {
           setData({});
+          updateUser()
           toast.success("Thank you for starting a story");
-          window.location.href = `/profile/${user.userName}`;
+          // window.location.href = `/profile/${user.userName}`;
         }
       } else {
         toast.error("Please log in to send this story");
