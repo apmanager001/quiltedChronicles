@@ -1,73 +1,109 @@
-'use client'
-import React, {useState} from "react";
+"use client";
+import React from "react";
 import { usePathname } from "next/navigation";
 import useStore from "../store/store";
-import ExpandStore from '../store/expandStore'
+import ExpandStore from "../store/expandStore";
 import Sidebar from "./leftColumn/sidebar";
 import NextStory from "./rightColumn/nextStory";
 import TopChapters from "./rightColumn/comp/topChapters";
 import TopStories from "./rightColumn/comp/toStories";
 import Buttons from "./rightColumn/comp/chainButton";
 
-
 const AccountPage = ({ children }) => {
   const expand = ExpandStore((state) => state.expand);
   const user = useStore((state) => state.user);
   const pathname = usePathname();
-  const transition =
-    "lg:border-r lg:border-b border-gray-500 hover:border-neutral bg-base-300 hover:shadow-xl lg:rounded-xl transition-transform transform hover:scale-105 lg:shadow-lg";
-  const universalDiv =
-    "lg:border-r lg:border-b hover:border-gray-500 border-neutral bg-base-300 hover:shadow-xl lg:rounded-xl ";
+
+  // Cleaner styling classes
+  const sidebarClass = `hidden lg:block w-64 xl:w-72 bg-base-100 rounded-2xl shadow-lg border border-base-300/50 overflow-hidden transition-all duration-300 ${
+    expand ? "hidden" : ""
+  }`;
+
+  const mainContentClass =
+    "flex-1 bg-base-100 rounded-2xl shadow-lg border border-base-300/50 overflow-hidden";
+
+  const rightPanelClass = `w-full lg:w-80 xl:w-96 flex flex-col gap-4 transition-all duration-300 ${
+    expand ? "hidden" : ""
+  }`;
+
+  const panelCardClass =
+    "bg-base-100 rounded-2xl shadow-lg border border-base-300/50 overflow-hidden";
+
+  const isChapterOrChain =
+    pathname &&
+    (pathname.startsWith("/chapter") || pathname.startsWith("/chain"));
+
   return (
-    <div className="flex flex-col lg:flex-row lg:gap-4 lg:p-6 xl:p-12 bg-gradient-to-b from-base-100 via-base-200 to-base-300">
-      {user? (
-        <div
-          className={`${expand ? 'hidden' : `hidden lg:block flex-2 max-w-60 xl:max-w-72 p-4 ${universalDiv}`}`}
-        >
-          <Sidebar />
-        </div>
-      ) : (
-        ""
-      )}
-      {pathname &&
-      (pathname.startsWith("/chapter") || pathname.startsWith("/chain")) ? (
-        <div className="lg:hidden flex justify-center gap-2 p-4 bg-base-300 ">
-          <Buttons />
-        </div>
-      ) : (
-        ""
-      )}
-      <main className={`flex-1 p-4 ${universalDiv}`}>
-        {children}
-      </main>
-      <div className={`${expand ? 'hidden' : "flex-2 w-full lg:max-w-96 flex flex-col lg:gap-2"}`}>
-        {pathname &&
-        (pathname.startsWith("/chapter") || pathname.startsWith("/chain")) ? (
-          <>
-            <div
-              className={`hidden lg:flex justify-center items-center w-full xl:max-w-96 p-4 ${universalDiv}`}
-            >
-              <div className="flex gap-2">
-                <Buttons />
+    <div className="min-h-screen bg-gradient-to-br from-base-100 via-base-200/50 to-base-300/30 p-4 lg:p-6 xl:p-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 xl:gap-8">
+          {/* Left Sidebar */}
+          {user && (
+            <aside className={sidebarClass}>
+              <div className="p-6">
+                <Sidebar />
               </div>
+            </aside>
+          )}
+
+          {/* Mobile Action Buttons */}
+          {isChapterOrChain && (
+            <div className="lg:hidden flex justify-center p-4 bg-base-100 rounded-2xl shadow-lg border border-base-300/50">
+              <Buttons />
             </div>
-            <div className={`flex-2 w-full xl:max-w-96 p-4 ${universalDiv}`}>
-              <NextStory />
-            </div>
-            <div className={`flex-1 w-full xl:max-w-96 p-4 ${universalDiv}`}>
-              <TopChapters />
-            </div>
-          </>
-        ) : (
-          <>
-            <div className={`flex-1 w-full  xl:max-w-96 p-4 ${universalDiv}`}>
-              <TopChapters />
-            </div>
-            <div className={`flex-1 w-full  xl:max-w-96 p-4 ${universalDiv}`}>
-              <TopStories />
-            </div>
-          </>
-        )}
+          )}
+
+          {/* Main Content Area */}
+          <main className={mainContentClass}>
+            <div className="p-6 lg:p-8">{children}</div>
+          </main>
+
+          {/* Right Panel */}
+          <aside className={rightPanelClass}>
+            {isChapterOrChain ? (
+              <>
+                {/* Action Buttons - Desktop */}
+                <div className={`hidden lg:block ${panelCardClass}`}>
+                  <div className="p-6">
+                    <div className="flex gap-3 justify-center">
+                      <Buttons />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Next Story */}
+                <div className={panelCardClass}>
+                  <div className="p-6">
+                    <NextStory />
+                  </div>
+                </div>
+
+                {/* Top Chapters */}
+                <div className={panelCardClass}>
+                  <div className="p-6">
+                    <TopChapters />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {/* Top Chapters */}
+                <div className={panelCardClass}>
+                  <div className="p-6">
+                    <TopChapters />
+                  </div>
+                </div>
+
+                {/* Top Stories */}
+                <div className={panelCardClass}>
+                  <div className="p-6">
+                    <TopStories />
+                  </div>
+                </div>
+              </>
+            )}
+          </aside>
+        </div>
       </div>
     </div>
   );

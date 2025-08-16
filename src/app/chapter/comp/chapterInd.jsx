@@ -1,24 +1,34 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import useStore from "../../store/store";
-import validator from 'validator'
+import validator from "validator";
 import Link from "next/link";
-import { Share2 } from "lucide-react";
+import {
+  Share2,
+  Heart,
+  ArrowBigLeft,
+  Rewind,
+  ClipboardCopy,
+  Calendar,
+  User,
+  BookOpen,
+  FileText,
+} from "lucide-react";
 import { useParams } from "next/navigation";
-import { Heart, ArrowBigLeft, Rewind, ClipboardCopy } from "lucide-react";
-import Expanded from '../../chain/comp/expand'
+import Expanded from "../../chain/comp/expand";
 import FollowAuthor from "../../profile/comp/followAuthor";
 import SharedButtons from "./shareButtons";
 import axiosInstance from "../../../comps/utility/axios";
 import Toolbar from "./toolbar/toolbar";
-import Loading from '../../../comps/utility/loading'
+import Loading from "../../../comps/utility/loading";
 import toast from "react-hot-toast";
 
-const ChapterInd = () => {
+const ChapterInd = ({ onTitleChange }) => {
   const user = useStore((state) => state.user);
   const { id } = useParams();
   const [chapter, setChapter] = useState("Loading...");
   const [loading, setLoading] = useState(false);
+  const [showShareDropdown, setShowShareDropdown] = useState(false);
 
   const [chapterData, setChapterData] = useState({
     authorName: "",
@@ -62,12 +72,23 @@ const ChapterInd = () => {
           continuationChapters,
         });
         setLoading(true);
+
+        // Notify parent component of title changes for SEO
+        if (onTitleChange) {
+          onTitleChange({
+            chapterTitle,
+            storyTitle,
+            authorName,
+            createDate: dateWithoutTime,
+          });
+        }
       } catch (error) {
         console.error(error);
       }
     };
     fetchChapter();
-  }, []);
+  }, [id, onTitleChange]);
+
   const {
     authorName,
     body,
@@ -80,11 +101,11 @@ const ChapterInd = () => {
     continuationChapters,
   } = chapterData;
 
-    const paragraphs = body
-      .split("\n")
-      .map((paragraph, index) => (
-        <p key={index}>{validator.unescape(paragraph)}</p>
-      ));
+  const paragraphs = body.split("\n").map((paragraph, index) => (
+    <p key={index} className="mb-4 leading-relaxed">
+      {validator.unescape(paragraph)}
+    </p>
+  ));
 
   function copyURL() {
     const url = window.location.href;
@@ -97,110 +118,154 @@ const ChapterInd = () => {
         toast.error("Failed to copy the URL");
       });
   }
-  
+
+  const toggleShareDropdown = () => {
+    setShowShareDropdown(!showShareDropdown);
+  };
+
   return loading ? (
-    <>
-      <title>{chapter.chapterTitle || chapter.storyTitle}</title>
-      <meta name="description" content={body.slice(0, 50)} />
-      <meta name="keywords" content={chapter.keywords.join(", ")} />
-      <div className="flex flex-col p-0 lg:pb-5 lg:h-full ">
-        <div className="pl-2">
-          <div className="flex flex-col items-start">
-            <div className="w-full flex items-center justify-end"><Expanded /></div>
-            <div className="w-full flex justify-between items-center pt-4 pr-4 gap-2">
-              <div className="flex justify-center items-center gap-2 p-4 badge badge-neutral">
-                <Heart color="red" fill="red" />
-                {chapter.likes}
-              </div>
-              <div className="flex items-center gap-2">
-                <Share2 />
-              <div
-                className="tooltip tooltip-bottom rounded-full h-[35px] w-[35px] hover:bg-base-100 flex justify-center items-center cursor-pointer"
-                data-tip="Click to Copy URL"
-                onClick={copyURL}
-              >
-                <ClipboardCopy />
-              </div>
-                <SharedButtons title={chapterData.storyTitle} />
-              </div>
-            </div>
-            <div className="flex items-center py-2 gap-2">
-              <div className="text-sm">By:</div>
-              <div className="font-bold text-red-500 pl-1">
-                <Link href={`/profile/${authorName}`}>{authorName}</Link>
-              </div>
-              <div className="ml-2">
-                {user && user.userName === authorName ? (
-                  ""
-                ) : (
-                  <FollowAuthor userId={chapter.authorId} />
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="flex items-center py-2 gap-2">
-            <div className="text-sm">Created on:</div>
-            <div className="font-bold">{createDate}</div>
-          </div>
-          <div className="flex items-center py-2">
-            <div className="flex items-center gap-2">
-              <div className="text-sm">Main Story Title: </div>
-              <div className="font-bold">{validator.unescape(storyTitle)}</div>
-            </div>
-          </div>
-          <div className="flex items-center py-2">
+    <div className="max-w-4xl mx-auto">
+      {/* Header Section */}
+      <div className="mb-8">
+        {/* Story/Chapter Title with Expand Button */}
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex-1 text-center">
+            <h1 className="text-3xl font-bold text-base-content mb-2">
+              {chapterTitle
+                ? validator.unescape(chapterTitle)
+                : validator.unescape(storyTitle)}
+            </h1>
             {chapterTitle && (
-              <div className="flex items-center gap-2">
-                <div className="text-sm">This Chapter Title:</div>
-                <div className="font-bold">
-                  {validator.unescape(chapterTitle)}
-                </div>
-              </div>
+              <p className="text-lg text-base-content/70">
+                Part of:{" "}
+                <span className="font-semibold">
+                  {validator.unescape(storyTitle)}
+                </span>
+              </p>
             )}
           </div>
+          <div className="ml-4">
+            <Expanded />
+          </div>
         </div>
-        <div className="break-words text-wrap font-message text-2xl px-0 lg:px-4 py-4 border-t-2 border-slate-600">
-          {paragraphs}
+
+        {/* Meta Information Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          {/* Author Card */}
+          <div className="bg-base-200/50 rounded-xl p-4 border border-base-300/50">
+            <div className="flex flex-col xl:flex-row items-center justify-center gap-3">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <User className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1 text-center">
+                <p className="text-sm text-base-content/60 mb-1">Author</p>
+                <Link
+                  href={`/profile/${authorName}`}
+                  className="font-semibold text-primary hover:text-primary-focus transition-colors"
+                >
+                  {authorName}
+                </Link>
+              </div>
+              {user && user.userName !== authorName && (
+                <FollowAuthor userId={chapter.authorId} />
+              )}
+            </div>
+          </div>
+
+          {/* Date Card */}
+          <div className="bg-base-200/50 rounded-xl p-4 border border-base-300/50">
+            <div className="flex flex-col xl:flex-row items-center justify-center gap-3">
+              <div className="p-2 bg-secondary/10 rounded-lg">
+                <Calendar className="w-5 h-5 text-secondary" />
+              </div>
+              <div className="text-center">
+                <p className="text-sm text-base-content/60 mb-1">Created</p>
+                <p className="font-semibold ">{createDate}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Likes Card */}
+          <div className="bg-base-200/50 rounded-xl p-4 border border-base-300/50">
+            <div className="flex flex-col xl:flex-row items-center justify-center gap-3">
+              <div className="p-2 bg-accent/10 rounded-lg">
+                <Heart className="w-5 h-5 text-accent" fill="currentColor" />
+              </div>
+              <div className="text-center">
+                <p className="text-sm text-base-content/60 mb-1">Likes</p>
+                <p className="font-semibold">{chapter.likes || 0}</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div
-          className={`flex items-center ${
-            previousChapter ? "justify-around" : "justify-center"
-          }  mt-auto`}
-        >
-          <div className="flex text-red-500">
-            {previousChapter && (
-              <div
-                className="tooltip tooltip-right tooltip-accent"
-                data-tip="Previous Chapter"
+
+        {/* Action Buttons */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            {/* Share Button */}
+            <div className="relative">
+              <button
+                onClick={toggleShareDropdown}
+                className="btn btn-outline btn-primary gap-2 btn-sm lg:btn-md"
               >
+                <Share2 className="w-4 h-4" />
+                Share
+              </button>
+
+              {/* Share Dropdown */}
+              {showShareDropdown && (
+                <div className="absolute top-full left-0 mt-2 bg-base-100 rounded-xl shadow-lg border border-base-300/50 p-3 min-w-[200px] z-10">
+                  <div className="space-y-2">
+                    <button
+                      onClick={copyURL}
+                      className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-base-200 transition-colors text-left"
+                    >
+                      <ClipboardCopy className="w-4 h-4" />
+                      <span>Copy URL</span>
+                    </button>
+                    <SharedButtons title={chapterData.storyTitle} />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex items-center gap-3">
+            {previousChapter && (
+              <>
                 <Link
                   href={`/chapter/${previousChapter}`}
-                  data-name="lastChapter"
-                  aria-label="This link will take you to the last chapter in the story"
+                  className="btn btn-outline btn-secondary gap-2 btn-sm lg:btn-md"
+                  aria-label="Go to previous chapter"
                 >
-                  <ArrowBigLeft size={40} fill="red" />
+                  <ArrowBigLeft className="w-4 h-4" />
+                  Previous
                 </Link>
-              </div>
-            )}
-            {previousChapter && (
-              <div
-                className="tooltip tooltip-right tooltip-accent mr-10"
-                data-tip="Jump to First Story"
-              >
                 <Link
                   href={`/chapter/${storyId}`}
-                  data-name="firstChapter"
-                  aria-label="This link will take you to the first chapter in the story"
+                  className="btn btn-outline btn-accent gap-2 btn-sm lg:btn-md"
+                  aria-label="Go to first chapter"
                 >
-                  <Rewind size={40} fill="red" />
+                  <Rewind className="w-4 h-4" />
+                  First
                 </Link>
-              </div>
+              </>
             )}
           </div>
-          <Toolbar />
         </div>
       </div>
-    </>
+
+      {/* Content Section */}
+      <div className="bg-base-100 rounded-2xl border border-base-300/50 p-6 lg:p-8 mb-8">
+        <div className="prose prose-lg max-w-none">{paragraphs}</div>
+      </div>
+
+      {/* Bottom Toolbar */}
+      <div className="flex justify-center">
+        <Toolbar />
+      </div>
+    </div>
   ) : (
     <Loading />
   );

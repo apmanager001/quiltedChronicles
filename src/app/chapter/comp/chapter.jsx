@@ -8,7 +8,7 @@ import AccountPage from "../../account/layout";
 import AddChapter from "./addChapter";
 import Chain from "./chain";
 
-const Chapter = () => {
+const Chapter = ({ onTitleChange }) => {
   const user = useStore((state) => state.user);
   const middleColumn = accountStore((state) => state.middleColumn);
   const [author, setAuthor] = useState("");
@@ -38,7 +38,7 @@ const Chapter = () => {
           <div className="flex-2 flex justify-center items-center w-full">
             {middleColumn === "chapter" && (
               <div>
-                <ChapterInd />
+                <ChapterInd onTitleChange={onTitleChange} />
               </div>
             )}
             {middleColumn === "add" &&

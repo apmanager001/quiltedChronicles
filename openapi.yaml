@@ -1,0 +1,2462 @@
+openapi: 3.1.0
+info:
+  title: A New Addventure
+  description:
+    "A collaborative fiction site that allows users to write stories with\
+    \ multiple branches, and add branches to existing stories written by others."
+  version: 1.0.0
+servers:
+  - url: /
+paths:
+  /register:
+    summary: GET/POST registration
+    post:
+      tags:
+        - User
+      summary: Register a new user
+      description:
+        "Register a new user by posting a new userName, an email address,\
+        \ and a password. Check for unique userName, send verification email, and\
+        \ store password."
+      operationId: register_user
+      requestBody:
+        description: Submit a request to register a user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Register"
+            example:
+              {
+                "userName": "EasterBunny",
+                "email": "EasterBunny@example.com",
+                "password": "12345678",
+              }
+      responses:
+        "201":
+          description: "If the registration is successful, return the users private profile information to indicate success."
+          content:
+            application/json:
+              example:
+                {
+                  "userId": "66ce0c8dc538303360039d01",
+                  "userName": "EasterBunny",
+                  "email": "EasterBunny@example.com",
+                  "admin": false,
+                  "moderator": false,
+                  "bio": "I haven't decided what to put in my bio yet.",
+                  "publishEmail": false,
+                  "darkMode": false,
+                  "locked": false,
+                  "emailVerified": false,
+                  "publishedChapters": [],
+                  "followedAuthors": [],
+                  "likedChapters": [],
+                  "bookmarkedChapters": [],
+                }
+        "400":
+          description: "If any of the fields are missing, return an error."
+          content:
+            application/json:
+              examples:
+                missingPassword:
+                  value: { "error": "Missing password." }
+                missingUserName:
+                  value: { "error": "Missing userName." }
+                missingEmail:
+                  value: { "error": "Missing email." }
+        "409":
+          description: "Username or Email are already in use."
+          content:
+            application/json:
+              examples:
+                duplicateUserName:
+                  value: { "error": "Username already in use." }
+                duplicateEmail:
+                  value: { "error": "Email already in use." }
+        default:
+          description: Default error sample response
+  /changepassword:
+    summary: Change the user's password.
+    post:
+      tags:
+        - User
+      summary: Change the user's password.
+      description:
+        Submit the user's current password and a new password. If the current password matches the one
+        the user submitted, set the new password as the user's password.
+      operationId: change_password
+      requestBody:
+        description: "Request to change the user's password"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePassword"
+            example:
+              { "password": "s33krit!", "newPassword": "s00per s33krit!" }
+      responses:
+        "200":
+          description: "Password successfully changed"
+          content:
+            application/json:
+              example: { "message": "Password has been successfully changed." }
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              examples:
+                missingPassword:
+                  value: { "error": "Missing password." }
+                missingNewPassword:
+                  value: { "error": "Missing newPassword." }
+        "403":
+          description: "Incorrect password."
+          content:
+            application/json:
+              example: { "error": "Incorrect password." }
+        default:
+          description: Default error sample response
+  /resetpassword:
+    summary: Send an email with a link that allows the user to reset their password.
+    post:
+      tags:
+        - User
+      summary: Send an email with a link that allows the user to reset their password.
+      description:
+        Submit a userName or an email, and if the corresponding user has a verified email, send an email
+        to the user's email with a link that will allow them to reset their password
+      operationId: send_reset_password_email
+      requestBody:
+        description: "Request to reset the user's password"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestResetPasswordEmail"
+            examples:
+              userName:
+                value: { "name": "Freddy" }
+              email:
+                value: { "name": "Freddy@example.com" }
+      responses:
+        "200":
+          description: "Password reset email sent"
+          content:
+            application/json:
+              example: { "message": "Password reset email has been sent." }
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              example: { "error": "Bad request." }
+        "403":
+          description: "No verified email."
+          content:
+            application/json:
+              example:
+                {
+                  "error": "That account does not have a verified email address.",
+                }
+        "404":
+          description: "No matching user."
+          content:
+            application/json:
+              example: { "error": "No account has that email or userName." }
+        default:
+          description: Default error sample response
+  /resetpassword/{userId}/{resetPasswordKey}:
+    summary: Reset the user's password.
+    post:
+      tags:
+        - User
+      summary: Reset the user's password.
+      description:
+        Reset the user's password, using the userId and resetPasswordKey to verify that the given user has requested
+        a password reset. The resetPasswordKey will only be made available through the user's verified email, to
+        maintain security of the user's acount. Must be used within 15 minutes of the reset password request, or the
+        user will have to start over.
+      operationId: reset_password
+      parameters:
+        - name: userId
+          in: path
+          description: the ID of the user
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+        - name: resetPasswordKey
+          in: path
+          description: reset password key
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      requestBody:
+        description: Reset the user's password
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPassword"
+            example: { "password": "forgetmenot" }
+      responses:
+        "200":
+          description: "Password successfully reset"
+          content:
+            application/json:
+              example: { "message": "Password successfully reset." }
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              examples:
+                badPassword:
+                  value: { "error": "Password must be a string." }
+                badUserId:
+                  value: { "error": "That is not a properly formatted userId." }
+                badResetKey:
+                  value:
+                    {
+                      "error": "That is not a properly formatted reset password key.",
+                    }
+        "403":
+          description: "Security!"
+          content:
+            application/json:
+              examples:
+                expired:
+                  value: { "error": "Reset password key has expired." }
+                wrongKey:
+                  value: { "error": "Incorrect reset password key." }
+                noKey:
+                  value: { "error": "No resetPasswordKey set for that user." }
+        "404":
+          description: "No matching user."
+          content:
+            application/json:
+              example: { "error": "There is no user with that userId." }
+        default:
+          description: Default error sample response
+  /login:
+    summary: POST login
+    post:
+      tags:
+        - User
+      summary: Login user
+      description:
+        "Post the name and password entered by the user, name may be either a userName or an email,\
+        \ userName checked first. If the name matches a user and the password is correct for that user,\
+        \ log them in."
+      operationId: login_user
+      requestBody:
+        description: Submit a request to login
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Login"
+            example: { "name": "EasterBunny", "password": "12345678" }
+      responses:
+        "200":
+          description: "If the login is successful, return the users private profile information to indicate success."
+          content:
+            application/json:
+              example:
+                {
+                  "userId": "66ce0c8dc538303360039d01",
+                  "userName": "EasterBunny",
+                  "email": "EasterBunny@example.com",
+                  "admin": false,
+                  "moderator": false,
+                  "bio": "I haven't decided what to put in my bio yet.",
+                  "publishEmail": false,
+                  "darkMode": false,
+                  "locked": false,
+                  "emailVerified": true,
+                  "publishedChapters": [],
+                  "followedAuthors": [],
+                  "likedChapters": [],
+                  "bookmarkedChapters": [],
+                }
+        "400":
+          description: "Missing field."
+          content:
+            application/json:
+              examples:
+                missingName:
+                  value: { "error": "Missing name." }
+                missingPassword:
+                  value: { "error": "Missing password." }
+        "401":
+          description: "Login failed."
+          content:
+            application/json:
+              example: { "error": "Incorrect name or password." }
+        default:
+          description: Default error sample response
+  /logout:
+    summary: POST logout
+    post:
+      tags:
+        - User
+      summary: Logout the logged in user.
+      description:
+        "Logout the logged in user. Posted by a button on the users profile\
+        \ page, or from the user menu."
+      operationId: logout_user
+      responses:
+        "200":
+          description:
+            "Logout should always be successful. If user was logged in\
+            \ before request, the cookie will indicate the user to log out. If user\
+            \ was not logged in before request, user will still not be logged in,\
+            \ so we'll call that a success condition too."
+          content:
+            application/json:
+              example: { "message": "Logout successful." }
+        default:
+          description: Default error sample response
+  /profile:
+    summary: GET/PUT logged in user's profile
+    get:
+      tags:
+        - User
+      summary: Get user's profile.
+      description:
+        "If a user is logged in, get that user's settings from the server,\
+        \ and show them on the page. If no user is logged in, check localStorage for\
+        \ basic settings (light/dark mode, blocked tags) otherwise use default basic\
+        \ settings. Can be used to change settings."
+      operationId: get_profile_page
+      responses:
+        "200":
+          description: "Returns the private profile information of the logged in user."
+          content:
+            application/json:
+              example:
+                {
+                  "userId": "668490250029a28118a8d1be",
+                  "userName": "Freddy",
+                  "email": "Freddy@example.com",
+                  "admin": true,
+                  "moderator": false,
+                  "bio": "I'm not particularly good at bio. I'm really more of a math/physics/computers kinda guy.",
+                  "publishEmail": true,
+                  "darkMode": true,
+                  "locked": false,
+                  "emailVerified": true,
+                  "publishedChapters":
+                    [
+                      {
+                        "storyId": "6695b2573550c66db1ab9106",
+                        "chapterId": "66a7fd2095206fecbb52c189",
+                        "storyTitle": "In the beginning...",
+                        "chapterTitle": "Lerrald and Vred sought the Cartesian Bear",
+                        "authorName": "Freddy",
+                        "previousChapter": "6695b2573550c66db1ab9106",
+                        "keywords": [],
+                        "likes": 2,
+                      },
+                      {
+                        "storyId": "6695b2573550c66db1ab9106",
+                        "chapterId": "6695b2573550c66db1ab9106",
+                        "storyTitle": "In the beginning...",
+                        "chapterTitle": null,
+                        "authorName": "Freddy",
+                        "previousChapter": null,
+                        "keywords": [],
+                        "likes": 3,
+                      },
+                      {
+                        "storyId": "6688142fb004b799a5a29d03",
+                        "chapterId": "668d51e61be56166aaaa6cc2",
+                        "storyTitle": "Random Title",
+                        "chapterTitle": "Suddenly, a wild accountant appears!",
+                        "authorName": "Freddy",
+                        "previousChapter": "6688142fb004b799a5a29d03",
+                        "keywords": [],
+                        "likes": 0,
+                      },
+                    ],
+                  "followedAuthors":
+                    [
+                      {
+                        "userName": "apmanager",
+                        "userId": "667b294248b8805d71a96a03",
+                      },
+                      {
+                        "userName": "BlackLagoon",
+                        "userId": "668ee18ae1dcd980cf0739c2",
+                      },
+                      {
+                        "userName": "FreddyJupiter",
+                        "userId": "668ee1cfe1dcd980cf0739db",
+                      },
+                      {
+                        "userName": "FreddyMercury",
+                        "userId": "668ee198e1dcd980cf0739c7",
+                      },
+                      {
+                        "userName": "FreddyQuaoar",
+                        "userId": "668ee23ce1dcd980cf0739f9",
+                      },
+                    ],
+                  "likedChapters":
+                    [
+                      {
+                        "storyId": "66a5a2ab375bbb2298ff7420",
+                        "chapterId": "66a5a2ab375bbb2298ff7420",
+                        "storyTitle": "7th newest ",
+                        "chapterTitle": null,
+                        "authorName": "apmanager",
+                        "authorId": "667b294248b8805d71a96a03",
+                        "previousChapter": null,
+                        "keywords": [],
+                      },
+                    ],
+                  "bookmarkedChapters":
+                    [
+                      {
+                        "storyId": "6695b2573550c66db1ab9106",
+                        "chapterId": "66a7fd2095206fecbb52c189",
+                        "storyTitle": "In the beginning...",
+                        "chapterTitle": "Lerrald and Vred sought the Cartesian Bear",
+                        "authorName": "Freddy",
+                        "authorId": "668490250029a28118a8d1be",
+                        "previousChapter": "6695b2573550c66db1ab9106",
+                        "keywords": [],
+                      },
+                      {
+                        "storyId": "66a5a2ab375bbb2298ff7420",
+                        "chapterId": "66a5a2ab375bbb2298ff7420",
+                        "storyTitle": "7th newest ",
+                        "chapterTitle": null,
+                        "authorName": "apmanager",
+                        "authorId": "667b294248b8805d71a96a03",
+                        "previousChapter": null,
+                        "keywords": [],
+                      },
+                    ],
+                }
+        "401":
+          description: "If no user is logged in, return an error"
+          content:
+            application/json:
+              example: { "error": "No user logged in." }
+        default:
+          description: Default error sample response
+    put:
+      tags:
+        - User
+      summary: Post changes to user's profile.
+      description: "If a user is logged in, put the changed settings to the server."
+      operationId: put_profile
+      requestBody:
+        description:
+          Submit a request to change one or more settings. Changeable settings are publishEmail (boolean),
+          bio (string), darkmode (boolean), and email (string). If email is set, emailVerified is set to false,
+          and a verification email is sent to the new email address.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Settings"
+            example:
+              {
+                "publishEmail": true,
+                "bio": "This is a new bio.",
+                "darkMode": false,
+                "email": "newEmail@example.com",
+              }
+      responses:
+        "200":
+          description: "Return the user's private profile data"
+          content:
+            application/json:
+              example:
+                {
+                  "userId": "668490250029a28118a8d1be",
+                  "userName": "Freddy",
+                  "email": "Freddy@example.com",
+                  "admin": true,
+                  "moderator": false,
+                  "bio": "I'm not particularly good at bio. I'm really more of a math/physics/computers kinda guy.",
+                  "publishEmail": true,
+                  "darkMode": true,
+                  "locked": false,
+                  "emailVerified": true,
+                  "publishedChapters":
+                    [
+                      {
+                        "storyId": "6695b2573550c66db1ab9106",
+                        "chapterId": "66a7fd2095206fecbb52c189",
+                        "storyTitle": "In the beginning...",
+                        "chapterTitle": "Lerrald and Vred sought the Cartesian Bear",
+                        "authorName": "Freddy",
+                        "previousChapter": "6695b2573550c66db1ab9106",
+                        "keywords": [],
+                      },
+                      {
+                        "storyId": "6695b2573550c66db1ab9106",
+                        "chapterId": "6695b2573550c66db1ab9106",
+                        "storyTitle": "In the beginning...",
+                        "chapterTitle": null,
+                        "authorName": "Freddy",
+                        "previousChapter": null,
+                        "keywords": [],
+                      },
+                      {
+                        "storyId": "6688142fb004b799a5a29d03",
+                        "chapterId": "668d51e61be56166aaaa6cc2",
+                        "storyTitle": "Random Title",
+                        "chapterTitle": "Suddenly, a wild accountant appears!",
+                        "authorName": "Freddy",
+                        "previousChapter": "6688142fb004b799a5a29d03",
+                        "keywords": [],
+                      },
+                    ],
+                  "followedAuthors":
+                    [
+                      {
+                        "userName": "apmanager",
+                        "userId": "667b294248b8805d71a96a03",
+                      },
+                      {
+                        "userName": "BlackLagoon",
+                        "userId": "668ee18ae1dcd980cf0739c2",
+                      },
+                      {
+                        "userName": "FreddyJupiter",
+                        "userId": "668ee1cfe1dcd980cf0739db",
+                      },
+                      {
+                        "userName": "FreddyMercury",
+                        "userId": "668ee198e1dcd980cf0739c7",
+                      },
+                      {
+                        "userName": "FreddyQuaoar",
+                        "userId": "668ee23ce1dcd980cf0739f9",
+                      },
+                    ],
+                  "likedChapters":
+                    [
+                      {
+                        "storyId": "66a5a2ab375bbb2298ff7420",
+                        "chapterId": "66a5a2ab375bbb2298ff7420",
+                        "storyTitle": "7th newest ",
+                        "chapterTitle": null,
+                        "authorName": "apmanager",
+                        "authorId": "667b294248b8805d71a96a03",
+                        "previousChapter": null,
+                        "keywords": [],
+                      },
+                    ],
+                  "bookmarkedChapters":
+                    [
+                      {
+                        "storyId": "6695b2573550c66db1ab9106",
+                        "chapterId": "66a7fd2095206fecbb52c189",
+                        "storyTitle": "In the beginning...",
+                        "chapterTitle": "Lerrald and Vred sought the Cartesian Bear",
+                        "authorName": "Freddy",
+                        "authorId": "668490250029a28118a8d1be",
+                        "previousChapter": "6695b2573550c66db1ab9106",
+                        "keywords": [],
+                      },
+                      {
+                        "storyId": "66a5a2ab375bbb2298ff7420",
+                        "chapterId": "66a5a2ab375bbb2298ff7420",
+                        "storyTitle": "7th newest ",
+                        "chapterTitle": null,
+                        "authorName": "apmanager",
+                        "authorId": "667b294248b8805d71a96a03",
+                        "previousChapter": null,
+                        "keywords": [],
+                      },
+                    ],
+                }
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              example: { error: "Invalid request." }
+        default:
+          description: Default error sample response
+  /user:
+    summary: GET a list of users
+    get:
+      tags:
+        - User
+        - Search
+      summary: "Get a list of users, sorted alphabetically."
+      description:
+        "Get a list of users, in publicInfo format, sorted alphabetically. If there's a query string, only return the users whose userNames\
+        \ match that query string."
+      operationId: get_users
+      parameters:
+        - in: query
+          name: regex
+          schema:
+            type: string
+          description: "If present, only returns users whose userName matches the regex, case sensitive unless i is set to a non-empty value."
+        - in: query
+          name: i
+          schema:
+            type: string
+          description: "If set to a non-empty value other than 'false' (case insensitive), regex match is done case insensitively. Ignored if regex is not set."
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+          description: "Returns the indicated page number of the result list. If not set, is equivalent to setting page=1"
+      responses:
+        "200":
+          description: "List of users found."
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "userId": "668490250029a28118a8d1be",
+                    "userName": "Freddy",
+                    "email": "Freddy@example.com",
+                    "bio": "I'm not particularly good at bio. I'm really more of a math/physics/computers kinda guy.",
+                    "publishedChapters":
+                      [
+                        {
+                          "storyId": "6695b2573550c66db1ab9106",
+                          "chapterId": "66a7fd2095206fecbb52c189",
+                          "storyTitle": "In the beginning...",
+                          "chapterTitle": "Lerrald and Vred sought the Cartesian Bear",
+                          "authorName": "Freddy",
+                          "previousChapter": "6695b2573550c66db1ab9106",
+                          "keywords": [],
+                        },
+                        {
+                          "storyId": "6695b2573550c66db1ab9106",
+                          "chapterId": "6695b2573550c66db1ab9106",
+                          "storyTitle": "In the beginning...",
+                          "chapterTitle": null,
+                          "authorName": "Freddy",
+                          "previousChapter": null,
+                          "keywords": [],
+                        },
+                        {
+                          "storyId": "6688142fb004b799a5a29d03",
+                          "chapterId": "668d51e61be56166aaaa6cc2",
+                          "storyTitle": "Random Title",
+                          "chapterTitle": "Suddenly, a wild accountant appears!",
+                          "authorName": "Freddy",
+                          "previousChapter": "6688142fb004b799a5a29d03",
+                          "keywords": [],
+                        },
+                      ],
+                  },
+                  {
+                    "userId": "668ee325e1dcd980cf073a1c",
+                    "userName": "FreddyCallisto",
+                    "email": "",
+                    "bio": "I haven't decided what to put in my bio yet.",
+                    "publishedChapters": [],
+                  },
+                  {
+                    "userId": "668ee24be1dcd980cf0739fe",
+                    "userName": "FreddyCeres",
+                    "email": "",
+                    "bio": "I haven't decided what to put in my bio yet.",
+                    "publishedChapters": [],
+                  },
+                  {
+                    "userId": "668ee1b6e1dcd980cf0739d1",
+                    "userName": "FreddyEarth",
+                    "email": "",
+                    "bio": "I haven't decided what to put in my bio yet.",
+                    "publishedChapters": [],
+                  },
+                ]
+        "404":
+          description: "No users matching the search string found."
+          content:
+            application/json:
+              example: { "error": "No matching users found." }
+        default:
+          description: Default error sample response
+  /user/{userId}:
+    summary: GET a user's public profile
+    get:
+      tags:
+        - User
+      summary: Get a user's public profile.
+      description:
+        Get the user's public information by userId, including userName, bio, email if they have set publishEmail to true, and links to their
+        published chapters.
+      operationId: get_public_profile
+      parameters:
+        - name: userId
+          in: path
+          description: the ID of the user
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: "Successfully retrieved user profile."
+          content:
+            application/json:
+              example:
+                {
+                  "userId": "668490250029a28118a8d1be",
+                  "userName": "Freddy",
+                  "email": "Freddy@example.com",
+                  "bio": "I'm not particularly good at bio. I'm really more of a math/physics/computers kinda guy.",
+                  "publishedChapters":
+                    [
+                      {
+                        "storyId": "6695b2573550c66db1ab9106",
+                        "chapterId": "66a7fd2095206fecbb52c189",
+                        "storyTitle": "In the beginning...",
+                        "chapterTitle": "Lerrald and Vred sought the Cartesian Bear",
+                        "authorName": "Freddy",
+                        "previousChapter": "6695b2573550c66db1ab9106",
+                        "keywords": [],
+                        "likes": 2,
+                      },
+                      {
+                        "storyId": "6695b2573550c66db1ab9106",
+                        "chapterId": "6695b2573550c66db1ab9106",
+                        "storyTitle": "In the beginning...",
+                        "chapterTitle": null,
+                        "authorName": "Freddy",
+                        "previousChapter": null,
+                        "keywords": [],
+                        "likes": 3,
+                      },
+                      {
+                        "storyId": "6688142fb004b799a5a29d03",
+                        "chapterId": "668d51e61be56166aaaa6cc2",
+                        "storyTitle": "Random Title",
+                        "chapterTitle": "Suddenly, a wild accountant appears!",
+                        "authorName": "Freddy",
+                        "previousChapter": "6688142fb004b799a5a29d03",
+                        "keywords": [],
+                        "likes": 0,
+                      },
+                      {
+                        "storyId": "66885d8e6715f290d4ce03a9",
+                        "chapterId": "66885d8e6715f290d4ce03a9",
+                        "storyTitle": "Random Title",
+                        "chapterTitle": null,
+                        "authorName": "Freddy",
+                        "previousChapter": null,
+                        "keywords": [],
+                        "likes": 0,
+                      },
+                      {
+                        "storyId": "668857a03f120ae7785257d4",
+                        "chapterId": "668857a03f120ae7785257d4",
+                        "storyTitle": "Random Title",
+                        "chapterTitle": null,
+                        "authorName": "Freddy",
+                        "previousChapter": null,
+                        "keywords": [],
+                        "likes": 0,
+                      },
+                      {
+                        "storyId": "6688142fb004b799a5a29d03",
+                        "chapterId": "668820191cb99dfdc244c23c",
+                        "storyTitle": "Random Title",
+                        "chapterTitle": "Chapter the first",
+                        "authorName": "Freddy",
+                        "previousChapter": "6688142fb004b799a5a29d03",
+                        "keywords": [],
+                        "likes": 0,
+                      },
+                      {
+                        "storyId": "6688142fb004b799a5a29d03",
+                        "chapterId": "6688142fb004b799a5a29d03",
+                        "storyTitle": "Random Title",
+                        "chapterTitle": null,
+                        "authorName": "Freddy",
+                        "previousChapter": null,
+                        "keywords": [],
+                        "likes": 0,
+                      },
+                    ],
+                }
+        "404":
+          description: "User not found."
+          content:
+            application/json:
+              example: { "error": "There is no user with that user ID." }
+        default:
+          description: Default error sample response
+  /user/{userId}/follow:
+    summary: Allows a logged-in user to follow another author
+    post:
+      tags:
+        - User
+      summary: Follow another user
+      description: "If a user is logged in, posting to this route causes the logged in user to follow the user whose ID is in the path parameter."
+      operationId: follow_user
+      parameters:
+        - name: userId
+          in: path
+          description: the ID of the user
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: "Successfully followed another user."
+          content:
+            application/json:
+              example: { "message": "Follow successful." }
+        "400":
+          description: "Not a valid userId format"
+          content:
+            application/json:
+              example: { "error": "That is not a properly formatted userId." }
+        "404":
+          description: "User not found."
+          content:
+            application/json:
+              example: { "error": "There is no user with that user ID." }
+        "409":
+          description: "You can only follow a given user once."
+          content:
+            application/json:
+              examples:
+                duplicate:
+                  value: { "error": "You are already following that user." }
+                circular:
+                  value:
+                    {
+                      "error": "Following yourself means you're going around in circles.",
+                    }
+        default:
+          description: Default error sample response
+    delete:
+      tags:
+        - User
+      summary: Unfollow another user
+      description: "If a user is logged in, deleteing this route causes the logged in user to unfollow the user whose ID is in the path parameter."
+      operationId: unfollow_user
+      parameters:
+        - name: userId
+          in: path
+          description: the ID of the user
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: "Successfully unfollowed another user."
+          content:
+            application/json:
+              example: { "message": "Author successfully unfollowed." }
+        "400":
+          description: "Not a valid userId format"
+          content:
+            application/json:
+              example: { "error": "That is not a properly formatted userId." }
+        "404":
+          description: "User not found or not followed."
+          content:
+            application/json:
+              example: { "error": "No follow to remove." }
+        default:
+          description: Default error sample response
+  /verify:
+    summary: If a user with an unverified email address is logged in, send a verification to their email address.
+    post:
+      tags:
+        - User
+      summary: If a user with an unverified email address is logged in, send a verification to their email address.
+      description:
+        If a user with an unverified email address is logged in, send a verification to their email address,
+        containing a link with the userId and an emailVerificationKey.
+      operationId: send_verification_email
+      responses:
+        "200":
+          description: "Verification email successfully sent"
+          content:
+            application/json:
+              example: { "message": "Verification email sent." }
+        default:
+          description: Default error sample response
+  /verify/{userId}/{emailVerificationKey}:
+    summary: Verify an email address
+    post:
+      tags:
+        - User
+      summary: Verify an email address.
+      description:
+        When a user is registered, or a user with an unverified email posts to the /verify route, an email is sent to
+        the user's email address containing a link to the front end that contains their userId and emailVerificationKey.
+        That page on the front end posts to this route with the userId and emailVerificationKey, setting the user's
+        emailVerified field to true. This route does not require the user to be logged in.
+      operationId: verify_email
+      parameters:
+        - name: userId
+          in: path
+          description: the ID of a user
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+        - name: emailVerificationKey
+          in: path
+          description: the email verification key
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: "email successfully verified"
+          content:
+            application/json:
+              example: { "message": "Email successfully verified." }
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              examples:
+                badUserId:
+                  value: { "error": "That is not a properly formatted userId." }
+                badEmailVerificationKey:
+                  value:
+                    {
+                      "error": "That is not a properly formatted email verification key.",
+                    }
+        "403":
+          description: "Unauthorized"
+          content:
+            application/json:
+              example: { "error": "Bad email verification key." }
+        "404":
+          description: "User not found"
+          content:
+            application/json:
+              example: { "error": "There is no user with that userId." }
+        "409":
+          description: "Email is already verified."
+          content:
+            application/json:
+              example: { "error": "Email already verified." }
+        default:
+          description: Default error sample response
+  /chapter:
+    summary: GET/POST chapters
+    get:
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: "The page number of results the user is requesting. Absence is equivalent to 'page=1'"
+        - in: query
+          name: storiesOnly
+          schema:
+            type: boolean
+          description: "If true, only returns stories, i.e. chapters that have storyId equal to chapterId and previousChapter equal to null"
+        - in: query
+          name: search
+          schema:
+            type: string
+          description:
+            A string submitted by the user that specifies what to search for, in which fields, and what order the results should
+            be returned in. The string must consist of 0 or more white space separated tokens. The string may contain 0 or 1 tokens
+            matching the regular expression "o:[scaldSCALD]+", which specifies the sort order of the results. The letters after the
+            "o:" specify the fields to sort by, "s:storyTitle", "c:chapterTitle", "a:author", "l:likes", "d:createDate" with the
+            earlier letters having higher priority than the later letters, and captial letters indicating descending order rather
+            than ascending. If no sort order specification is given, the sort order defaults to "o:D". All other tokens must match
+            the regular expression "([scabkSCAK]+:)?[\\w.-]+". The optional prefix terminating with the colon specifies the fields
+            ("s:storyTitle" "c:chapterTitle" "a:authorName" "b:bodyText" "k:keywords", captials indicate the word given must match
+            the whole field and be case insensitive) in which to search for the word that makes up the rest of the token. Tokens
+            that don't include the optional prefix are treated as if they had the prefix "scabK:".
+      tags:
+        - Chapter
+      summary: GET a list of recent chapters
+      description: "Gets a list of [constants.resultsPerPage] recent chapters, newest first. Get more by setting query string to 'page=2', etc."
+      operationId: get_chapter_list
+      responses:
+        "200":
+          description: "Successfully found chapters."
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "storyId": "6695b2573550c66db1ab9106",
+                    "chapterId": "66a7fd2095206fecbb52c189",
+                    "storyTitle": "In the beginning...",
+                    "chapterTitle": "Lerrald and Vred sought the Cartesian Bear",
+                    "authorName": "Freddy",
+                    "authorId": "668490250029a28118a8d1be",
+                    "previousChapter": "6695b2573550c66db1ab9106",
+                    "keywords": [],
+                    "likes": 0,
+                    "likedByUser": false,
+                    "bookmarkedByUser": true,
+                  },
+                  {
+                    "storyId": "66c6570904c7e9974e060273",
+                    "chapterId": "66c6570904c7e9974e060273",
+                    "storyTitle": "In the beginnning...",
+                    "chapterTitle": null,
+                    "authorName": "Freddy",
+                    "authorId": "668490250029a28118a8d1be",
+                    "previousChapter": null,
+                    "keywords": ["drama", "sad"],
+                    "likes": 0,
+                    "likedByUser": false,
+                    "bookmarkedByUser": false,
+                  },
+                  {
+                    "storyId": "66c6570904c7e9974e060273",
+                    "chapterId": "66c6578d04c7e9974e060287",
+                    "storyTitle": "In the beginnning...",
+                    "chapterTitle": "In the beginnning...",
+                    "authorName": "Freddy",
+                    "authorId": "668490250029a28118a8d1be",
+                    "previousChapter": "66c6570904c7e9974e060273",
+                    "keywords": ["drama", "sad"],
+                    "likes": 0,
+                    "likedByUser": false,
+                    "bookmarkedByUser": false,
+                  },
+                ]
+        default:
+          description: Default error sample response
+    post:
+      tags:
+        - Chapter
+        - Story
+      summary: Post a new story
+      description: "Post the story title, chapter title, and text of a chapter to start a new story."
+      operationId: post_story
+      requestBody:
+        description: "Post a new story."
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewStory"
+            example:
+              {
+                "storyTitle": "Random Title",
+                "bodyText": "Genji no monogatari",
+                "keywords": ["drama", "sad"],
+              }
+      responses:
+        "201":
+          description: "Successfully created chapter."
+          content:
+            application/json:
+              example:
+                {
+                  "storyId": "66c6570904c7e9974e060273",
+                  "chapterId": "66c6570904c7e9974e060273",
+                  "storyTitle": "In the beginnning...",
+                  "chapterTitle": null,
+                  "authorName": "Freddy",
+                  "authorId": "668490250029a28118a8d1be",
+                  "bodyText": "testkurmdlqazsvnepyhs",
+                  "previousChapter": null,
+                  "createDate": "2024-08-21T21:07:21.032Z",
+                  "keywords": ["drama", "sad"],
+                  "likes": 0,
+                }
+        "400":
+          description: "Bad request."
+          content:
+            application/json:
+              examples:
+                missingStoryTitle:
+                  value: { "error": "Missing story title." }
+                missingBodyText:
+                  value: { "error": "Missing story text." }
+                badKeywords:
+                  value: { "error": "keywords must be an array of strings." }
+        default:
+          description: Default error sample response
+  /chapter/{chapterId}:
+    summary: GET/POST/PUT/DELETE a particular chapter
+    get:
+      tags:
+        - Chapter
+      summary: GET a particular chapter by ID
+      description: "Gets chapter data, and an array named continuationChapters containing chapterIds and chapter titles from continuation chapters."
+      operationId: get_chapter_by_id
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: "Chapter found"
+          content:
+            application/json:
+              example:
+                {
+                  "storyId": "66df18c63ecabb4d57111d42",
+                  "chapterId": "66df18c63ecabb4d57111d42",
+                  "authorName": "Freddy",
+                  "authorId": "66db1e32bb8f1cbaa7d1c388",
+                  "chapterTitle": null,
+                  "storyTitle": "In the beginning...",
+                  "bodyText": "In the beginning, there was the word, and the word was \"Wakamolensis,\" and nobody knew what it meant.\n\nAnd so it came to pass that Lerrald the inquisitive spake unto Vred the persistent, \"Let us seek the Divine Dictionary of Quantanonalog, so that we might learn the meaning of Wakamolensis.\"\n\n\"Right,\" said Vred. \"But we're going to have to walk, because it turns out that I'm too sexy for my donkey,\" and indicated the beast of burden in question.\n\n\"Verily,\" said Lerrald, \"A half dead ogre wouldst be too sexy for that donkey.\"\n\nAnd thus, they set out on foot.",
+                  "previousChapter": null,
+                  "createDate": "2024-09-09T15:48:22.282Z",
+                  "keywords": ["silly"],
+                  "likes": 1,
+                  "continuationChapters":
+                    [
+                      {
+                        "storyId": "66df18c63ecabb4d57111d42",
+                        "chapterId": "66df18f43ecabb4d57111d73",
+                        "storyTitle": "In the beginning...",
+                        "chapterTitle": "Lerrald and Vred sought the Cartesian Bear",
+                        "authorName": "Freddy",
+                        "bodyText": "Lerrald and Vred set forth to find the greatest mapmaker in all the land, the Cartesian Bear. This meant that they were going south, because the Cartesian Bear was well known to dislike Polar Bears, and stay as far away from them as possible.\n\n\"So,\" spake Vred, as they travelled, \"do you think the whole story is going to be full of referential humor and obscure math jokes like this?\"\n\n\"Indeed,\" replied Lerrald, \"for the author art a nerd of the greatest magnitude. Also, the breaking of the fourth wall shalt most likely continue unabated.\"\n\nWhereupon Vred stopped walking for a moment, frowned, exclaimed \"Dang it!\" and hurried to catch up with Lerrald.",
+                        "previousChapter": "66df18c63ecabb4d57111d42",
+                        "createDate": "2024-09-09T15:49:08.338Z",
+                        "keywords": ["silly"],
+                        "likes": 0,
+                      },
+                    ],
+                }
+        "400":
+          description: "userId not well formed"
+          content:
+            application/json:
+              example: { "error": "That is not a properly formatted userId." }
+        "404":
+          description: "userId not found"
+          content:
+            application/json:
+              example: { "error": "There is no user with that userId." }
+        default:
+          description: Default error sample response
+    post:
+      tags:
+        - Chapter
+        - Story
+      summary: Post a new story
+      description: "Post the chapter title and text of a chapter to continue a story."
+      operationId: continue_story
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      requestBody:
+        description: "Continue a story."
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContinueStory"
+            example:
+              {
+                "storyTitle": "Once upon a time...",
+                "bodyText": "Once upon a time, there were there were 92 little pigs. The first little pig built his house out of hydrogen, which was really dificult.",
+                "keywords": ["drama", "sad"],
+              }
+      responses:
+        "201":
+          description: "Successfully created chapter."
+          content:
+            application/json:
+              example:
+                {
+                  "storyId": "66ce142dc538303360039d3b",
+                  "chapterId": "66ce142dc538303360039d3b",
+                  "storyTitle": "Once upon a time...",
+                  "chapterTitle": null,
+                  "authorName": "Freddy",
+                  "authorId": "668490250029a28118a8d1be",
+                  "bodyText": "Once upon a time, there were there were 92 little pigs. The first little pig built his house out of hydrogen, which was really dificult.",
+                  "previousChapter": null,
+                  "createDate": "2024-08-27T18:00:13.862Z",
+                  "keywords": ["drama", "sad"],
+                  "likes": 0,
+                }
+        "400":
+          description: "Bad request."
+          content:
+            application/json:
+              examples:
+                missingStoryTitle:
+                  value: { "error": "Missing chapter title." }
+                missingBodyText:
+                  value: { "error": "Missing story text." }
+                badKeywords:
+                  value: { "error": "keywords must be an array of strings." }
+        default:
+          description: Default error sample response
+  /chapter/{chapterId}/like:
+    summary: POST or DELETE a like to a chapter
+    post:
+      tags:
+        - Chapter
+      summary: Like a chapter
+      description: "Like a chapter. You cannot like your own chapters, or like a chapter multiple times."
+      operationId: like_chapter
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: Like successfully posted.
+          content:
+            application/json:
+              example: { "message": "Chapter liked." }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example:
+                { "error": "That is not a properly formatted chapterId." }
+        "404":
+          description: chapterId not found."
+          content:
+            application/json:
+              example: { "error": "There is no chapter with that chapterId." }
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              examples:
+                duplicateLike:
+                  value: { "error": "You have already liked that chapter." }
+                likeOwnChapter:
+                  value: { "error": "You cannot like your own chapters." }
+        default:
+          description: Default error sample response
+    delete:
+      tags:
+        - Chapter
+      summary: Remove a like from a chapter
+      description: "Remove a like from a chapter."
+      operationId: unlike_chapter
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: Like successfully removed.
+          content:
+            application/json:
+              example: { "message": "Like successfully removed." }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example:
+                { "error": "That is not a properly formatted chapterId." }
+        "404":
+          description: chapterId not found."
+          content:
+            application/json:
+              examples:
+                notLiked:
+                  value: { error: "You have not liked that chapter." }
+                chapterIdNotFound:
+                  value: { "error": "There is no chapter with that chapterId." }
+        default:
+          description: Default error sample response
+  /chapter/{chapterId}/flag:
+    summary: POST a flag for review on the chapter
+    post:
+      tags:
+        - Chapter
+        - Flag
+      summary: Flag a chapter for review
+      description: "Post a flag for review, to be entered into a moderation queue. Must include reason for flagging."
+      operationId: flag_chapter
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      requestBody:
+        description: Flag a chapter
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Flag"
+            example: { "reason": "Spam" }
+      responses:
+        "200":
+          description: Chapter successfully flagged.
+          content:
+            application/json:
+              example: { "message": "Chapter successfully flagged." }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              examples:
+                noReason:
+                  value: { "error": "Flagging a chapter needs a reason." }
+                badChapterId:
+                  value:
+                    { "error": "That is not a properly formatted chapterId." }
+        "404":
+          description: Chapter not found.
+          content:
+            application/json:
+              example: { "error": "There is no chapter with that chapterId." }
+        default:
+          description: Default error sample response
+  /chapter/{chapterId}/bookmark:
+    summary: POST or DELETE bookmarks
+    post:
+      tags:
+        - Chapter
+        - Bookmark
+      summary: Bookmark a page
+      description: If there is a logged in user, set a bookmark for that user on that chapter.
+      operationId: bookmark_chapter
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: Successfully created bookmark.
+          content:
+            application/json:
+              example: { "message": "Chapter bookmarked." }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example:
+                { "error": "That is not a properly formatted chapterId." }
+        "404":
+          description: Chapter not found
+          content:
+            application/json:
+              example: { "error": "There is no chapter with that chapterId." }
+        "409":
+          description: User has already bookmarked that chapter.
+          content:
+            application/json:
+              example: { "error": "You have already liked that bookmark." }
+        default:
+          description: Default error sample response
+    delete:
+      tags:
+        - Chapter
+        - Bookmark
+      summary: Unbookmark a page
+      description: If there is a logged in user that has bookmarked the given chapter, remove the bookmark.
+      operationId: unbookmark_chapter
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: Successfully deleted bookmark.
+          content:
+            application/json:
+              example: { message: "Bookmark successfully deleted." }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example:
+                { "error": "That is not a properly formatted chapterId." }
+        "404":
+          description: Chapter not found
+          content:
+            application/json:
+              examples:
+                notBookmarked:
+                  value: { "error": "You don't have that chapter bookmarked." }
+
+                missingKeyword:
+                  value: { "error": "There is no chapter with that chapterId." }
+        default:
+          description: Default error sample response
+  /chapter/{chapterId}/keyword:
+    summary: Add one or more keywords to a chapter
+    put:
+      tags:
+        - Chapter
+        - Keyword
+      summary: Apply new keywords to a chapter
+      description: "Adds one or more keywords to an existing chapter. Only the post's author can use this route."
+      operationId: put_new_keywords
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      requestBody:
+        description: "Array of keywords to add to a chapter"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Keywords"
+            example: ["drama", "sad"]
+      responses:
+        "200":
+          description: "Successfully added all keywords"
+          content:
+            application/json:
+              example: { "message": "Keywords successfully added." }
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              examples:
+                badChapterId:
+                  value:
+                    { "error": "That is not a properly formatted chapterId." }
+                badKeywords:
+                  value:
+                    { "error": "Request body must be an array of strings." }
+        "404":
+          description: "Chapter not found"
+          content:
+            application/json:
+              example: { "error": "There is no chapter with that chapterId." }
+        default:
+          description: Default error sample response
+  /chapter/{chapterId}/keyword/{keywordValue}:
+    summary: Delete a keyword from a chapter
+    delete:
+      tags:
+        - Chapter
+        - Keyword
+      summary: Delete keywords from a chapter.
+      description: "Delete one or more keywords from a chapter. Only the chapter's author can use this route."
+      operationId: delete_keyword
+      parameters:
+        - name: chapterId
+          in: path
+          description: The ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+        - name: keywordValue
+          in: path
+          description: The keyword to delete
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: "Successfully deleted the keyword"
+          content:
+            application/json:
+              example: { "message": "Keyword successfully deleted." }
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              examples:
+                badChapterId:
+                  value:
+                    { "error": "That is not a properly formatted chapterId." }
+                badKeyword:
+                  value: { "error": "That is not a valid keyword." }
+        "404":
+          description: "Entity not found"
+          content:
+            application/json:
+              examples:
+                missingChapter:
+                  value: { "error": "There is no chapter with that chapterId." }
+                missingKeyword:
+                  value: { "error": "Keyword not found in chapter." }
+        default:
+          description: Default error sample response
+  /message:
+    summary: Post messages to the site admins
+    post:
+      tags:
+        - Message
+      summary: POST messages to the site admins
+      description: "POST a message to the site admins."
+      operationId: post_message
+      requestBody:
+        description:
+          The body JSON must include messageText, and optionally any or all of name, email, and useLoginInfo. If useLoginInfo is set to true,
+          and the submitter of the form is a logged in user, the name and email of the message are set to the user's userName and email, and
+          the message is marked as verified when it is added to the database. If useLoginInfo is not set, but the name and email match the
+          userName and email of a logged in user, then the email is marked as verified. If useLoginInfo is set to true and the submitter is
+          not logged in, they are redirected to /login. If useLoginInfo is set to false, or not included, and either there is no logged in
+          user, or the name or email provided do not match the username and email of the logged in user, then name and email will be used to
+          set their respective submitted values (if present), and the message will not be marked as verified.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Message"
+            examples:
+              nameAndEmail:
+                value:
+                  {
+                    "name": "Freddy",
+                    "email": "Freddy@example.com",
+                    "messageText": "This is an unverified message to the admins.",
+                  }
+              anonymous:
+                value: { "messageText": "Eye think ewe knead a spell checker." }
+              loggedIn:
+                value:
+                  {
+                    "useLoginInfo": true,
+                    "messageText": "This is a verified message to the admins.",
+                  }
+      responses:
+        "200":
+          description: "Successfully created message"
+          content:
+            application/json:
+              example: { "message": "Message sent." }
+        "400":
+          description: "Bad request."
+          content:
+            application/json:
+              example: { "error": "Message text is missing." }
+        default:
+          description: Default error sample response
+  /admin/message:
+    summary: Admin route to read messages POSTed to /message
+    get:
+      tags:
+        - Message
+        - Admin
+      summary: GET messages
+      description: "If there is a logged in user that is an admin, return a list of messages. Otherwise, redirect to /login"
+      operationId: get_message
+      parameters:
+        - in: query
+          name: unread
+          schema:
+            type: boolean
+          description: "If unread is set to true, the GET will only return messages that have read set to false, otherwise it will return all messages."
+      responses:
+        "200":
+          description: "list of messages found"
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "_id": "669fdd90d88a3ce68dde514f",
+                    "name": "Anonymous",
+                    "email": "Anonymous@example.com",
+                    "messageText": "This should NOT be a verified message",
+                    "verified": false,
+                    "read": false,
+                    "createDate": "2024-07-23T19:30:14.089Z",
+                    "__v": 0,
+                  },
+                  {
+                    "_id": "66a00443827cfd41d2557be0",
+                    "name": "Anonymous",
+                    "email": "Anonymous@example.com",
+                    "messageText": "This should NOT be a verified message",
+                    "verified": false,
+                    "read": false,
+                    "createDate": "2024-07-23T19:30:14.089Z",
+                    "__v": 0,
+                  },
+                  {
+                    "_id": "66a006ee5e9ad8a79398ae45",
+                    "name": "Freddy",
+                    "email": "Freddy@example.com",
+                    "messageText": "This should be a verified message, and have a createDate.",
+                    "verified": true,
+                    "read": true,
+                    "createDate": "2024-07-23T19:39:26.146Z",
+                    "__v": 0,
+                  },
+                ]
+        default:
+          description: Default error sample response
+  /admin/message/{messageId}:
+    summary: Admin route to work with individual messages POSTed to /message
+    put:
+      tags:
+        - Message
+        - Admin
+      summary: Mark a particular message as read or unread
+      description: If there is a logged in user that is an admin, allow them to mark the message as read or unread.
+      operationId: mark_message_read
+      parameters:
+        - name: messageId
+          in: path
+          description: the ID of the message
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      requestBody:
+        description: Submit a request to mark the message as read or unread
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMessage"
+            example: { "read": true }
+      responses:
+        "200":
+          description: Successfully updated messages.
+          content:
+            application/json:
+              example:
+                {
+                  "_id": "669fdb11d88a3ce68dde514c",
+                  "name": "Freddy",
+                  "email": "Freddy@example.com",
+                  "messageText": "This should be a verified message",
+                  "verified": true,
+                  "read": true,
+                  "__v": 0,
+                  "createDate": "2024-07-24T19:21:26.156Z",
+                }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example: { "error": "Invalid request." }
+        "404":
+          description: MessageId not found."
+          content:
+            application/json:
+              example: { "error": "There is no message with that messageId." }
+    delete:
+      tags:
+        - Message
+        - Admin
+      summary: Delete a message
+      description: If there is a logged in user that is an admin, allow them to delete the message.
+      operationId: delete_message
+      parameters:
+        - name: messageId
+          in: path
+          description: the ID of the message
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "204":
+          description: Successfully deleted message.
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example: { "error": "Invalid request." }
+        "404":
+          description: MessageId not found."
+          content:
+            application/json:
+              example: { "error": "There is no message with that messageId." }
+        default:
+          description: Default error sample response
+  /admin/flag:
+    summary: Return a list of flags
+    get:
+      tags:
+        - Flag
+        - Admin
+      summary: Get a list of flags
+      description: "Get a list of flags"
+      operationId: get_flags
+      responses:
+        "200":
+          description: Flags successfully returned.
+          content:
+            application/json:
+              example:
+                [
+                  {
+                    "_id": "66ad3d1c263beda349fb2a41",
+                    "user":
+                      {
+                        "_id": "667b294248b8805d71a96a03",
+                        "userName": "apmanager",
+                        "email": "rfoley00@live.com",
+                        "admin": true,
+                        "bio": "I haven't decided what to put in my bio yet.",
+                        "darkMode": true,
+                        "moderator": false,
+                        "publishEmail": true,
+                        "locked": false,
+                        "emailVerified": true,
+                        "id": "667b294248b8805d71a96a03",
+                      },
+                    "chapter":
+                      {
+                        "keywords": [],
+                        "_id": "6688142fb004b799a5a29d03",
+                        "authorName": "Freddy",
+                        "chapterTitle": null,
+                        "storyTitle": "Random Title",
+                        "bodyText": "Genji no monogatari",
+                        "previousChapter": null,
+                        "createDate": "2024-07-05T15:41:35.510Z",
+                        "storyId": "6688142fb004b799a5a29d03",
+                        "__v": 0,
+                        "id": "6688142fb004b799a5a29d03",
+                      },
+                    "reason": "spam",
+                    "createDate": "2024-08-02T20:10:04.480Z",
+                    "__v": 0,
+                  },
+                  {
+                    "_id": "66bcc1308c632c903d8e5f98",
+                    "user":
+                      {
+                        "_id": "667b294248b8805d71a96a03",
+                        "userName": "apmanager",
+                        "email": "rfoley00@live.com",
+                        "admin": true,
+                        "bio": "I haven't decided what to put in my bio yet.",
+                        "darkMode": true,
+                        "moderator": false,
+                        "publishEmail": true,
+                        "locked": false,
+                        "emailVerified": true,
+                        "id": "667b294248b8805d71a96a03",
+                      },
+                    "chapter":
+                      {
+                        "keywords": [],
+                        "_id": "66a7fd2095206fecbb52c189",
+                        "authorName": "Freddy",
+                        "chapterTitle": "Lerrald and Vred sought the Cartesian Bear",
+                        "bodyText": "Lerrald and Vred set forth to find the greatest mapmaker in all the land, the Cartesian Bear. This meant that they were going south, because the Cartesian Bear was well known to dislike Polar Bears, and stay as far away from them as possible.\n\n\"So,\" spake Vred, as they travelled, \"do you think the whole story is going to be full of referential humor and obscure math jokes like this?\"\n\n\"Indeed,\" replied Lerrald, \"for the author art a nerd of the greatest magnitude. Also, the breaking of the fourth wall shalt most likely continue unabated.\"\n\nWhereupon Vred stopped walking for a moment, frowned, exclaimed \"Dang it!\" and hurried to catch up with Lerrald.",
+                        "previousChapter": "6695b2573550c66db1ab9106",
+                        "createDate": "2024-07-29T20:35:44.858Z",
+                        "storyId": "6695b2573550c66db1ab9106",
+                        "storyTitle": "In the beginning...",
+                        "__v": 0,
+                        "id": "66a7fd2095206fecbb52c189",
+                      },
+                    "reason": "spam",
+                    "createDate": "2024-08-14T14:37:37.001Z",
+                    "__v": 0,
+                  },
+                ]
+  /admin/flag/{flagId}:
+    summary: Delete a flag
+    delete:
+      tags:
+        - Admin
+        - Flag
+      summary: Delete a flag
+      description: "Delete a flag."
+      operationId: delete_flag
+      parameters:
+        - name: flagId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: Successfully deleted flag.
+          content:
+            application/json:
+              example: { "message": "Flag successfully deleted." }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example: { "error": "That is not a properly formatted flagId." }
+        "404":
+          description: Flag not found.
+          content:
+            application/json:
+              example: { "error": "There is no flag with that flagId." }
+        default:
+          description: Default error sample response
+  /admin/chapter/{chapterId}:
+    summary: Delete a chapter
+    delete:
+      tags:
+        - Admin
+        - Chapter
+      summary: Delete a chapter
+      description: "Delete a chapter."
+      operationId: delete_chapter
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: Successfully deleted chapter.
+          content:
+            application/json:
+              example: { "message": "Chapter successfully deleted." }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example:
+                { "error": "That is not a properly formatted chapterId." }
+        "404":
+          description: Chapter not found.
+          content:
+            application/json:
+              example: { "error": "There is no chapter with that chapterId." }
+        default:
+          description: Default error sample response
+  /admin/chapter/{chapterId}/keyword:
+    summary: Add one or more keywords to a chapter
+    put:
+      tags:
+        - Chapter
+        - Keyword
+        - Admin
+      summary: Apply new keywords to a chapter
+      description: "Adds one or more keywords to an existing chapter. Only admins can use this route."
+      operationId: admin_put_new_keywords
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      requestBody:
+        description: "An array of the keywords to add."
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Keywords"
+            example: ["drama", "sad"]
+      responses:
+        "200":
+          description: "Successfully added all keywords"
+          content:
+            application/json:
+              example: { "message": "Keywords successfully added." }
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              examples:
+                badChapterId:
+                  value:
+                    { "error": "That is not a properly formatted chapterId." }
+                badKeywords:
+                  value:
+                    { "error": "Request body must be an array of strings." }
+        "404":
+          description: "Chapter not found"
+          content:
+            application/json:
+              example: { "error": "There is no chapter with that chapterId." }
+        default:
+          description: Default error sample response
+  /admin/chapter/{chapterId}/keyword/{keywordValue}:
+    summary: Delete a keyword from a chapter
+    delete:
+      tags:
+        - Chapter
+        - Keyword
+        - Admin
+      summary: Delete keywords from a chapter.
+      description: "Delete one or more keywords from a chapter. Only admins can use this route."
+      operationId: admin_delete_keyword
+      parameters:
+        - name: chapterId
+          in: path
+          description: The ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+        - name: keywordValue
+          in: path
+          description: The keyword to delete from the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: "Successfully deleted the keyword"
+          content:
+            application/json:
+              example: { "message": "Keyword successfully deleted." }
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              examples:
+                badChapterId:
+                  value:
+                    { "error": "That is not a properly formatted chapterId." }
+                badKeywords:
+                  value: { "error": "That is not a valid keyword." }
+        "404":
+          description: "Entity not found"
+          content:
+            application/json:
+              examples:
+                missingChapter:
+                  value: { "error": "There is no chapter with that chapterId." }
+                missingKeyword:
+                  value: { "error": "Keyword not found in chapter." }
+        default:
+          description: Default error sample response
+  /admin/user/{userId}/lock:
+    summary: Lock a user
+    post:
+      tags:
+        - Admin
+        - User
+      summary: Lock a user
+      description: Lock a user
+      operationId: lock_user
+      parameters:
+        - name: userId
+          in: path
+          description: the ID of the user
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: Successfully locked user.
+          content:
+            application/json:
+              example: { "message": "User successfully locked." }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example: { "error": "That is not a properly formatted userId." }
+        "404":
+          description: Chapter not found.
+          content:
+            application/json:
+              example: { "error": "There is no user with that userId." }
+        "409":
+          description: User already locked."
+          content:
+            application/json:
+              example: { "error": "That user is already locked." }
+        default:
+          description: Default error sample response
+    delete:
+      tags:
+        - Admin
+        - User
+      summary: Unlock a user
+      description: Unlock a user
+      operationId: unlock_user
+      parameters:
+        - name: userId
+          in: path
+          description: the ID of the user
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: Successfully unlocked user.
+          content:
+            application/json:
+              example: { "message": "User successfully unlocked." }
+        "400":
+          description: Bad request.
+          content:
+            application/json:
+              example: { "error": "That is not a properly formatted userId." }
+        "404":
+          description: Chapter not found.
+          content:
+            application/json:
+              example: { "error": "There is no user with that userId." }
+        "409":
+          description: User not locked."
+          content:
+            application/json:
+              example: { "error": "That user is not locked." }
+        default:
+          description: Default error sample response
+  /admin/user/{userId}:
+    summary: Examine or alter a user's information
+    get:
+      tags:
+        - Admin
+        - User
+      summary: Examine a user's information
+      description: "Return the document from the users collection with the given userId"
+      operationId: examine_user
+      parameters:
+        - name: userId
+          in: path
+          description: the ID of the user
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: "Successfully retrieved user document."
+          content:
+            application/json:
+              example:
+                {
+                  "_id": "668ee23ce1dcd980cf0739f9",
+                  "userName": "FreddyQuaoar",
+                  "email": "FreddyQuaoar@example.com",
+                  "admin": false,
+                  "moderator": false,
+                  "bio": "I haven't decided what to put in my bio yet.",
+                  "publishEmail": false,
+                  "darkMode": false,
+                  "__v": 0,
+                  "locked": false,
+                  "emailVerified": true,
+                  "publishedChapters": [],
+                  "followedAuthors": [],
+                  "likedChapters": [],
+                  "bookmarkedChapters": [],
+                  "id": "668ee23ce1dcd980cf0739f9",
+                }
+        "400":
+          description: Invalid request.
+          content:
+            application/json:
+              example: { "error": "That is not a properly formatted userId." }
+        "404":
+          description: User not found.
+          content:
+            application/json:
+              example: { "error": "There is no user with that userId." }
+        default:
+          description: Default error sample response
+    put:
+      tags:
+        - Admin
+        - User
+      summary: Alter a user
+      description:
+        "Submit a JSON object containing one or more of the follwing fields with values of the apropriate type:
+        admin: boolean, moderator: boolean, bio: string, publishEmail: boolean, emailVerified: boolean.
+        The user's database chapter will have it's corresponding chapter set to the given value."
+      operationId: alter_user
+      parameters:
+        - name: userId
+          in: path
+          description: the ID of the user
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      requestBody:
+        description: "Fields in the user's database document to change, and the values they should be changed to"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlterUser"
+            example:
+              {
+                "admin": true,
+                "moderator": true,
+                "bio": "I am a doofus who put naughty words in my bio.",
+                "publishEmail": false,
+                "emailVerified": true,
+              }
+      responses:
+        "200":
+          description: "Successfully changed user settings."
+          content:
+            application/json:
+              example:
+                {
+                  "_id": "668ee23ce1dcd980cf0739f9",
+                  "userName": "FreddyQuaoar",
+                  "email": "FreddyQuaoar@example.com",
+                  "admin": false,
+                  "moderator": false,
+                  "bio": "I haven't decided what to put in my bio yet.",
+                  "publishEmail": false,
+                  "darkMode": false,
+                  "__v": 0,
+                  "locked": false,
+                  "emailVerified": true,
+                  "publishedChapters": [],
+                  "followedAuthors": [],
+                  "likedChapters": [],
+                  "bookmarkedChapters": [],
+                  "id": "668ee23ce1dcd980cf0739f9",
+                }
+        "400":
+          description: Invalid request.
+          content:
+            application/json:
+              examples:
+                invalidRequest:
+                  value: { "error": "Invalid request." }
+                misformedUserId:
+                  value: { "error": "That is not a properly formatted userId." }
+        "404":
+          description: User not found.
+          content:
+            application/json:
+              example: { "error": "There is no user with that userId." }
+        default:
+          description: Default error sample response
+  /chain/{chapterId}:
+    summary: GET the chapter chain ending at the specified chapter
+    get:
+      tags:
+        - Chain
+      summary: Get the chapter chain ending at the specified chapter.
+      description:
+        "Returns an array of chapters with the last one being the chapter with the given chapterId, and every other chapter in the array having the\
+        \ chapterId equal to previousChapter of the next array chapter, and the first array chapter being the beginning of the story."
+      operationId: get_chain
+      parameters:
+        - name: chapterId
+          in: path
+          description: the ID of the chapter
+          required: true
+          style: simple
+          explode: false
+          schema: {}
+      responses:
+        "200":
+          description: "Chain successfully returned."
+          content:
+            application/json:
+              examples:
+                fullChain:
+                  value:
+                    [
+                      {
+                        "storyId": "6688142fb004b799a5a29d03",
+                        "chapterId": "6688142fb004b799a5a29d03",
+                        "authorName": "Freddy",
+                        "authorId": "668490250029a28118a8d1be",
+                        "chapterTitle": null,
+                        "storyTitle": "Random Title",
+                        "bodyText": "Genji no monogatari",
+                        "previousChapter": null,
+                        "createDate": "2024-07-05T15:41:35.510Z",
+                        "keywords": [],
+                        "likes": 0,
+                        "likedByUser": false,
+                        "bookmarkedByUser": false,
+                        "continuationChapters":
+                          [
+                            {
+                              "storyId": "6688142fb004b799a5a29d03",
+                              "chapterId": "668820191cb99dfdc244c23c",
+                              "storyTitle": "Random Title",
+                              "chapterTitle": "Chapter the first",
+                              "authorName": "Freddy",
+                              "previousChapter": "6688142fb004b799a5a29d03",
+                              "keywords": [],
+                            },
+                            {
+                              "storyId": "6688142fb004b799a5a29d03",
+                              "chapterId": "668c4771e0989ccd9cd6ec8a",
+                              "storyTitle": "Random Title",
+                              "chapterTitle": "adding to this chapters list of sub chapters",
+                              "authorName": "apmanager",
+                              "previousChapter": "6688142fb004b799a5a29d03",
+                              "keywords": [],
+                            },
+                          ],
+                      },
+                      {
+                        "storyId": "6688142fb004b799a5a29d03",
+                        "chapterId": "668d51e61be56166aaaa6cc2",
+                        "authorName": "Freddy",
+                        "authorId": "668490250029a28118a8d1be",
+                        "chapterTitle": "Suddenly, a wild accountant appears!",
+                        "storyTitle": "Random Title",
+                        "bodyText": "It throws a bundle of tax forms at our hero, Bob, stunning him! The existential dread is almost enough to keep him from dodging the subsequent thrown calculator, but he manages to roll out of the way in time, and retaliate with a well-swung Swingline stapler!",
+                        "previousChapter": "6688142fb004b799a5a29d03",
+                        "createDate": "2024-07-09T15:06:14.267Z",
+                        "keywords": [],
+                        "likes": 0,
+                        "likedByUser": false,
+                        "bookmarkedByUser": false,
+                        "continuationChapters": [],
+                      },
+                    ]
+                brokenChain:
+                  value:
+                    [
+                      {
+                        "storyId": "66bd0377fd83fe5734584642",
+                        "chapterId": "66bd0378fd83fe5734584651",
+                        "authorName": "testkurmdlqazsvnepyhs0.7645244396758495",
+                        "authorId": "66bd0374fd83fe5734584612",
+                        "chapterTitle": "testkurmdlqazsvnepyhs1",
+                        "storyTitle": "testkurmdlqazsvnepyhs",
+                        "bodyText": "testkurmdlqazsvnepyhs2",
+                        "previousChapter": "66bd0377fd83fe5734584642",
+                        "createDate": "2024-08-14T19:20:24.445Z",
+                        "keywords": [],
+                        "likes": 0,
+                        "continuationChapters":
+                          [
+                            {
+                              "storyId": "66bd0377fd83fe5734584642",
+                              "chapterId": "66bd0379fd83fe5734584660",
+                              "storyTitle": "testkurmdlqazsvnepyhs",
+                              "chapterTitle": "testkurmdlqazsvnepyhs1",
+                              "authorName": "testkurmdlqazsvnepyhs0.7645244396758495",
+                              "previousChapter": "66bd0378fd83fe5734584651",
+                            },
+                          ],
+                      },
+                      {
+                        "storyId": "66bd0377fd83fe5734584642",
+                        "chapterId": "66bd0379fd83fe5734584660",
+                        "authorName": "testkurmdlqazsvnepyhs0.7645244396758495",
+                        "authorId": "66bd0374fd83fe5734584612",
+                        "chapterTitle": "testkurmdlqazsvnepyhs1",
+                        "storyTitle": "testkurmdlqazsvnepyhs",
+                        "bodyText": "testkurmdlqazsvnepyhs2",
+                        "previousChapter": "66bd0378fd83fe5734584651",
+                        "createDate": "2024-08-14T19:20:25.135Z",
+                        "keywords": [],
+                        "likes": 0,
+                        "continuationChapters": [],
+                      },
+                    ]
+        "400":
+          description: "malformed request."
+          content:
+            application/json:
+              example:
+                { "error": "That is not a properly formatted chapterId." }
+        "404":
+          description: "chapterId does not exist."
+          content:
+            application/json:
+              example: { "error": "There is no chapter with that chapterId." }
+        default:
+          description: Default error sample response
+  /stats:
+    summary: Get some basic site statistics
+    get:
+      tags:
+        - Statistics
+      summary: Get some basic site statistics
+      description: Get the number of users, stories, and chapters currently on the site.
+      operationId: get_stats
+      responses:
+        "200":
+          description: Successfully got site statistics.
+          content:
+            application/json:
+              example: { "users": 36, "stories": 9, "chapters": 17 }
+        default:
+          description: Default error sample response
+  /keywords:
+    summary: GET a list of keywords in use and their counts.
+    get:
+      parameters:
+        - in: query
+          name: regex
+          schema:
+            type: string
+          description: "An optional regular expression, only matching keywords will be returned"
+      tags:
+        - Keyword
+        - Search
+      summary: Get a list of defined keywords
+      description: "Get a list of all used keywords, sorted by number of occurences. If a query string is used, return only matching keywords."
+      operationId: get_keyword_list
+      responses:
+        "200":
+          description: "Successfully found a list of keywords."
+          content:
+            application/json:
+              examples:
+                registered:
+                  value:
+                    [
+                      { "keyword": "keywords", "count": 2 },
+                      { "keyword": "testing", "count": 2 },
+                      { "keyword": "lock", "count": 2 },
+                      { "keyword": "sad", "count": 1 },
+                      { "keyword": "drama", "count": 1 },
+                    ]
+        "404":
+          description: "No matching keywords found."
+          content:
+            application/json:
+              examples:
+                registered:
+                  value: { "error": "No matching keywords found." }
+        default:
+          description: Default error sample response
+components:
+  schemas:
+    Register:
+      required:
+        - userName
+        - email
+        - password
+      properties:
+        userName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    ChangePassword:
+      required:
+        - password
+        - newPassword
+      properties:
+        password:
+          type: string
+        newPassword:
+          type: string
+    RequestResetPasswordEmail:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    ResetPassword:
+      required:
+        - password
+      properties:
+        password:
+          type: string
+    Login:
+      required:
+        - name
+        - password
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+    Settings:
+      properties:
+        bio:
+          type: string
+        email:
+          type: string
+        publishEmail:
+          type: boolean
+        darkMode:
+          type: boolean
+    AlterUser:
+      properties:
+        bio:
+          type: string
+        publishEmail:
+          type: boolean
+        admin:
+          type: boolean
+        moderator:
+          type: boolean
+        emailVerified:
+          type: boolean
+    NewStory:
+      required:
+        - storyTitle
+        - bodyText
+      properties:
+        storyTitle:
+          type: string
+        bodyText:
+          type: string
+        keywords:
+          type: array
+          items:
+            type: string
+    ContinueStory:
+      required:
+        - chapterTitle
+        - bodyText
+      properties:
+        chapterTitle:
+          type: string
+        bodyText:
+          type: string
+        keywords:
+          type: array
+          items:
+            type: string
+    Message:
+      required:
+        - messageText
+      properties:
+        messageText:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        useLoginInfo:
+          type: boolean
+    UpdateMessage:
+      properties:
+        read:
+          type: boolean
+    Flag:
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+    Keywords:
+      type: array
+      items:
+        type: string
