@@ -108,7 +108,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
 
-    // Information pages - medium priority
     {
       url: `${baseUrl}/howitworks`,
       lastModified: currentDate,
