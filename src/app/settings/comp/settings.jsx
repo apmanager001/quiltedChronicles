@@ -35,6 +35,7 @@ const Settings = () => {
         axiosInstance
           .get(`/profile`)
           .then((response) => {
+            
             const settings = response.data;
             setEmailPublic(settings.publishEmail);
             setDarkMode(settings.darkMode);
@@ -57,15 +58,15 @@ const Settings = () => {
           bio,
         };
 
-    axiosInstance
-      .put("/profile", settingsData)
-      .then((response) => {
-        toast.success("Settings updated successfully");
-      })
-      .catch((error) => {
-        console.error("There was an error updating the settings", error);
-      });
-  };
+        axiosInstance
+          .put("/profile", settingsData)
+          .then((response) => {
+            toast.success("Settings updated successfully");
+          })
+          .catch((error) => {
+            console.error("There was an error updating the settings", error);
+          });
+      };
 
   // const handleThemeToggle = (isDarkMode) => {
   //   setDarkMode(isDarkMode);

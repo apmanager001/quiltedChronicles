@@ -1,24 +1,24 @@
-'use client'
-import React, {useState, useEffect} from 'react'
-import Link from 'next/link';
-import {User, Search} from "lucide-react";
-import useStore from '../../app/store/store'
-import toast from 'react-hot-toast';
-import Drawer from './drawer'
-import axiosInstance from '../utility/axios';
+"use client";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { User, Search } from "lucide-react";
+import useStore from "../../app/store/store";
+import toast from "react-hot-toast";
+import Drawer from "./drawer";
+import axiosInstance from "../utility/axios";
 
 const UserInfo = () => {
   const user = useStore((state) => state.user);
   const validateSession = useStore((state) => state.validateSession);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-    useEffect(() => {
-      validateSession();
-    }, []);
+  useEffect(() => {
+    validateSession();
+  }, []);
 
   const closeDrawer = () => {
     setIsDrawerOpen(false);
@@ -81,21 +81,28 @@ const UserInfo = () => {
             >
               <User size={32} />
             </Link>
-           
           </div>
         </div>
       ) : (
-        <div className='flex justify-center items-center gap-4 mr-2 '>
-        <Link href="/search" className="btn btn-ghost hidden lg:flex" aria-label='This link will take you to login page'>
-          <Search />
-        </Link>
-        <Link href="/login" className="btn btn-ghost" aria-label='This link will take you to login page'>
-          Sign In
-        </Link>
+        <div className="flex justify-center items-center gap-4 mr-2 ">
+          <Link
+            href="/search"
+            className="btn btn-ghost hidden lg:flex"
+            aria-label="This link will take you to login page"
+          >
+            <Search />
+          </Link>
+          <Link
+            href="/login"
+            className="btn btn-ghost"
+            aria-label="This link will take you to login page"
+          >
+            Sign In
+          </Link>
         </div>
       )}
     </div>
   );
-}
+};
 
 export default UserInfo;
