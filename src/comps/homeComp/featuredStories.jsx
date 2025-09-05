@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import validator from "validator";
 import axiosInstance from "../utility/axios";
 import Loading from "../utility/loading";
 import Link from "next/link";
@@ -75,7 +76,7 @@ const FeaturedStories = () => {
               {/* Image */}
               <div className="relative h-48 overflow-hidden">
                 <Image
-                  src={`/icon${(index % 3) + 1}.jpeg`}
+                  src={`/hero/hero${(index % 7)+1}.webp`}
                   alt={chapter.chapterTitle || chapter.storyTitle}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -109,7 +110,7 @@ const FeaturedStories = () => {
 
                 {/* Excerpt */}
                 <p className="text-base-content/70 line-clamp-3 mb-4">
-                  {chapter.bodyText || "No preview available..."}
+                  {validator.unescape(chapter.bodyText) || "No preview available..."}
                 </p>
 
                 {/* Stats and Meta */}

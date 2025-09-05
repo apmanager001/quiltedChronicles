@@ -177,7 +177,7 @@ const Chain = ({ onTitleChange }) => {
 
                   {/* Share Dropdown */}
                   {showShareDropdown && (
-                    <div className="absolute top-full left-0 mt-2 bg-base-100 rounded-xl shadow-lg border border-base-300/50 p-3 min-w-[200px] z-10 animate-in fade-in-0 zoom-in-95 duration-200">
+                    <div className="absolute top-full right-0 mt-2 bg-base-100 rounded-xl shadow-lg border border-base-300/50 p-3 min-w-[200px] z-10 animate-in fade-in-0 zoom-in-95 duration-200">
                       <div className="space-y-3">
                         <button
                           onClick={copyURL}

@@ -153,7 +153,7 @@ const ChapterInd = ({ onTitleChange }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           {/* Author Card */}
           <div className="bg-base-200/50 rounded-xl p-4 border border-base-300/50">
-            <div className="flex flex-col xl:flex-row items-center justify-center gap-3">
+            <div className="flex flex-col items-center justify-center gap-3">
               <div className="p-2 bg-primary/10 rounded-lg">
                 <User className="w-5 h-5 text-primary" />
               </div>
@@ -161,7 +161,7 @@ const ChapterInd = ({ onTitleChange }) => {
                 <p className="text-sm text-base-content/60 mb-1">Author</p>
                 <Link
                   href={`/profile/${authorName}`}
-                  className="font-semibold text-primary hover:text-primary-focus transition-colors"
+                  className="text-xs font-semibold text-primary hover:text-primary-focus transition-colors"
                 >
                   {authorName}
                 </Link>
@@ -174,7 +174,7 @@ const ChapterInd = ({ onTitleChange }) => {
 
           {/* Date Card */}
           <div className="bg-base-200/50 rounded-xl p-4 border border-base-300/50">
-            <div className="flex flex-col xl:flex-row items-center justify-center gap-3">
+            <div className="flex flex-col items-center justify-center gap-3 h-full">
               <div className="p-2 bg-secondary/10 rounded-lg">
                 <Calendar className="w-5 h-5 text-secondary" />
               </div>
@@ -187,7 +187,7 @@ const ChapterInd = ({ onTitleChange }) => {
 
           {/* Likes Card */}
           <div className="bg-base-200/50 rounded-xl p-4 border border-base-300/50">
-            <div className="flex flex-col xl:flex-row items-center justify-center gap-3">
+            <div className="flex flex-col items-center justify-center gap-3 h-full">
               <div className="p-2 bg-accent/10 rounded-lg">
                 <Heart className="w-5 h-5 text-accent" fill="currentColor" />
               </div>
@@ -206,7 +206,7 @@ const ChapterInd = ({ onTitleChange }) => {
             <div className="relative">
               <button
                 onClick={toggleShareDropdown}
-                className="btn btn-outline btn-primary gap-2 btn-sm lg:btn-md"
+                className="btn btn-outline btn-primary gap-2 btn-xs lg:btn-md "
               >
                 <Share2 className="w-4 h-4" />
                 Share
@@ -236,7 +236,7 @@ const ChapterInd = ({ onTitleChange }) => {
               <>
                 <Link
                   href={`/chapter/${previousChapter}`}
-                  className="btn btn-outline btn-secondary gap-2 btn-sm lg:btn-md"
+                  className="btn btn-soft btn-secondary gap-2 btn-sm lg:btn-md"
                   aria-label="Go to previous chapter"
                 >
                   <ArrowBigLeft className="w-4 h-4" />
@@ -244,7 +244,7 @@ const ChapterInd = ({ onTitleChange }) => {
                 </Link>
                 <Link
                   href={`/chapter/${storyId}`}
-                  className="btn btn-outline btn-accent gap-2 btn-sm lg:btn-md"
+                  className="btn btn-soft btn-accent gap-2 btn-sm lg:btn-md"
                   aria-label="Go to first chapter"
                 >
                   <Rewind className="w-4 h-4" />

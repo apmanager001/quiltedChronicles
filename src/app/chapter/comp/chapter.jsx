@@ -33,7 +33,7 @@ const Chapter = ({ onTitleChange }) => {
 
   return (
     <AccountPage>
-      <div className="flex flex-row justify-center lg:min-h-full w-full gap-5 p-5">
+      <div className="flex flex-row justify-center lg:min-h-full w-full gap-5 ">
         <div className="flex flex-col w-full">
           <div className="flex-2 flex justify-center items-center w-full">
             {middleColumn === "chapter" && (

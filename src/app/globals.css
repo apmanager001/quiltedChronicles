@@ -1,6 +1,6 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; 
 
 /* Custom styles for homepage components */
 @layer utilities {
@@ -26,4 +26,4 @@
     );
     background-size: 20px 20px;
   }
-}
+} 

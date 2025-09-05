@@ -38,7 +38,7 @@ const FollowAuthor = ({ userId }) => {
       !user.followedAuthors.some((author) => author.userId === userId) ? (
         <input
           type="submit"
-          className='btn btn-sm btn-accent'
+          className='btn btn-xs btn-accent'
           value="Follow this Author"
           onClick={handleFollow}
         />
